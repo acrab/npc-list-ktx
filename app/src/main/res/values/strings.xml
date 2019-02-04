@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">RoomWordNavigation</string>
+    <string name="character_name_hint">Enter a name</string>
+    <string name="organisation_name_hint">Name the organisation</string>
+    <string name="add_character">Add</string>
+    <string name="add_organisation">Add</string>
+    <string name="character_list">Characters</string>
+    <string name="organisation_list">Organisations</string>
+    <string name="about">About</string>
+    <string name="add_organisation_title">Create new organisation</string>
+    <string name="organisation_list_title">Organisations</string>
+    <string name="add_character_title">Create new character</string>
+    <string name="character_list_title">Characters</string>
+    <string name="organisation_description">Enter a description...</string>
+</resources>

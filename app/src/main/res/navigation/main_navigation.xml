@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/characterListFragment">
+    <fragment
+        android:id="@+id/characterListFragment"
+        android:name="com.example.android.roomwordnavigation.CharacterListFragment"
+        android:label="@string/character_list_title"
+        tools:layout="@layout/fragment_character_list">
+        <action
+            android:id="@+id/action_wordListFragment_to_addWordFragment"
+            app:destination="@id/addCharacterFragment"
+            app:popUpTo="@+id/characterListFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/addCharacterFragment"
+        android:name="com.example.android.roomwordnavigation.AddCharacterFragment"
+        android:label="@string/add_character_title"
+        tools:layout="@layout/fragment_add_character"/>
+    <fragment
+        android:id="@+id/organisationListFragment"
+        android:name="com.example.android.roomwordnavigation.OrganisationListFragment"
+        android:label="@string/organisation_list_title"
+        tools:layout="@layout/fragment_organisation_list">
+        <action
+            android:id="@+id/action_organisationListFragment_to_addOrganisationFragment"
+            app:destination="@id/addOrganisationFragment"
+            app:popUpTo="@+id/organisationListFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_organisationListFragment_to_viewOrganisationFragment"
+            app:destination="@id/viewOrganisationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addOrganisationFragment"
+        android:name="com.example.android.roomwordnavigation.AddOrganisationFragment"
+        android:label="@string/add_organisation_title"
+        tools:layout="@layout/fragment_add_organisation" />
+    <fragment
+        android:id="@+id/viewOrganisationFragment"
+        android:name="com.example.android.roomwordnavigation.ViewOrganisationFragment"
+        android:label="ViewOrganisationFragment"
+        tools:layout="@layout/fragment_view_organisation" >
+        <argument
+            android:name="organisation_id"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_viewOrganisationFragment_to_addCharacterToOrganisationFragment"
+            app:destination="@id/addCharacterToOrganisationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addCharacterToOrganisationFragment"
+        android:name="com.example.android.roomwordnavigation.AddCharacterToOrganisationFragment"
+        android:label="AddCharacterToOrganisationFragment"
+        tools:layout="@layout/fragment_character_list">
+        <argument
+            android:name="organisation_id"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_addCharacterToOrganisationFragment_to_addCharacterFragment"
+            app:destination="@id/addCharacterFragment"
+            app:popUpTo="@+id/addCharacterToOrganisationFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+</navigation>
