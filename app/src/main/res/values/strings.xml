@@ -11,5 +11,5 @@
     <string name="organisation_list_title">Organisations</string>
     <string name="add_character_title">Create new character</string>
     <string name="character_list_title">Characters</string>
-    <string name="organisation_description">Enter a description...</string>
+    <string name="organisation_description">Enter a description…</string>
 </resources>
