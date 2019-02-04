@@ -1,23 +1,20 @@
 package com.example.android.roomwordnavigation
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.example.android.roomwordnavigation.data.AppDatabase
+import androidx.lifecycle.ViewModel
 import com.example.android.roomwordnavigation.data.Organisation
 import com.example.android.roomwordnavigation.data.OrganisationRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class OrganisationListViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository:OrganisationRepository
+class OrganisationListViewModel @Inject constructor(private val repository: OrganisationRepository) : ViewModel() {
 
-    val allOrganisations:LiveData<List<Organisation>>
+    val allOrganisations: LiveData<List<Organisation>> = repository.allOrganisations
 
-    //TODO: consider moving to a base class
     private var parentJob = Job()
 
     private val coroutineContext: CoroutineContext
@@ -25,13 +22,7 @@ class OrganisationListViewModel(application: Application) : AndroidViewModel(app
 
     private val scope = CoroutineScope(coroutineContext)
 
-    init{
-        val dao = AppDatabase.getDatabase(application).organisationDao()
-        repository = OrganisationRepository(dao)
-        allOrganisations = repository.allOrganisations
-    }
-
-    fun insert(organisation: Organisation) = scope.launch(Dispatchers.IO){
+    fun insert(organisation: Organisation) = scope.launch(Dispatchers.IO) {
         repository.insert(organisation)
     }
 }

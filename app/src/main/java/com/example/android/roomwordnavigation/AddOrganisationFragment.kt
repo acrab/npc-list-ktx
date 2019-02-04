@@ -12,10 +12,22 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.example.android.roomwordnavigation.data.Organisation
 import com.example.android.roomwordnavigation.databinding.FragmentAddOrganisationBinding
+import com.example.android.roomwordnavigation.injection.ViewModelFactory
+import dagger.android.support.AndroidSupportInjection
+import javax.inject.Inject
 
 class AddOrganisationFragment : Fragment() {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
     private lateinit var organisationListViewModel: OrganisationListViewModel
     private lateinit var inputMethodManager: InputMethodManager
+
+    override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = DataBindingUtil.inflate<FragmentAddOrganisationBinding>(
@@ -26,17 +38,18 @@ class AddOrganisationFragment : Fragment() {
         )
 
         inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE)!! as InputMethodManager
-        organisationListViewModel =
-            activity?.run { ViewModelProviders.of(this).get(OrganisationListViewModel::class.java) } ?: throw Exception(
-                "Invalid Activity"
-            )
+        organisationListViewModel = activity?.run {
+            ViewModelProviders.of(this, viewModelFactory).get(OrganisationListViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
 
         binding.button.setOnClickListener {
             inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
+
             val newOrg = Organisation(
                 binding.organisationTitle.text.toString(),
                 binding.organisationDescription.text.toString()
             )
+
             organisationListViewModel.insert(newOrg)
             it.findNavController().navigateUp()
         }

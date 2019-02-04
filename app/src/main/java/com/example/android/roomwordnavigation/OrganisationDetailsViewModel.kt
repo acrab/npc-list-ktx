@@ -1,28 +1,20 @@
 package com.example.android.roomwordnavigation
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.example.android.roomwordnavigation.data.*
+import com.example.android.roomwordnavigation.data.Character
+import com.example.android.roomwordnavigation.data.MembershipRepository
+import com.example.android.roomwordnavigation.data.Organisation
+import com.example.android.roomwordnavigation.data.OrganisationMembership
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class OrganisationDetailsViewModel(application: Application, private val organisationId:Int):AndroidViewModel(application)
+class OrganisationDetailsViewModel @Inject constructor(private val membershipRepository: MembershipRepository):ViewModel()
 {
-    class Factory(private val application: Application, private val organisationId:Int) : ViewModelProvider.AndroidViewModelFactory(application)
-    {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            @Suppress("UNCHECKED_CAST")
-            return OrganisationDetailsViewModel(application, organisationId) as T
-        }
-    }
-
-    //TODO: consider moving to a base class
     private var parentJob = Job()
 
     private val coroutineContext: CoroutineContext
@@ -30,20 +22,19 @@ class OrganisationDetailsViewModel(application: Application, private val organis
 
     private val scope = CoroutineScope(coroutineContext)
 
-    private val membershipRepository: MembershipRepository
-    val allMembers:LiveData<List<Character>>
-    val organisation:LiveData<Organisation>
+    private var organisationId = 0
 
-    init{
-        val db = AppDatabase.getDatabase(application)
-        val membershipDao = db.membershipDao()
-        val organisationDao = db.organisationDao()
-        membershipRepository = MembershipRepository(membershipDao, organisationDao)
-        allMembers = membershipRepository.getMembers(organisationId)
-        organisation = membershipRepository.getOrganisation(organisationId)
-    }
+    lateinit var allMembers:LiveData<List<Character>>
+    lateinit var organisation:LiveData<Organisation>
 
     fun addToOrganisation(character: Character) = scope.launch(Dispatchers.IO){
         membershipRepository.createMembership(OrganisationMembership(character.id, organisationId))
+    }
+
+    fun setOrganisationId(organisationId:Int)
+    {
+        this.organisationId = organisationId
+        allMembers = membershipRepository.getMembers(organisationId)
+        organisation = membershipRepository.getOrganisation(organisationId)
     }
 }

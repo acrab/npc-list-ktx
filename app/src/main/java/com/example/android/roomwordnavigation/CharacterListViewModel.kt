@@ -1,21 +1,19 @@
 package com.example.android.roomwordnavigation
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.example.android.roomwordnavigation.data.AppDatabase
+import androidx.lifecycle.ViewModel
 import com.example.android.roomwordnavigation.data.Character
 import com.example.android.roomwordnavigation.data.CharacterRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class CharacterListViewModel (application: Application):AndroidViewModel(application)
+class CharacterListViewModel @Inject constructor(private val repository:CharacterRepository):ViewModel()
 {
-    private val repository:CharacterRepository
-    val allWords:LiveData<List<Character>>
+    val allWords:LiveData<List<Character>> = repository.allWords
 
     private var parentJob = Job()
 
@@ -23,12 +21,6 @@ class CharacterListViewModel (application: Application):AndroidViewModel(applica
         get() = parentJob + Dispatchers.Main
 
     private val scope = CoroutineScope(coroutineContext)
-
-    init{
-        val dao = AppDatabase.getDatabase(application).characterDao()
-        repository = CharacterRepository(dao)
-        allWords = repository.allWords
-    }
 
     fun insert(character:Character) = scope.launch(Dispatchers.IO) {
         repository.insert(character)

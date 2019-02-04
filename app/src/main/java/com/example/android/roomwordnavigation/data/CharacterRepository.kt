@@ -2,8 +2,9 @@ package com.example.android.roomwordnavigation.data
 
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
+import javax.inject.Inject
 
-class CharacterRepository(private val CharacterDao: CharacterDao) {
+class CharacterRepository @Inject constructor(private val CharacterDao: CharacterDao) {
     val allWords: LiveData<List<Character>> = CharacterDao.getAllWords()
 
     @WorkerThread

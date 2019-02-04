@@ -11,10 +11,24 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.example.android.roomwordnavigation.databinding.FragmentAddCharacterBinding
+import com.example.android.roomwordnavigation.injection.ViewModelFactory
+import dagger.android.support.AndroidSupportInjection
+import javax.inject.Inject
 
 class AddCharacterFragment : Fragment() {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
     private lateinit var characterListViewModel: CharacterListViewModel
     private lateinit var inputMethodManager: InputMethodManager
+
+    override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
+    }
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = DataBindingUtil.inflate<FragmentAddCharacterBinding>(
             inflater,
@@ -25,8 +39,9 @@ class AddCharacterFragment : Fragment() {
 
         inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE)!! as InputMethodManager
 
-        characterListViewModel = activity?.run { ViewModelProviders.of(this).get(CharacterListViewModel::class.java) }
-            ?: throw Exception("Invalid Activity")
+        characterListViewModel =
+            activity?.run { ViewModelProviders.of(this, viewModelFactory).get(CharacterListViewModel::class.java) }
+                ?: throw Exception("Invalid Activity")
 
         binding.button.setOnClickListener {
             inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
