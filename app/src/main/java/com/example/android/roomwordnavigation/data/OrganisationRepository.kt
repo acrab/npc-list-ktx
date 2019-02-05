@@ -1,6 +1,7 @@
 package com.example.android.roomwordnavigation.data
 
 import androidx.annotation.WorkerThread
+import androidx.lifecycle.LiveData
 
 class OrganisationRepository(private val organisationDao: OrganisationDao) {
     val allOrganisations = organisationDao.getAllOrganisations()
@@ -9,5 +10,10 @@ class OrganisationRepository(private val organisationDao: OrganisationDao) {
     fun insert(organisation: Organisation)
     {
         organisationDao.insert(organisation)
+    }
+
+    fun getOrganisation(organisationId: Int) : LiveData<Organisation>
+    {
+        return organisationDao.getOrganisation(organisationId)
     }
 }

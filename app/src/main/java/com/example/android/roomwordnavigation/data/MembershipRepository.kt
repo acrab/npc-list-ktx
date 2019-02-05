@@ -11,11 +11,6 @@ class MembershipRepository(private val membershipDao: MembershipDao, private val
         membershipDao.createMembership(membership)
     }
 
-    fun getOrganisation(organisationId: Int) : LiveData<Organisation>
-    {
-        return organisationDao.getOrganisation(organisationId)
-    }
-
     fun getMembers(organisationId:Int) : LiveData<List<Character>>
     {
         return membershipDao.getMembers(organisationId)
