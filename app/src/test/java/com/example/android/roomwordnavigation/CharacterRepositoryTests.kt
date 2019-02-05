@@ -20,11 +20,11 @@ class When_The_Character_Repository_Is_Created{
     }
 
     @Test
-    fun It_Gets_All_Words_From_The_Dao()
+    fun It_Gets_All_Characters_From_The_Dao()
     {
         CharacterRepository(characterDao)
 
-        verify(characterDao).getAllWords()
+        verify(characterDao).getAllCharacters()
     }
 }
 

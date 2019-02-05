@@ -10,7 +10,7 @@ import androidx.room.Query
 interface CharacterDao {
 
     @Query("SELECT * FROM character_table ORDER BY name ASC")
-    fun getAllWords() : LiveData<List<Character>>
+    fun getAllCharacters() : LiveData<List<Character>>
 
     @Insert
     fun insert(character:Character)
