@@ -44,7 +44,7 @@ class CharacterListFragment : Fragment()
 
         characterListViewModel = activity?.run { ViewModelProviders.of(this, viewModelFactory).get(
             CharacterListViewModel::class.java)} ?: throw Exception("Invalid Activity")
-        characterListViewModel.allWords.observe(this, Observer { characters->
+        characterListViewModel.allCharacters.observe(this, Observer { characters->
             characters?.let{
                 adapter.setCharacters(it)
             }

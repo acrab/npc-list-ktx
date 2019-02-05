@@ -35,7 +35,7 @@ class When_The_Character_Repository_Is_Created {
     @Test
     fun The_Data_Is_Available() {
         val repo = CharacterRepository(characterDao)
-        val x = repo.allWords
+        val x = repo.allCharacters
         assert(x == data)
     }
 }

@@ -65,7 +65,7 @@ class AddCharacterToOrganisationFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context!!)
 
-        characterListViewModel.allWords.observe(this, Observer { characters ->
+        characterListViewModel.allCharacters.observe(this, Observer { characters ->
             characters?.let {
                 adapter.setCharacters(it)
             }
