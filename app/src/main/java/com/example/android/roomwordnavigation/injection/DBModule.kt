@@ -27,7 +27,7 @@ class DBModule{
 
     @Singleton
     @Provides
-    fun providesCharacterRepository(characterDao: CharacterDao) = CharacterRepository(characterDao)
+    fun providesCharacterRepository(characterDao: CharacterDao) : ICharacterRepository = CharacterRepository(characterDao)
 
     @Singleton
     @Provides
