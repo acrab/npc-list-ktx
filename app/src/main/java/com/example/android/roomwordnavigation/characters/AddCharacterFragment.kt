@@ -1,4 +1,4 @@
-package com.example.android.roomwordnavigation
+package com.example.android.roomwordnavigation.characters
 
 import android.content.Context
 import android.os.Bundle
@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import com.example.android.roomwordnavigation.R
 import com.example.android.roomwordnavigation.databinding.FragmentAddCharacterBinding
 import com.example.android.roomwordnavigation.injection.ViewModelFactory
 import dagger.android.support.AndroidSupportInjection

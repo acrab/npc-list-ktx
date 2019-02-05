@@ -1,4 +1,4 @@
-package com.example.android.roomwordnavigation
+package com.example.android.roomwordnavigation.organisations
 
 import android.content.Context
 import android.os.Bundle
@@ -13,6 +13,10 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.android.roomwordnavigation.AddCharacterToOrganisationFragmentArgs
+import com.example.android.roomwordnavigation.AddCharacterToOrganisationFragmentDirections
+import com.example.android.roomwordnavigation.R
+import com.example.android.roomwordnavigation.characters.CharacterListViewModel
 import com.example.android.roomwordnavigation.databinding.FragmentCharacterListBinding
 import com.example.android.roomwordnavigation.injection.ViewModelFactory
 import com.example.android.roomwordnavigation.ui.CharacterListAdapter

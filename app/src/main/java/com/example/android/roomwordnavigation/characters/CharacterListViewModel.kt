@@ -1,4 +1,4 @@
-package com.example.android.roomwordnavigation
+package com.example.android.roomwordnavigation.characters
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

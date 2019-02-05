@@ -2,6 +2,10 @@ package com.example.android.roomwordnavigation.injection
 
 import androidx.lifecycle.ViewModel
 import com.example.android.roomwordnavigation.*
+import com.example.android.roomwordnavigation.characters.AddCharacterFragment
+import com.example.android.roomwordnavigation.characters.CharacterListFragment
+import com.example.android.roomwordnavigation.characters.CharacterListViewModel
+import com.example.android.roomwordnavigation.organisations.*
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module

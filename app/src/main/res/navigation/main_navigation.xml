@@ -6,7 +6,7 @@
     app:startDestination="@id/characterListFragment">
     <fragment
         android:id="@+id/characterListFragment"
-        android:name="com.example.android.roomwordnavigation.CharacterListFragment"
+        android:name="com.example.android.roomwordnavigation.characters.CharacterListFragment"
         android:label="@string/character_list_title"
         tools:layout="@layout/fragment_character_list">
         <action
@@ -17,12 +17,12 @@
     </fragment>
     <fragment
         android:id="@+id/addCharacterFragment"
-        android:name="com.example.android.roomwordnavigation.AddCharacterFragment"
+        android:name="com.example.android.roomwordnavigation.characters.AddCharacterFragment"
         android:label="@string/add_character_title"
         tools:layout="@layout/fragment_add_character"/>
     <fragment
         android:id="@+id/organisationListFragment"
-        android:name="com.example.android.roomwordnavigation.OrganisationListFragment"
+        android:name="com.example.android.roomwordnavigation.organisations.OrganisationListFragment"
         android:label="@string/organisation_list_title"
         tools:layout="@layout/fragment_organisation_list">
         <action
@@ -36,12 +36,12 @@
     </fragment>
     <fragment
         android:id="@+id/addOrganisationFragment"
-        android:name="com.example.android.roomwordnavigation.AddOrganisationFragment"
+        android:name="com.example.android.roomwordnavigation.organisations.AddOrganisationFragment"
         android:label="@string/add_organisation_title"
         tools:layout="@layout/fragment_add_organisation" />
     <fragment
         android:id="@+id/viewOrganisationFragment"
-        android:name="com.example.android.roomwordnavigation.ViewOrganisationFragment"
+        android:name="com.example.android.roomwordnavigation.organisations.ViewOrganisationFragment"
         android:label="ViewOrganisationFragment"
         tools:layout="@layout/fragment_view_organisation" >
         <argument
@@ -54,7 +54,7 @@
     </fragment>
     <fragment
         android:id="@+id/addCharacterToOrganisationFragment"
-        android:name="com.example.android.roomwordnavigation.AddCharacterToOrganisationFragment"
+        android:name="com.example.android.roomwordnavigation.organisations.AddCharacterToOrganisationFragment"
         android:label="AddCharacterToOrganisationFragment"
         tools:layout="@layout/fragment_character_list">
         <argument

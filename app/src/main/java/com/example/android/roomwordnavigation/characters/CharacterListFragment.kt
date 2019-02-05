@@ -1,4 +1,4 @@
-package com.example.android.roomwordnavigation
+package com.example.android.roomwordnavigation.characters
 
 import android.content.Context
 import android.os.Bundle
@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.android.roomwordnavigation.CharacterListFragmentDirections
+import com.example.android.roomwordnavigation.R
 import com.example.android.roomwordnavigation.databinding.FragmentCharacterListBinding
 import com.example.android.roomwordnavigation.injection.ViewModelFactory
 import com.example.android.roomwordnavigation.ui.CharacterListAdapter
@@ -30,7 +32,8 @@ class CharacterListFragment : Fragment()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val binding = DataBindingUtil.inflate<FragmentCharacterListBinding>(inflater, R.layout.fragment_character_list, container, false)
+        val binding = DataBindingUtil.inflate<FragmentCharacterListBinding>(inflater,
+            R.layout.fragment_character_list, container, false)
         binding.fab.setOnClickListener{
             it.findNavController().navigate(CharacterListFragmentDirections.actionWordListFragmentToAddWordFragment())
         }
@@ -39,7 +42,8 @@ class CharacterListFragment : Fragment()
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context!!)
 
-        characterListViewModel = activity?.run { ViewModelProviders.of(this, viewModelFactory).get(CharacterListViewModel::class.java)} ?: throw Exception("Invalid Activity")
+        characterListViewModel = activity?.run { ViewModelProviders.of(this, viewModelFactory).get(
+            CharacterListViewModel::class.java)} ?: throw Exception("Invalid Activity")
         characterListViewModel.allWords.observe(this, Observer { characters->
             characters?.let{
                 adapter.setCharacters(it)
