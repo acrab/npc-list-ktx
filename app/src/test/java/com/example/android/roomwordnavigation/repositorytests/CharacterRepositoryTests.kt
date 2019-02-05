@@ -1,6 +1,6 @@
 @file:Suppress("ClassName", "TestFunctionName")
 
-package com.example.android.roomwordnavigation
+package com.example.android.roomwordnavigation.repositorytests
 
 import com.example.android.roomwordnavigation.data.Character
 import com.example.android.roomwordnavigation.data.CharacterDao
