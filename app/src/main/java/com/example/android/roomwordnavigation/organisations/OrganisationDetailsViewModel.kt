@@ -2,6 +2,7 @@ package com.example.android.roomwordnavigation.organisations
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.example.android.roomwordnavigation.ViewModelWithCoroutineScope
 import com.example.android.roomwordnavigation.data.Character
 import com.example.android.roomwordnavigation.data.MembershipRepository
 import com.example.android.roomwordnavigation.data.Organisation
@@ -13,15 +14,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class OrganisationDetailsViewModel @Inject constructor(private val membershipRepository: MembershipRepository):ViewModel()
+class OrganisationDetailsViewModel @Inject constructor(private val membershipRepository: MembershipRepository):ViewModelWithCoroutineScope()
 {
-    private var parentJob = Job()
-
-    private val coroutineContext: CoroutineContext
-        get() = parentJob + Dispatchers.Main
-
-    private val scope = CoroutineScope(coroutineContext)
-
     private var organisationId = 0
 
     lateinit var allMembers:LiveData<List<Character>>
