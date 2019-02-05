@@ -29,6 +29,6 @@ class OrganisationDetailsViewModel @Inject constructor(private val membershipRep
     {
         this.organisationId = organisationId
         allMembers = membershipRepository.getMembers(organisationId)
-        organisation = membershipRepository.getOrganisation(organisationId)
+        organisation = organisationRepository.getOrganisation(organisationId)
     }
 }
