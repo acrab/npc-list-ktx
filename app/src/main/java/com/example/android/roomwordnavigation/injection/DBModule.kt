@@ -31,9 +31,9 @@ class DBModule{
 
     @Singleton
     @Provides
-    fun providesMembershipRepository(membershipDao: MembershipDao, organisationDao: OrganisationDao) = MembershipRepository(membershipDao, organisationDao)
+    fun providesMembershipRepository(membershipDao: MembershipDao) : IMembershipRepository = MembershipRepository(membershipDao)
 
     @Singleton
     @Provides
-    fun providesOrganisationRepository(organisationDao: OrganisationDao) = OrganisationRepository(organisationDao)
+    fun providesOrganisationRepository(organisationDao: OrganisationDao) : IOrganisationRepository = OrganisationRepository(organisationDao)
 }

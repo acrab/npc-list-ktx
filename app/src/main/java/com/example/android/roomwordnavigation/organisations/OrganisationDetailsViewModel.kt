@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class OrganisationDetailsViewModel @Inject constructor(private val membershipRepository: MembershipRepository, private val organisationRepository: OrganisationRepository):ViewModelWithCoroutineScope()
+class OrganisationDetailsViewModel @Inject constructor(private val membershipRepository: IMembershipRepository, private val organisationRepository: IOrganisationRepository):ViewModelWithCoroutineScope()
 {
     private var organisationId = 0
 
