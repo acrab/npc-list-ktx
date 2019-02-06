@@ -15,9 +15,9 @@ import org.junit.Before
 import org.junit.Test
 
 class When_A_Membership_Is_Created {
-    lateinit var subject: MembershipRepository
-    lateinit var membershipDao: MembershipDao
-    lateinit var organisationDao: OrganisationDao
+    private lateinit var subject: MembershipRepository
+    private lateinit var membershipDao: MembershipDao
+    private lateinit var organisationDao: OrganisationDao
 
     @Before
     fun TestSetup() {
@@ -35,10 +35,10 @@ class When_A_Membership_Is_Created {
 }
 
 class When_All_Members_Of_An_Organisation_Are_Retrieved {
-    lateinit var subject: MembershipRepository
-    lateinit var membershipDao: MembershipDao
-    lateinit var organisationDao: OrganisationDao
-    lateinit var memberData: LiveData<List<Character>>
+    private lateinit var subject: MembershipRepository
+    private lateinit var membershipDao: MembershipDao
+    private lateinit var organisationDao: OrganisationDao
+    private lateinit var memberData: LiveData<List<Character>>
 
     @Before
     fun TestSetup() {
@@ -48,7 +48,7 @@ class When_All_Members_Of_An_Organisation_Are_Retrieved {
             on { getMembers(1) } doReturn memberData
         }
         organisationDao = mock()
-        subject = MembershipRepository(membershipDao, organisationDao)
+        subject = MembershipRepository(membershipDao)
     }
 
     @Test
