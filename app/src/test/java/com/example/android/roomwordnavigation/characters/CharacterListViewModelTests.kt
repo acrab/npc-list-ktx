@@ -26,7 +26,7 @@ class When_The_View_Model_Is_Created {
     }
 
     @Test
-    fun It_Should_Request_All_Words() {
+    fun It_Should_Request_All_Characters() {
         CharacterListViewModel(characterRepository)
         verify(characterRepository).allCharacters
     }
