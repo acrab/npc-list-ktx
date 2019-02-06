@@ -23,7 +23,7 @@ class When_A_Membership_Is_Created {
     fun TestSetup() {
         membershipDao = mock()
         organisationDao = mock()
-        subject = MembershipRepository(membershipDao, organisationDao)
+        subject = MembershipRepository(membershipDao)
     }
 
     @Test
