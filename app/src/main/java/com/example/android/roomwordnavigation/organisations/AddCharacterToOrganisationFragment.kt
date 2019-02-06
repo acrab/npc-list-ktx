@@ -1,12 +1,10 @@
 package com.example.android.roomwordnavigation.organisations
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
@@ -18,10 +16,10 @@ import com.example.android.roomwordnavigation.characters.CharacterListViewModel
 import com.example.android.roomwordnavigation.databinding.FragmentCharacterListBinding
 import com.example.android.roomwordnavigation.injection.ViewModelFactory
 import com.example.android.roomwordnavigation.ui.CharacterListAdapter
-import dagger.android.support.AndroidSupportInjection
+import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class AddCharacterToOrganisationFragment : Fragment() {
+class AddCharacterToOrganisationFragment : DaggerFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -30,11 +28,6 @@ class AddCharacterToOrganisationFragment : Fragment() {
     private lateinit var characterListViewModel: CharacterListViewModel
 
     private val args: AddCharacterToOrganisationFragmentArgs by navArgs()
-
-    override fun onAttach(context: Context?) {
-        AndroidSupportInjection.inject(this)
-        super.onAttach(context)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = DataBindingUtil.inflate<FragmentCharacterListBinding>(
