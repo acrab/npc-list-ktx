@@ -57,13 +57,21 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"
     kapt "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
 
+    //Testing arch
+    testImplementation "android.arch.core:core-testing:$rootProject.archLifecycleVersion"
+
     // Coroutines
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
+    testImplementation "org.robolectric:robolectric:$rootProject.robolectricVersion"
+
+    testImplementation "androidx.test:runner:1.1.1"
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    testImplementation "androidx.test.ext:junit:$rootProject.extJunitVersion"
+
 
     //Dagger
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"

@@ -2,15 +2,21 @@
 
 package com.example.android.roomwordnavigation.characters
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.android.roomwordnavigation.data.Character
 import com.example.android.roomwordnavigation.data.ICharacterRepository
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyBlocking
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 
 class When_The_View_Model_Is_Created {
     private lateinit var data: LiveData<List<Character>>
@@ -39,7 +45,12 @@ class When_The_View_Model_Is_Created {
     }
 }
 
+@RunWith(AndroidJUnit4::class)
 class When_A_Character_Is_Inserted {
+
+    @get:Rule
+    val instantExecutor = InstantTaskExecutorRule()
+
     private lateinit var characterRepository: ICharacterRepository
     private lateinit var subject: CharacterListViewModel
 
@@ -50,9 +61,9 @@ class When_A_Character_Is_Inserted {
     }
 
     @Test
-    fun It_Is_Added_To_The_Repository() {
+    fun It_Is_Added_To_The_Repository() = runBlocking {
         val data = Character("Test name")
         subject.insert(data)
-        verifyBlocking(characterRepository) { insert(data) }
+        verify(characterRepository).insert(data)
     }
 }
