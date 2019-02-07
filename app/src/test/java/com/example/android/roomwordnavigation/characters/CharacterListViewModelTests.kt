@@ -10,6 +10,8 @@ import com.example.android.roomwordnavigation.data.ICharacterRepository
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
@@ -58,10 +60,11 @@ class When_A_Character_Is_Inserted {
         subject = CharacterListViewModel(characterRepository)
     }
 
+    @ExperimentalCoroutinesApi
     @Test
     fun It_Is_Added_To_The_Repository() = runBlocking {
         val data = Character("Test name")
-        subject.insert(data)
+        subject.insert(data, Dispatchers.Unconfined)
         verify(characterRepository).insert(data)
     }
 }

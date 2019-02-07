@@ -8,6 +8,7 @@ import com.example.android.roomwordnavigation.data.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
 class OrganisationDetailsViewModel @Inject constructor(
     private val membershipRepository: IMembershipRepository,
@@ -23,11 +24,11 @@ class OrganisationDetailsViewModel @Inject constructor(
         orgId?.let { organisationRepository.getOrganisation(it) }
     }
 
-    fun addToOrganisation(character: Character) {
+    fun addToOrganisation(character: Character, coroutineContext: CoroutineContext = Dispatchers.IO) {
 
         val orgId = organisationId.value ?: throw IllegalStateException("Must set organisationId before adding a character")
 
-        scope.launch(Dispatchers.IO) {
+        scope.launch(coroutineContext) {
             membershipRepository.createMembership(OrganisationMembership(character.id, orgId))
         }
     }

@@ -11,6 +11,8 @@ import com.example.android.roomwordnavigation.util.observedValue
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Before
@@ -148,10 +150,11 @@ class When_A_Character_Is_Added_To_The_Organisation {
             subject.organisationId.postValue(1)
         }
 
+        @ExperimentalCoroutinesApi
         @Test
         fun It_Should_Create_A_Membership_In_The_Repository() = runBlocking {
             val charToAdd = Character("Test Character")
-            subject.addToOrganisation(charToAdd)
+            subject.addToOrganisation(charToAdd, Dispatchers.Unconfined)
             verify(membershipRepository).createMembership(OrganisationMembership(charToAdd.id, 1))
         }
     }
