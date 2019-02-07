@@ -1,6 +1,6 @@
 @file:Suppress("ClassName", "TestFunctionName")
 
-package com.example.android.roomwordnavigation.repositorytests
+package com.example.android.roomwordnavigation.data
 
 import androidx.lifecycle.LiveData
 import com.example.android.roomwordnavigation.data.Character
