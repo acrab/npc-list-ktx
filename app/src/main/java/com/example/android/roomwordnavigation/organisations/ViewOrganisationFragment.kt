@@ -44,7 +44,7 @@ class ViewOrganisationFragment : DaggerFragment() {
             ViewModelProviders.of(this, viewModelFactory).get(OrganisationDetailsViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
-        organisationDetailsViewModel.setOrganisationId(orgId)
+        organisationDetailsViewModel.organisationId.postValue(orgId)
 
         organisationDetailsViewModel.allMembers.observe(this, Observer { members ->
             members?.let {

@@ -45,7 +45,7 @@ class AddCharacterToOrganisationFragment : DaggerFragment() {
             ViewModelProviders.of(this, viewModelFactory).get(CharacterListViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
-        organisationDetailsViewModel.setOrganisationId(args.organisationId)
+        organisationDetailsViewModel.organisationId.postValue(args.organisationId)
 
         val recyclerView = binding.characterList
         val adapter = CharacterListAdapter(context!!) {
