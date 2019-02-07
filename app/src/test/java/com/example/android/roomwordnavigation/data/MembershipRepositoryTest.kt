@@ -3,11 +3,6 @@
 package com.example.android.roomwordnavigation.data
 
 import androidx.lifecycle.LiveData
-import com.example.android.roomwordnavigation.data.Character
-import com.example.android.roomwordnavigation.data.MembershipDao
-import com.example.android.roomwordnavigation.data.MembershipRepository
-import com.example.android.roomwordnavigation.data.OrganisationDao
-import com.example.android.roomwordnavigation.data.OrganisationMembership
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify

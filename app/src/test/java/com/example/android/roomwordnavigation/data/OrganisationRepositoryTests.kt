@@ -3,9 +3,6 @@
 package com.example.android.roomwordnavigation.data
 
 import androidx.lifecycle.LiveData
-import com.example.android.roomwordnavigation.data.Organisation
-import com.example.android.roomwordnavigation.data.OrganisationDao
-import com.example.android.roomwordnavigation.data.OrganisationRepository
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify

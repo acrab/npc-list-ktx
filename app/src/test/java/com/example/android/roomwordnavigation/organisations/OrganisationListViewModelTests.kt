@@ -7,7 +7,6 @@ import androidx.lifecycle.LiveData
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.android.roomwordnavigation.data.IOrganisationRepository
 import com.example.android.roomwordnavigation.data.Organisation
-import com.example.android.roomwordnavigation.data.OrganisationRepository
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
