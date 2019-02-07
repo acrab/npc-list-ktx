@@ -7,12 +7,14 @@ import com.example.android.roomwordnavigation.data.Organisation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
 class OrganisationListViewModel @Inject constructor(private val repository: IOrganisationRepository) : ViewModelWithCoroutineScope() {
 
     val allOrganisations: LiveData<List<Organisation>> = repository.allOrganisations
 
-    fun insert(organisation: Organisation) = scope.launch(Dispatchers.IO) {
+    fun insert(organisation: Organisation, context:CoroutineContext = Dispatchers.IO) = scope.launch(context) {
         repository.insert(organisation)
+
     }
 }
