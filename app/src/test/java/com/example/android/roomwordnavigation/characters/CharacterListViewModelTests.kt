@@ -10,13 +10,11 @@ import com.example.android.roomwordnavigation.data.ICharacterRepository
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.verifyBlocking
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
 
 class When_The_View_Model_Is_Created {
     private lateinit var data: LiveData<List<Character>>
