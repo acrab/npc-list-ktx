@@ -14,7 +14,7 @@ import com.nhaarman.mockitokotlin2.verify
 import org.junit.Before
 import org.junit.Test
 
-class When_A_Membership_Is_Created {
+class MembershipRepository_When_A_Membership_Is_Created {
     private lateinit var subject: MembershipRepository
     private lateinit var membershipDao: MembershipDao
     private lateinit var organisationDao: OrganisationDao
@@ -34,7 +34,7 @@ class When_A_Membership_Is_Created {
     }
 }
 
-class When_All_Members_Of_An_Organisation_Are_Retrieved {
+class MembershipRepository_When_All_Members_Of_An_Organisation_Are_Retrieved {
     private lateinit var subject: MembershipRepository
     private lateinit var membershipDao: MembershipDao
     private lateinit var organisationDao: OrganisationDao

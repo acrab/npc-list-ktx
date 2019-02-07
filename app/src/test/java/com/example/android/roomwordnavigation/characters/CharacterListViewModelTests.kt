@@ -18,7 +18,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-class When_The_View_Model_Is_Created {
+class CharacterListViewModel_When_The_View_Model_Is_Created {
     private lateinit var data: LiveData<List<Character>>
     private lateinit var characterRepository: ICharacterRepository
 
@@ -46,7 +46,7 @@ class When_The_View_Model_Is_Created {
 }
 
 @RunWith(AndroidJUnit4::class)
-class When_A_Character_Is_Inserted {
+class CharacterListViewModel_When_A_Character_Is_Inserted {
 
     @get:Rule
     val instantExecutor = InstantTaskExecutorRule()

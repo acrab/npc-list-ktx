@@ -12,7 +12,7 @@ import com.nhaarman.mockitokotlin2.verify
 import org.junit.Before
 import org.junit.Test
 
-class When_The_Character_Repository_Is_Created {
+class CharacterRepository_When_The_Character_Repository_Is_Created {
 
     private lateinit var characterDao: CharacterDao
 
@@ -40,7 +40,7 @@ class When_The_Character_Repository_Is_Created {
     }
 }
 
-class When_A_Character_Is_Created {
+class CharacterRepository_When_A_Character_Is_Created {
     private lateinit var characterDao: CharacterDao
     private lateinit var subject: CharacterRepository
     @Before

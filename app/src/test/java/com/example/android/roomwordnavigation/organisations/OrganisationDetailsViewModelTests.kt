@@ -20,7 +20,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-class When_The_ViewModel_Is_Created {
+class OrganisationDetailsViewModel_When_The_ViewModel_Is_Created {
     private lateinit var subject: OrganisationDetailsViewModel
     @Before
     fun setup() {
@@ -40,7 +40,7 @@ class When_The_ViewModel_Is_Created {
     }
 }
 
-class When_The_Organisation_ID_Is_Set {
+class OrganisationDetailsViewModel_When_The_Organisation_ID_Is_Set {
 
     @get:Rule
     val instantExecutor = InstantTaskExecutorRule()
@@ -110,7 +110,7 @@ class When_The_Organisation_ID_Is_Set {
 }
 
 @Suppress("unused") //Subclasses contain tests, superclass isn't explicitly used.
-class When_A_Character_Is_Added_To_The_Organisation {
+class OrganisationDetailsViewModel_When_A_Character_Is_Added_To_The_Organisation {
 
     @RunWith(AndroidJUnit4::class)
     class And_The_Organsiation_ID_Has_Not_Been_Set {

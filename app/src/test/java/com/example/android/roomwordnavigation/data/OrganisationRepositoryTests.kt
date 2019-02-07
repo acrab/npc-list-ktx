@@ -12,7 +12,7 @@ import com.nhaarman.mockitokotlin2.verify
 import org.junit.Before
 import org.junit.Test
 
-class When_The_Organisation_Repository_Is_Created
+class OrganisationRepository_When_The_Organisation_Repository_Is_Created
 {
     private lateinit var dao: OrganisationDao
     private lateinit var data : LiveData<List<Organisation>>
@@ -41,7 +41,7 @@ class When_The_Organisation_Repository_Is_Created
     }
 }
 
-class When_An_Organisation_Is_Created
+class OrganisationRepository_When_An_Organisation_Is_Created
 {
     private lateinit var dao: OrganisationDao
     private lateinit var subject: OrganisationRepository
@@ -62,7 +62,7 @@ class When_An_Organisation_Is_Created
     }
 }
 
-class When_An_Organisation_Is_Requested
+class OrganisationRepository_When_An_Organisation_Is_Requested
 {
     private lateinit var dao: OrganisationDao
     private lateinit var subject: OrganisationRepository
