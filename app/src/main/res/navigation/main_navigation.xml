@@ -10,7 +10,7 @@
         android:label="@string/character_list_title"
         tools:layout="@layout/fragment_character_list">
         <action
-            android:id="@+id/action_wordListFragment_to_addWordFragment"
+            android:id="@+id/action_characterListFragment_to_addCharacterFragment"
             app:destination="@id/addCharacterFragment"
             app:popUpTo="@+id/characterListFragment"
             app:popUpToInclusive="false" />

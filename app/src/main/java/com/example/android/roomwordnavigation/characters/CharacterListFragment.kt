@@ -27,7 +27,7 @@ class CharacterListFragment : DaggerFragment()
         val binding = DataBindingUtil.inflate<FragmentCharacterListBinding>(inflater,
             R.layout.fragment_character_list, container, false)
         binding.fab.setOnClickListener{
-            it.findNavController().navigate(CharacterListFragmentDirections.actionWordListFragmentToAddWordFragment())
+            it.findNavController().navigate(CharacterListFragmentDirections.actionCharacterListFragmentToAddCharacterFragment())
         }
         val recyclerView = binding.characterList
         val adapter = CharacterListAdapter(context!!)
