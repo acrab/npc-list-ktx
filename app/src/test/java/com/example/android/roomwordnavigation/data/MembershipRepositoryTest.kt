@@ -12,12 +12,10 @@ import org.junit.Test
 class MembershipRepository_When_A_Membership_Is_Created {
     private lateinit var subject: MembershipRepository
     private lateinit var membershipDao: MembershipDao
-    private lateinit var organisationDao: OrganisationDao
 
     @Before
     fun TestSetup() {
         membershipDao = mock()
-        organisationDao = mock()
         subject = MembershipRepository(membershipDao)
     }
 
@@ -32,17 +30,15 @@ class MembershipRepository_When_A_Membership_Is_Created {
 class MembershipRepository_When_All_Members_Of_An_Organisation_Are_Retrieved {
     private lateinit var subject: MembershipRepository
     private lateinit var membershipDao: MembershipDao
-    private lateinit var organisationDao: OrganisationDao
     private lateinit var memberData: LiveData<List<Character>>
 
     @Before
     fun TestSetup() {
-        this.memberData = mock()
+        this.memberData = mock(stubOnly = true)
 
         membershipDao = mock {
             on { getMembers(1) } doReturn memberData
         }
-        organisationDao = mock()
         subject = MembershipRepository(membershipDao)
     }
 
