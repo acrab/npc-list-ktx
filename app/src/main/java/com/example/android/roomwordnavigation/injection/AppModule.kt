@@ -1,6 +1,7 @@
 package com.example.android.roomwordnavigation.injection
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.android.roomwordnavigation.*
 import com.example.android.roomwordnavigation.characters.AddCharacterFragment
 import com.example.android.roomwordnavigation.characters.CharacterListFragment
@@ -9,6 +10,7 @@ import com.example.android.roomwordnavigation.organisations.*
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module
+import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
 import kotlin.reflect.KClass
@@ -40,6 +42,12 @@ abstract class FragmentModule
 
     @ContributesAndroidInjector
     internal abstract fun contributeViewOrganisationFragment() : ViewOrganisationFragment
+}
+
+@Module
+internal class ViewModelFactoryModule{
+    @Provides
+    fun providesViewModelFactory(viewModelFactory: ViewModelFactory) : ViewModelProvider.Factory = viewModelFactory
 }
 
 @Module
