@@ -8,6 +8,12 @@ import dagger.android.HasActivityInjector
 import dagger.android.support.HasSupportFragmentInjector
 
 class TestApp : Application(), HasActivityInjector, HasSupportFragmentInjector {
+
+    override fun onCreate() {
+        super.onCreate()
+        setTheme(R.style.AppTheme)
+    }
+
     override fun activityInjector() = AndroidInjector<Activity> {   }
 
     override fun supportFragmentInjector() = AndroidInjector<Fragment> {    }

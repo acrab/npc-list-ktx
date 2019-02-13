@@ -4,23 +4,24 @@ import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.android.roomwordnavigation.IWithViewModelFactory
 import com.example.android.roomwordnavigation.R
 import com.example.android.roomwordnavigation.databinding.FragmentCharacterListBinding
-import com.example.android.roomwordnavigation.injection.ViewModelFactory
 import com.example.android.roomwordnavigation.ui.CharacterListAdapter
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class CharacterListFragment : DaggerFragment()
+class CharacterListFragment : DaggerFragment(), IWithViewModelFactory
 {
     private lateinit var characterListViewModel: CharacterListViewModel
 
     @Inject
-    lateinit var viewModelFactory : ViewModelFactory
+    override lateinit var viewModelFactory : ViewModelProvider.Factory
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
