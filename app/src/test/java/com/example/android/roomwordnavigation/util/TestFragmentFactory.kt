@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.roomwordnavigation.IWithViewModelFactory
 
-class TestFragmentFactory<T : IWithViewModelFactory>(private val viewModel: ViewModel) : FragmentFactory() {
+open class TestFragmentFactory<T : IWithViewModelFactory>(private val viewModel: ViewModel) : FragmentFactory() {
     override fun instantiate(classLoader: ClassLoader, className: String, args: Bundle?): Fragment {
         //Spawn the fragment
         val fragment = super.instantiate(classLoader, className, args)
