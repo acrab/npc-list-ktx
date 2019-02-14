@@ -8,8 +8,14 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.Suite
 
-class CharacterRepository_When_The_Character_Repository_Is_Created {
+@RunWith(Suite::class)
+@Suite.SuiteClasses(When_The_Character_Repository_Is_Created::class, When_A_Character_Is_Created::class)
+class CharacterRepositoryTests
+
+class When_The_Character_Repository_Is_Created {
 
     private lateinit var characterDao: CharacterDao
 
@@ -37,7 +43,7 @@ class CharacterRepository_When_The_Character_Repository_Is_Created {
     }
 }
 
-class CharacterRepository_When_A_Character_Is_Created {
+class When_A_Character_Is_Created {
     private lateinit var characterDao: CharacterDao
     private lateinit var subject: CharacterRepository
     @Before

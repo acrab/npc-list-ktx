@@ -17,8 +17,13 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.junit.runners.Suite
 
-class OrganisationListViewModel_When_The_View_Model_Is_Created {
+@RunWith(Suite::class)
+@Suite.SuiteClasses(When_An_Organsiation_Is_Inserted::class, When_The_View_Model_Is_Created::class)
+class OrganisationListViewModelTests
+
+class When_The_View_Model_Is_Created {
 
     private lateinit var subject: OrganisationListViewModel
     private lateinit var organisationRepository: IOrganisationRepository
@@ -45,7 +50,7 @@ class OrganisationListViewModel_When_The_View_Model_Is_Created {
 }
 
 @RunWith(AndroidJUnit4::class)
-class OrganisationListViewModel_When_An_Organsiation_Is_Inserted {
+class When_An_Organsiation_Is_Inserted {
 
     @get:Rule
     val instantExecutor = InstantTaskExecutorRule()

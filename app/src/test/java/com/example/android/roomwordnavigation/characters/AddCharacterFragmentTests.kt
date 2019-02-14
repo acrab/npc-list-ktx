@@ -19,11 +19,16 @@ import com.nhaarman.mockitokotlin2.verify
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.junit.runners.Suite
 import org.robolectric.annotation.Config
+
+@RunWith(Suite::class)
+@Suite.SuiteClasses(When_The_Submit_Button_Is_Pressed::class)
+class AddCharacterFragmentTests
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = TestApp::class)
-class AddCharacterFragment_When_The_Submit_Button_Is_Pressed
+class When_The_Submit_Button_Is_Pressed
 {
     private lateinit var navController: NavController
     private lateinit var scenario: FragmentScenario<AddCharacterFragment>

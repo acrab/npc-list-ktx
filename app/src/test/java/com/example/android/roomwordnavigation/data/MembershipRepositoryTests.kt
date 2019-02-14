@@ -8,8 +8,14 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.Suite
 
-class MembershipRepository_When_A_Membership_Is_Created {
+@RunWith(Suite::class)
+@Suite.SuiteClasses(When_A_Membership_Is_Created::class, When_All_Members_Of_An_Organisation_Are_Retrieved::class)
+class MembershipRepositoryTests
+
+class When_A_Membership_Is_Created {
     private lateinit var subject: MembershipRepository
     private lateinit var membershipDao: MembershipDao
 
@@ -27,7 +33,7 @@ class MembershipRepository_When_A_Membership_Is_Created {
     }
 }
 
-class MembershipRepository_When_All_Members_Of_An_Organisation_Are_Retrieved {
+class When_All_Members_Of_An_Organisation_Are_Retrieved {
     private lateinit var subject: MembershipRepository
     private lateinit var membershipDao: MembershipDao
     private lateinit var memberData: LiveData<List<Character>>

@@ -20,11 +20,16 @@ import com.nhaarman.mockitokotlin2.verify
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.junit.runners.Suite
+import org.mockito.internal.matchers.Matches
 import org.robolectric.annotation.Config
 
+@RunWith(Suite::class)
+@Suite.SuiteClasses(When_The_Add_Button_Is_Clicked::class)
+class CharacterListFragmentTests
 @RunWith(AndroidJUnit4::class)
 @Config(application = TestApp::class)
-class CharacterListFragment_When_The_Add_Button_Is_Clicked {
+class When_The_Add_Button_Is_Clicked {
     private lateinit var navController: NavController
     private lateinit var scenario: FragmentScenario<CharacterListFragment>
     private lateinit var viewModel: CharacterListViewModel

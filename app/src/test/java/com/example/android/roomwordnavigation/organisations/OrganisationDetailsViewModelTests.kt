@@ -19,8 +19,18 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.junit.runners.Suite
 
-class OrganisationDetailsViewModel_When_The_ViewModel_Is_Created {
+@RunWith(Suite::class)
+@Suite.SuiteClasses(
+    When_The_ViewModel_Is_Created::class,
+    When_The_Organisation_ID_Is_Set::class,
+    When_A_Character_Is_Added_To_The_Organisation_And_The_Organsiation_ID_Has_Not_Been_Set::class,
+    When_A_Character_Is_Added_To_The_Organisation_And_The_Organsiation_ID_Has_Been_Set::class
+)
+class OrganisationDetailsViewModelTests
+
+class When_The_ViewModel_Is_Created {
     private lateinit var subject: OrganisationDetailsViewModel
     @Before
     fun setup() {
@@ -40,7 +50,7 @@ class OrganisationDetailsViewModel_When_The_ViewModel_Is_Created {
     }
 }
 
-class OrganisationDetailsViewModel_When_The_Organisation_ID_Is_Set {
+class When_The_Organisation_ID_Is_Set {
 
     @get:Rule
     val instantExecutor = InstantTaskExecutorRule()
@@ -109,53 +119,49 @@ class OrganisationDetailsViewModel_When_The_Organisation_ID_Is_Set {
     }
 }
 
-@Suppress("unused") //Subclasses contain tests, superclass isn't explicitly used.
-class OrganisationDetailsViewModel_When_A_Character_Is_Added_To_The_Organisation {
+@RunWith(AndroidJUnit4::class)
+class When_A_Character_Is_Added_To_The_Organisation_And_The_Organsiation_ID_Has_Not_Been_Set {
 
-    @RunWith(AndroidJUnit4::class)
-    class And_The_Organsiation_ID_Has_Not_Been_Set {
+    @get:Rule
+    val instantExecutor = InstantTaskExecutorRule()
 
-        @get:Rule
-        val instantExecutor = InstantTaskExecutorRule()
+    private lateinit var subject: OrganisationDetailsViewModel
 
-        private lateinit var subject: OrganisationDetailsViewModel
-
-        @Before
-        fun setup() {
-            subject = OrganisationDetailsViewModel(mock(), mock())
-        }
-
-        @Test(expected = IllegalStateException::class)
-        fun It_Should_Fail() {
-            runBlocking {
-                subject.addToOrganisation(Character("Test Character"))
-            }
-            //No exception thrown
-            assert(true)
-        }
+    @Before
+    fun setup() {
+        subject = OrganisationDetailsViewModel(mock(), mock())
     }
 
-    @RunWith(AndroidJUnit4::class)
-    class And_The_Organsiation_ID_Has_Been_Set {
-
-        @get:Rule
-        val instantExecutor = InstantTaskExecutorRule()
-
-        private lateinit var subject: OrganisationDetailsViewModel
-        private lateinit var membershipRepository: IMembershipRepository
-        @Before
-        fun setup() {
-            membershipRepository = mock()
-            subject = OrganisationDetailsViewModel(membershipRepository, mock())
-            subject.organisationId.postValue(1)
+    @Test(expected = IllegalStateException::class)
+    fun It_Should_Fail() {
+        runBlocking {
+            subject.addToOrganisation(Character("Test Character"))
         }
+        //No exception thrown
+        assert(true)
+    }
+}
 
-        @ExperimentalCoroutinesApi
-        @Test
-        fun It_Should_Create_A_Membership_In_The_Repository() = runBlocking {
-            val charToAdd = Character("Test Character")
-            subject.addToOrganisation(charToAdd, Dispatchers.Unconfined)
-            verify(membershipRepository).createMembership(OrganisationMembership(charToAdd.id, 1))
-        }
+@RunWith(AndroidJUnit4::class)
+class When_A_Character_Is_Added_To_The_Organisation_And_The_Organsiation_ID_Has_Been_Set {
+
+    @get:Rule
+    val instantExecutor = InstantTaskExecutorRule()
+
+    private lateinit var subject: OrganisationDetailsViewModel
+    private lateinit var membershipRepository: IMembershipRepository
+    @Before
+    fun setup() {
+        membershipRepository = mock()
+        subject = OrganisationDetailsViewModel(membershipRepository, mock())
+        subject.organisationId.postValue(1)
+    }
+
+    @ExperimentalCoroutinesApi
+    @Test
+    fun It_Should_Create_A_Membership_In_The_Repository() = runBlocking {
+        val charToAdd = Character("Test Character")
+        subject.addToOrganisation(charToAdd, Dispatchers.Unconfined)
+        verify(membershipRepository).createMembership(OrganisationMembership(charToAdd.id, 1))
     }
 }
