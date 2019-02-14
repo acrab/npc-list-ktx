@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.example.android.roomwordnavigation.IWithViewModelFactory
 import com.example.android.roomwordnavigation.R
@@ -21,7 +21,7 @@ class AddCharacterFragment : DaggerFragment(), IWithViewModelFactory {
     @Inject
     override lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var characterListViewModel: CharacterListViewModel
+    private val characterListViewModel: CharacterListViewModel by viewModels{viewModelFactory}
     private lateinit var inputMethodManager: InputMethodManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -34,16 +34,12 @@ class AddCharacterFragment : DaggerFragment(), IWithViewModelFactory {
 
         inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE)!! as InputMethodManager
 
-        val provider = ViewModelProviders.of(this, viewModelFactory)
-
-        characterListViewModel = provider.get(CharacterListViewModel::class.java)
-
         binding.button.setOnClickListener {
             inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
             characterListViewModel.insert(com.example.android.roomwordnavigation.data.Character(binding.editText.text.toString()))
             it.findNavController().navigateUp()
-
         }
+
         return binding.root
     }
 }

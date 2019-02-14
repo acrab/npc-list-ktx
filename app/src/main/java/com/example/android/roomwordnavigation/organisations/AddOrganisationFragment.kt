@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.example.android.roomwordnavigation.R
 import com.example.android.roomwordnavigation.data.Organisation
@@ -21,7 +21,7 @@ class AddOrganisationFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    private lateinit var organisationListViewModel: OrganisationListViewModel
+    private val organisationListViewModel: OrganisationListViewModel by activityViewModels{viewModelFactory}
     private lateinit var inputMethodManager: InputMethodManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -33,9 +33,6 @@ class AddOrganisationFragment : DaggerFragment() {
         )
 
         inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE)!! as InputMethodManager
-        organisationListViewModel = activity?.run {
-            ViewModelProviders.of(this, viewModelFactory).get(OrganisationListViewModel::class.java)
-        } ?: throw Exception("Invalid Activity")
 
         binding.button.setOnClickListener {
             inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)

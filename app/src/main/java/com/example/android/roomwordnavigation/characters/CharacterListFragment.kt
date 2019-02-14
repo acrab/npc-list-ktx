@@ -3,9 +3,9 @@ package com.example.android.roomwordnavigation.characters
 import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,10 +18,10 @@ import javax.inject.Inject
 
 class CharacterListFragment : DaggerFragment(), IWithViewModelFactory
 {
-    private lateinit var characterListViewModel: CharacterListViewModel
-
     @Inject
-    override lateinit var viewModelFactory : ViewModelProvider.Factory
+    override lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val characterListViewModel: CharacterListViewModel by activityViewModels { viewModelFactory }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -35,10 +35,8 @@ class CharacterListFragment : DaggerFragment(), IWithViewModelFactory
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context!!)
 
-        characterListViewModel = activity?.run { ViewModelProviders.of(this, viewModelFactory).get(
-            CharacterListViewModel::class.java)} ?: throw Exception("Invalid Activity")
-        characterListViewModel.allCharacters.observe(this, Observer { characters->
-            characters?.let{
+        characterListViewModel.allCharacters.observe(this, Observer { characters ->
+            characters?.let {
                 adapter.setCharacters(it)
             }
         })

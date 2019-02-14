@@ -80,10 +80,14 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.core:core-ktx:1.1.0-alpha04'
-    implementation "androidx.fragment:fragment-ktx:1.1.0-alpha03"
+    implementation "androidx.fragment:fragment-ktx:1.1.0-alpha04"
 
     //As per android documentation, this has to be debug, not test
-    debugImplementation "androidx.fragment:fragment-testing:1.1.0-alpha03"
+    debugImplementation("androidx.fragment:fragment-testing:1.1.0-alpha04")
+            {
+                //This library uses an alpha version of the monitor dependency, which is incompatible with the version imported by other libraries
+                exclude group:'androidx.test', module: 'monitor'
+            }
 
     testImplementation "androidx.arch.core:core-testing:2.0.0"
     testImplementation "androidx.test.ext:junit:$rootProject.extJunitVersion"
@@ -97,7 +101,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
-    androidTestImplementation "androidx.fragment:fragment-testing:1.1.0-alpha03"
     androidTestImplementation "androidx.arch.core:core-testing:2.0.0"
     androidTestImplementation 'org.mockito:mockito-android:2.24.0'
 

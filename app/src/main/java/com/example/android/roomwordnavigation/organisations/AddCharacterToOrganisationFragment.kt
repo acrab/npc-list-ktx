@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -24,26 +24,15 @@ class AddCharacterToOrganisationFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    private lateinit var organisationDetailsViewModel: OrganisationDetailsViewModel
-    private lateinit var characterListViewModel: CharacterListViewModel
+    private val organisationDetailsViewModel: OrganisationDetailsViewModel by activityViewModels { viewModelFactory }
+    private val characterListViewModel: CharacterListViewModel by activityViewModels { viewModelFactory }
 
     private val args: AddCharacterToOrganisationFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = DataBindingUtil.inflate<FragmentCharacterListBinding>(
-            inflater,
-            R.layout.fragment_character_list,
-            container,
-            false
+            inflater, R.layout.fragment_character_list, container, false
         )
-
-        organisationDetailsViewModel = activity?.run {
-            ViewModelProviders.of(this, viewModelFactory).get(OrganisationDetailsViewModel::class.java)
-        } ?: throw Exception("Invalid Activity")
-
-        characterListViewModel = activity?.run {
-            ViewModelProviders.of(this, viewModelFactory).get(CharacterListViewModel::class.java)
-        } ?: throw Exception("Invalid Activity")
 
         organisationDetailsViewModel.organisationId.postValue(args.organisationId)
 

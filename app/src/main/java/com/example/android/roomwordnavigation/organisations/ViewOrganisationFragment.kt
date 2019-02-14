@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,7 +23,7 @@ class ViewOrganisationFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    private lateinit var organisationDetailsViewModel: OrganisationDetailsViewModel
+    private val organisationDetailsViewModel: OrganisationDetailsViewModel by activityViewModels{viewModelFactory}
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = DataBindingUtil.inflate<FragmentViewOrganisationBinding>(
@@ -39,10 +39,6 @@ class ViewOrganisationFragment : DaggerFragment() {
         val adapter = CharacterListAdapter(context!!)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context!!)
-
-        organisationDetailsViewModel = activity?.run {
-            ViewModelProviders.of(this, viewModelFactory).get(OrganisationDetailsViewModel::class.java)
-        } ?: throw Exception("Invalid Activity")
 
         organisationDetailsViewModel.organisationId.postValue(orgId)
 
