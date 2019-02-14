@@ -4,7 +4,6 @@ package com.example.android.roomwordnavigation.organisations
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.android.roomwordnavigation.data.IOrganisationRepository
 import com.example.android.roomwordnavigation.data.Organisation
 import com.nhaarman.mockitokotlin2.doReturn
@@ -49,7 +48,6 @@ class When_The_View_Model_Is_Created {
     }
 }
 
-@RunWith(AndroidJUnit4::class)
 class When_An_Organsiation_Is_Inserted {
 
     @get:Rule

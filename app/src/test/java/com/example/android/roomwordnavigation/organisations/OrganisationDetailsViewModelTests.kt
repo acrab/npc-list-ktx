@@ -4,7 +4,6 @@ package com.example.android.roomwordnavigation.organisations
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.android.roomwordnavigation.data.*
 import com.example.android.roomwordnavigation.util.afterObserve
 import com.example.android.roomwordnavigation.util.observedValue
@@ -119,7 +118,6 @@ class When_The_Organisation_ID_Is_Set {
     }
 }
 
-@RunWith(AndroidJUnit4::class)
 class When_A_Character_Is_Added_To_The_Organisation_And_The_Organsiation_ID_Has_Not_Been_Set {
 
     @get:Rule
@@ -142,7 +140,6 @@ class When_A_Character_Is_Added_To_The_Organisation_And_The_Organsiation_ID_Has_
     }
 }
 
-@RunWith(AndroidJUnit4::class)
 class When_A_Character_Is_Added_To_The_Organisation_And_The_Organsiation_ID_Has_Been_Set {
 
     @get:Rule

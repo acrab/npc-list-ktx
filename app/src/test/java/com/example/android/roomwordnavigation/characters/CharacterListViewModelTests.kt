@@ -4,7 +4,6 @@ package com.example.android.roomwordnavigation.characters
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.android.roomwordnavigation.data.Character
 import com.example.android.roomwordnavigation.data.ICharacterRepository
 import com.nhaarman.mockitokotlin2.doReturn
@@ -50,7 +49,6 @@ class When_The_View_Model_Is_Created {
     }
 }
 
-@RunWith(AndroidJUnit4::class)
 class When_A_Character_Is_Inserted {
 
     @get:Rule
