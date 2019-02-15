@@ -19,55 +19,58 @@ import org.junit.runner.RunWith
 import org.junit.runners.Suite
 
 @RunWith(Suite::class)
-@Suite.SuiteClasses(When_An_Organsiation_Is_Inserted::class, When_The_View_Model_Is_Created::class)
-class OrganisationListViewModelTests
+@Suite.SuiteClasses(
+    OrganisationListViewModelTests.When_An_Organsiation_Is_Inserted::class,
+    OrganisationListViewModelTests.When_The_View_Model_Is_Created::class
+)
+class OrganisationListViewModelTests {
+    class When_The_View_Model_Is_Created {
 
-class When_The_View_Model_Is_Created {
+        private lateinit var subject: OrganisationListViewModel
+        private lateinit var organisationRepository: IOrganisationRepository
+        private lateinit var data: LiveData<List<Organisation>>
+        @Before
+        fun setup() {
+            data = mock()
 
-    private lateinit var subject: OrganisationListViewModel
-    private lateinit var organisationRepository: IOrganisationRepository
-    private lateinit var data: LiveData<List<Organisation>>
-    @Before
-    fun setup() {
-        data = mock()
-
-        organisationRepository = mock {
-            on { allOrganisations } doReturn data
+            organisationRepository = mock {
+                on { allOrganisations } doReturn data
+            }
+            subject = OrganisationListViewModel(organisationRepository)
         }
-        subject = OrganisationListViewModel(organisationRepository)
+
+        @Test
+        fun It_Should_Get_The_List_Of_Organisations() {
+            verify(organisationRepository).allOrganisations
+        }
+
+        @Test
+        fun The_Data_Should_Be_Available() {
+            assert(subject.allOrganisations == data)
+        }
     }
 
-    @Test
-    fun It_Should_Get_The_List_Of_Organisations() {
-        verify(organisationRepository).allOrganisations
-    }
+    class When_An_Organsiation_Is_Inserted {
 
-    @Test
-    fun The_Data_Should_Be_Available() {
-        assert(subject.allOrganisations == data)
-    }
-}
+        @get:Rule
+        val instantExecutor = InstantTaskExecutorRule()
 
-class When_An_Organsiation_Is_Inserted {
+        private lateinit var subject: OrganisationListViewModel
+        private lateinit var organisationRepository: IOrganisationRepository
 
-    @get:Rule
-    val instantExecutor = InstantTaskExecutorRule()
+        @Before
+        fun setup() {
+            organisationRepository = mock()
+            subject = OrganisationListViewModel(organisationRepository)
+        }
 
-    private lateinit var subject: OrganisationListViewModel
-    private lateinit var organisationRepository: IOrganisationRepository
+        @ExperimentalCoroutinesApi
+        @Test
+        fun It_Should_Be_Inserted_Into_The_Repository() = runBlocking {
 
-    @Before
-    fun setup() {
-        organisationRepository = mock()
-        subject = OrganisationListViewModel(organisationRepository)
-    }
-
-    @ExperimentalCoroutinesApi
-    @Test
-    fun It_Should_Be_Inserted_Into_The_Repository() = runBlocking {
-
-        val data = Organisation("Test Organsiation", "Test description")
-        subject.insert(data, Dispatchers.Unconfined)
-        verify(organisationRepository).insert(data)
+            val data = Organisation("Test Organsiation", "Test description")
+            subject.insert(data, Dispatchers.Unconfined)
+            verify(organisationRepository).insert(data)
+        }
     }
 }

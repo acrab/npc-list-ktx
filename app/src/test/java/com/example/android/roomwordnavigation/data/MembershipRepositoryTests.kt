@@ -12,51 +12,54 @@ import org.junit.runner.RunWith
 import org.junit.runners.Suite
 
 @RunWith(Suite::class)
-@Suite.SuiteClasses(When_A_Membership_Is_Created::class, When_All_Members_Of_An_Organisation_Are_Retrieved::class)
-class MembershipRepositoryTests
+@Suite.SuiteClasses(
+    MembershipRepositoryTests.When_A_Membership_Is_Created::class,
+    MembershipRepositoryTests.When_All_Members_Of_An_Organisation_Are_Retrieved::class
+)
+class MembershipRepositoryTests {
+    class When_A_Membership_Is_Created {
+        private lateinit var subject: MembershipRepository
+        private lateinit var membershipDao: MembershipDao
 
-class When_A_Membership_Is_Created {
-    private lateinit var subject: MembershipRepository
-    private lateinit var membershipDao: MembershipDao
-
-    @Before
-    fun TestSetup() {
-        membershipDao = mock()
-        subject = MembershipRepository(membershipDao)
-    }
-
-    @Test
-    fun It_Is_Inserted_Into_The_Membership_Dao() {
-        val toInsert = OrganisationMembership(1, 2)
-        subject.createMembership(toInsert)
-        verify(membershipDao).createMembership(toInsert)
-    }
-}
-
-class When_All_Members_Of_An_Organisation_Are_Retrieved {
-    private lateinit var subject: MembershipRepository
-    private lateinit var membershipDao: MembershipDao
-    private lateinit var memberData: LiveData<List<Character>>
-
-    @Before
-    fun TestSetup() {
-        this.memberData = mock(stubOnly = true)
-
-        membershipDao = mock {
-            on { getMembers(1) } doReturn memberData
+        @Before
+        fun TestSetup() {
+            membershipDao = mock()
+            subject = MembershipRepository(membershipDao)
         }
-        subject = MembershipRepository(membershipDao)
+
+        @Test
+        fun It_Is_Inserted_Into_The_Membership_Dao() {
+            val toInsert = OrganisationMembership(1, 2)
+            subject.createMembership(toInsert)
+            verify(membershipDao).createMembership(toInsert)
+        }
     }
 
-    @Test
-    fun The_Dao_Is_Queried() {
-        subject.getMembers(1)
-        verify(membershipDao).getMembers(1)
-    }
+    class When_All_Members_Of_An_Organisation_Are_Retrieved {
+        private lateinit var subject: MembershipRepository
+        private lateinit var membershipDao: MembershipDao
+        private lateinit var memberData: LiveData<List<Character>>
 
-    @Test
-    fun The_Members_Are_Returned() {
-        val x = subject.getMembers(1)
-        assert(x == memberData)
+        @Before
+        fun TestSetup() {
+            this.memberData = mock(stubOnly = true)
+
+            membershipDao = mock {
+                on { getMembers(1) } doReturn memberData
+            }
+            subject = MembershipRepository(membershipDao)
+        }
+
+        @Test
+        fun The_Dao_Is_Queried() {
+            subject.getMembers(1)
+            verify(membershipDao).getMembers(1)
+        }
+
+        @Test
+        fun The_Members_Are_Returned() {
+            val x = subject.getMembers(1)
+            assert(x == memberData)
+        }
     }
 }

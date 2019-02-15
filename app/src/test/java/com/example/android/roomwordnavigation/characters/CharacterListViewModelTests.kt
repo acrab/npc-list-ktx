@@ -19,55 +19,58 @@ import org.junit.runner.RunWith
 import org.junit.runners.Suite
 
 @RunWith(Suite::class)
-@Suite.SuiteClasses(When_The_View_Model_Is_Created::class, When_A_Character_Is_Inserted::class)
-class CharacterListViewModelTests
+@Suite.SuiteClasses(
+    CharacterListViewModelTests.When_The_View_Model_Is_Created::class,
+    CharacterListViewModelTests.When_A_Character_Is_Inserted::class
+)
+class CharacterListViewModelTests {
+    class When_The_View_Model_Is_Created {
+        private lateinit var data: LiveData<List<Character>>
+        private lateinit var characterRepository: ICharacterRepository
 
-class When_The_View_Model_Is_Created {
-    private lateinit var data: LiveData<List<Character>>
-    private lateinit var characterRepository: ICharacterRepository
+        @Before
+        fun setup() {
+            data = mock()
 
-    @Before
-    fun setup() {
-        data = mock()
+            characterRepository = mock {
+                on { allCharacters } doReturn data
+            }
+        }
 
-        characterRepository = mock {
-            on { allCharacters } doReturn data
+        @Test
+        fun It_Should_Request_All_Characters() {
+            CharacterListViewModel(characterRepository)
+            verify(characterRepository).allCharacters
+        }
+
+        @Test
+        fun The_Data_Is_Available() {
+            val vm = CharacterListViewModel(characterRepository)
+            val x = vm.allCharacters
+            assert(data == x)
         }
     }
 
-    @Test
-    fun It_Should_Request_All_Characters() {
-        CharacterListViewModel(characterRepository)
-        verify(characterRepository).allCharacters
-    }
+    class When_A_Character_Is_Inserted {
 
-    @Test
-    fun The_Data_Is_Available() {
-        val vm = CharacterListViewModel(characterRepository)
-        val x = vm.allCharacters
-        assert(data == x)
-    }
-}
+        @get:Rule
+        val instantExecutor = InstantTaskExecutorRule()
 
-class When_A_Character_Is_Inserted {
+        private lateinit var characterRepository: ICharacterRepository
+        private lateinit var subject: CharacterListViewModel
 
-    @get:Rule
-    val instantExecutor = InstantTaskExecutorRule()
+        @Before
+        fun setup() {
+            characterRepository = mock()
+            subject = CharacterListViewModel(characterRepository)
+        }
 
-    private lateinit var characterRepository: ICharacterRepository
-    private lateinit var subject: CharacterListViewModel
-
-    @Before
-    fun setup() {
-        characterRepository = mock()
-        subject = CharacterListViewModel(characterRepository)
-    }
-
-    @ExperimentalCoroutinesApi
-    @Test
-    fun It_Is_Added_To_The_Repository() = runBlocking {
-        val data = Character("Test name")
-        subject.insert(data, Dispatchers.Unconfined)
-        verify(characterRepository).insert(data)
+        @ExperimentalCoroutinesApi
+        @Test
+        fun It_Is_Added_To_The_Repository() = runBlocking {
+            val data = Character("Test name")
+            subject.insert(data, Dispatchers.Unconfined)
+            verify(characterRepository).insert(data)
+        }
     }
 }
