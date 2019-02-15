@@ -8,36 +8,30 @@ import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ScrollToAction
 import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.action.ViewActions.scrollTo
-import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.contrib.RecyclerViewActions.scrollToPosition
-import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.android.roomwordnavigation.R
 import com.example.android.roomwordnavigation.TestApp
 import com.example.android.roomwordnavigation.data.Character
-import com.example.android.roomwordnavigation.ui.CharacterListAdapter
 import com.example.android.roomwordnavigation.util.TestFragmentFactory
 import com.example.android.roomwordnavigation.util.withRecyclerView
-import com.nhaarman.mockitokotlin2.*
-import org.hamcrest.Matchers.allOf
-import org.hamcrest.Matchers.containsString
-import org.hamcrest.core.AllOf
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Suite
-import org.mockito.internal.matchers.Matches
 import org.robolectric.annotation.Config
 
 @RunWith(Suite::class)
@@ -55,7 +49,7 @@ class When_The_View_Is_Created {
     private lateinit var navController: NavController
     private lateinit var scenario: FragmentScenario<CharacterListFragment>
     private lateinit var viewModel: CharacterListViewModel
-    private lateinit var testFragmentFactory: TestFragmentFactory<CharacterListFragment>
+    private lateinit var viewModelFactory : ViewModelProvider.Factory
 
     @Before
     fun setup() {
@@ -65,10 +59,12 @@ class When_The_View_Is_Created {
             on { allCharacters } doReturn mock()
         }
 
-        testFragmentFactory = spy(TestFragmentFactory(viewModel))
+        viewModelFactory = mock{
+            on{create<CharacterListViewModel>(any())} doReturn viewModel
+        }
 
         scenario = launchFragmentInContainer<CharacterListFragment>(
-            factory = testFragmentFactory
+            factory = TestFragmentFactory<CharacterListFragment>(viewModelFactory)
         ).onFragment {
             Navigation.setViewNavController(it.view!!, navController)
         }.moveToState(Lifecycle.State.RESUMED)
@@ -76,7 +72,7 @@ class When_The_View_Is_Created {
 
     @Test
     fun It_Should_Create_The_View_Model() {
-        verify(testFragmentFactory).instantiate(any(), any(), anyOrNull())
+        verify(viewModelFactory).create(CharacterListViewModel::class.java)
     }
 
     @Test
@@ -96,7 +92,7 @@ class When_The_Characters_List_Is_Updated_With_One_Item {
     private lateinit var scenario: FragmentScenario<CharacterListFragment>
     private lateinit var characterData: MutableLiveData<List<Character>>
     private lateinit var viewModel: CharacterListViewModel
-    private lateinit var testFragmentFactory: TestFragmentFactory<CharacterListFragment>
+    private lateinit var viewModelFactory : ViewModelProvider.Factory
 
     @Before
     fun setup() {
@@ -106,10 +102,12 @@ class When_The_Characters_List_Is_Updated_With_One_Item {
             on { allCharacters } doReturn characterData
         }
 
-        testFragmentFactory = spy(TestFragmentFactory(viewModel))
+        viewModelFactory = mock{
+            on{create<CharacterListViewModel>(any())} doReturn viewModel
+        }
 
         scenario = launchFragmentInContainer<CharacterListFragment>(
-            factory = testFragmentFactory
+            factory = TestFragmentFactory<CharacterListFragment>(viewModelFactory)
         ).onFragment {
             Navigation.setViewNavController(it.view!!, navController)
         }.moveToState(Lifecycle.State.RESUMED)
@@ -141,7 +139,7 @@ class When_The_Characters_List_Is_Updated_With_Many_Items {
     private lateinit var scenario: FragmentScenario<CharacterListFragment>
     private lateinit var characterData: MutableLiveData<List<Character>>
     private lateinit var viewModel: CharacterListViewModel
-    private lateinit var testFragmentFactory: TestFragmentFactory<CharacterListFragment>
+    private lateinit var viewModelFactory : ViewModelProvider.Factory
 
     @Before
     fun setup() {
@@ -151,10 +149,12 @@ class When_The_Characters_List_Is_Updated_With_Many_Items {
             on { allCharacters } doReturn characterData
         }
 
-        testFragmentFactory = spy(TestFragmentFactory(viewModel))
+        viewModelFactory = mock{
+            on{create<CharacterListViewModel>(com.nhaarman.mockitokotlin2.any())} doReturn viewModel
+        }
 
         scenario = launchFragmentInContainer<CharacterListFragment>(
-            factory = testFragmentFactory
+            factory = TestFragmentFactory<CharacterListFragment>(viewModelFactory)
         ).onFragment {
             Navigation.setViewNavController(it.view!!, navController)
         }.moveToState(Lifecycle.State.RESUMED)
@@ -188,6 +188,8 @@ class When_The_Add_Button_Is_Clicked {
     private lateinit var navController: NavController
     private lateinit var scenario: FragmentScenario<CharacterListFragment>
     private lateinit var viewModel: CharacterListViewModel
+    private lateinit var viewModelFactory : ViewModelProvider.Factory
+
 
     @Before
     fun setup() {
@@ -195,8 +197,12 @@ class When_The_Add_Button_Is_Clicked {
         viewModel = mock(name = "MockViewModel") {
             on { allCharacters } doReturn mock()
         }
+        viewModelFactory = mock{
+            on{create<CharacterListViewModel>(com.nhaarman.mockitokotlin2.any())} doReturn viewModel
+        }
+
         scenario = launchFragmentInContainer<CharacterListFragment>(
-            factory = TestFragmentFactory<CharacterListFragment>(viewModel)
+            factory = TestFragmentFactory<CharacterListFragment>(viewModelFactory)
         )
         scenario.onFragment {
             Navigation.setViewNavController(it.view!!, navController)
