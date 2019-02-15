@@ -2,7 +2,7 @@ package com.example.android.roomwordnavigation.injection
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.android.roomwordnavigation.*
+import com.example.android.roomwordnavigation.MainActivity
 import com.example.android.roomwordnavigation.characters.AddCharacterFragment
 import com.example.android.roomwordnavigation.characters.CharacterListFragment
 import com.example.android.roomwordnavigation.characters.CharacterListViewModel

@@ -21,7 +21,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.android.roomwordnavigation.R
 import com.example.android.roomwordnavigation.TestApp
 import com.example.android.roomwordnavigation.data.Character
-import com.example.android.roomwordnavigation.util.TestFragmentFactory
+import com.example.android.roomwordnavigation.util.FragmentWithViewModelFactory
 import com.example.android.roomwordnavigation.util.withRecyclerView
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
@@ -64,7 +64,7 @@ class When_The_View_Is_Created {
         }
 
         scenario = launchFragmentInContainer<CharacterListFragment>(
-            factory = TestFragmentFactory<CharacterListFragment>(viewModelFactory)
+            factory = FragmentWithViewModelFactory<CharacterListFragment>(viewModelFactory)
         ).onFragment {
             Navigation.setViewNavController(it.view!!, navController)
         }.moveToState(Lifecycle.State.RESUMED)
@@ -107,7 +107,7 @@ class When_The_Characters_List_Is_Updated_With_One_Item {
         }
 
         scenario = launchFragmentInContainer<CharacterListFragment>(
-            factory = TestFragmentFactory<CharacterListFragment>(viewModelFactory)
+            factory = FragmentWithViewModelFactory<CharacterListFragment>(viewModelFactory)
         ).onFragment {
             Navigation.setViewNavController(it.view!!, navController)
         }.moveToState(Lifecycle.State.RESUMED)
@@ -154,7 +154,7 @@ class When_The_Characters_List_Is_Updated_With_Many_Items {
         }
 
         scenario = launchFragmentInContainer<CharacterListFragment>(
-            factory = TestFragmentFactory<CharacterListFragment>(viewModelFactory)
+            factory = FragmentWithViewModelFactory<CharacterListFragment>(viewModelFactory)
         ).onFragment {
             Navigation.setViewNavController(it.view!!, navController)
         }.moveToState(Lifecycle.State.RESUMED)
@@ -202,7 +202,7 @@ class When_The_Add_Button_Is_Clicked {
         }
 
         scenario = launchFragmentInContainer<CharacterListFragment>(
-            factory = TestFragmentFactory<CharacterListFragment>(viewModelFactory)
+            factory = FragmentWithViewModelFactory<CharacterListFragment>(viewModelFactory)
         )
         scenario.onFragment {
             Navigation.setViewNavController(it.view!!, navController)

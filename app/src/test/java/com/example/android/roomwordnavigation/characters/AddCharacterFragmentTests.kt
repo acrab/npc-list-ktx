@@ -2,6 +2,7 @@
 
 package com.example.android.roomwordnavigation.characters
 
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.lifecycle.Lifecycle
@@ -14,10 +15,11 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.android.roomwordnavigation.InputMethodManagerFactory
 import com.example.android.roomwordnavigation.R
 import com.example.android.roomwordnavigation.TestApp
 import com.example.android.roomwordnavigation.data.Character
-import com.example.android.roomwordnavigation.util.TestFragmentFactory
+import com.example.android.roomwordnavigation.util.FragmentWithBothFactory
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
@@ -55,7 +57,7 @@ class AddCharacterFragmentTests {
                 on { create<CharacterListViewModel>(any()) } doReturn viewModel
             }
             scenario = launchFragmentInContainer<AddCharacterFragment>(
-                factory = TestFragmentFactory<AddCharacterFragment>(viewModelFactory)
+                factory = FragmentWithBothFactory<AddCharacterFragment>(mock(), viewModelFactory)
             ).onFragment {
                 Navigation.setViewNavController(it.view!!, navController)
             }.moveToState(Lifecycle.State.RESUMED)
@@ -76,6 +78,7 @@ class AddCharacterFragmentTests {
         private lateinit var scenario: FragmentScenario<AddCharacterFragment>
         private lateinit var viewModel: CharacterListViewModel
         private lateinit var viewModelFactory: ViewModelProvider.Factory
+        private lateinit var inputMethodManager: InputMethodManager
 
         @Before
         fun setup() {
@@ -86,8 +89,15 @@ class AddCharacterFragmentTests {
             viewModelFactory = mock {
                 on { create<CharacterListViewModel>(com.nhaarman.mockitokotlin2.any()) } doReturn viewModel
             }
+
+            inputMethodManager = mock()
+
+            val immFactory : InputMethodManagerFactory = mock{
+                on{get(any())} doReturn inputMethodManager
+            }
+
             scenario = launchFragmentInContainer<AddCharacterFragment>(
-                factory = TestFragmentFactory<AddCharacterFragment>(viewModelFactory)
+                factory = FragmentWithBothFactory<AddCharacterFragment>(immFactory, viewModelFactory)
             )
             scenario.onFragment {
                 Navigation.setViewNavController(it.view!!, navController)
@@ -113,6 +123,12 @@ class AddCharacterFragmentTests {
         fun It_Should_Navigate_Up() {
             onView(withId(R.id.button)).perform(ViewActions.click())
             verify(navController).navigateUp()
+        }
+
+        @Test
+        fun It_Should_Close_The_Keyboard() {
+            onView(withId(R.id.button)).perform(ViewActions.click())
+            verify(inputMethodManager).hideSoftInputFromWindow(any(), any())
         }
     }
 }
