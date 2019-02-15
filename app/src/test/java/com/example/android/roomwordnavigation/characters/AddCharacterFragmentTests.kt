@@ -29,17 +29,19 @@ import org.junit.runners.Suite
 import org.robolectric.annotation.Config
 
 @RunWith(Suite::class)
-@Suite.SuiteClasses(AddCharacterFragmentTests.When_The_Submit_Button_Is_Pressed::class, AddCharacterFragmentTests.When_The_View_Is_Created::class)
+@Suite.SuiteClasses(
+    AddCharacterFragmentTests.When_The_Submit_Button_Is_Pressed::class,
+    AddCharacterFragmentTests.When_The_View_Is_Created::class
+)
 class AddCharacterFragmentTests {
 
     @RunWith(AndroidJUnit4::class)
     @Config(application = TestApp::class)
-    class When_The_View_Is_Created
-    {
+    class When_The_View_Is_Created {
         private lateinit var navController: NavController
         private lateinit var scenario: FragmentScenario<AddCharacterFragment>
         private lateinit var viewModel: CharacterListViewModel
-        private lateinit var viewModelFactory : ViewModelProvider.Factory
+        private lateinit var viewModelFactory: ViewModelProvider.Factory
 
         @Before
         fun setup() {
@@ -49,8 +51,8 @@ class AddCharacterFragmentTests {
                 on { allCharacters } doReturn mock()
             }
 
-            viewModelFactory = mock{
-                on{create<CharacterListViewModel>(any())} doReturn viewModel
+            viewModelFactory = mock {
+                on { create<CharacterListViewModel>(any()) } doReturn viewModel
             }
             scenario = launchFragmentInContainer<AddCharacterFragment>(
                 factory = TestFragmentFactory<AddCharacterFragment>(viewModelFactory)
@@ -60,8 +62,7 @@ class AddCharacterFragmentTests {
         }
 
         @Test
-        fun The_Text_Box_Should_Be_Empty()
-        {
+        fun The_Text_Box_Should_Be_Empty() {
             onView(withId(R.id.editText)).check(matches(withText("")))
         }
 
@@ -74,15 +75,16 @@ class AddCharacterFragmentTests {
         private lateinit var navController: NavController
         private lateinit var scenario: FragmentScenario<AddCharacterFragment>
         private lateinit var viewModel: CharacterListViewModel
-        private lateinit var viewModelFactory : ViewModelProvider.Factory
+        private lateinit var viewModelFactory: ViewModelProvider.Factory
 
         @Before
         fun setup() {
+
             navController = mock()
             viewModel = mock(name = "MockViewModel")
 
-            viewModelFactory = mock{
-                on{create<CharacterListViewModel>(com.nhaarman.mockitokotlin2.any())} doReturn viewModel
+            viewModelFactory = mock {
+                on { create<CharacterListViewModel>(com.nhaarman.mockitokotlin2.any()) } doReturn viewModel
             }
             scenario = launchFragmentInContainer<AddCharacterFragment>(
                 factory = TestFragmentFactory<AddCharacterFragment>(viewModelFactory)
@@ -91,12 +93,20 @@ class AddCharacterFragmentTests {
                 Navigation.setViewNavController(it.view!!, navController)
             }
             scenario.moveToState(Lifecycle.State.RESUMED)
+
         }
 
         @Test
-        fun It_Should_Create_A_Character_In_The_View_Model() {
+        fun If_The_Text_Is_Blank_It_Should_Create_A_Character_In_The_View_Model() {
             onView(withId(R.id.button)).perform(ViewActions.click())
             verify(viewModel).insert(Character(""))
+        }
+
+        @Test
+        fun If_The_Text_Has_Contents_It_Should_Create_A_Character_In_The_View_Model() {
+            onView(withId(R.id.editText)).perform(ViewActions.typeText("Mixed Case Text"))
+            onView(withId(R.id.button)).perform(ViewActions.click())
+            verify(viewModel).insert(Character("Mixed Case Text"))
         }
 
         @Test
