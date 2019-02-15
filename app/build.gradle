@@ -76,8 +76,8 @@ dependencies {
     kapt "androidx.lifecycle:lifecycle-compiler:$rootProject.archLifecycleVersion"
 
     //Coroutines
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1"
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1"
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1'
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1'
 
     //Dagger
     implementation "com.google.dagger:dagger-android-support:$daggerVersion"
@@ -85,38 +85,29 @@ dependencies {
     implementation "com.google.dagger:dagger:$daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.core:core-ktx:1.1.0-alpha04'
-    implementation "androidx.fragment:fragment-ktx:1.1.0-alpha04"
+    implementation 'androidx.fragment:fragment-ktx:1.1.0-alpha04'
 
     //As per android documentation, this has to be debug, not test
-    debugImplementation("androidx.fragment:fragment-testing:1.1.0-alpha04")
-            {
-                //This library uses an alpha version of the monitor dependency, which is incompatible with the version imported by other libraries
-                exclude group:'androidx.test', module: 'monitor'
-            }
-
-
-    testImplementation "androidx.arch.core:core-testing:2.0.0"
+    debugImplementation('androidx.fragment:fragment-testing:1.1.0-alpha04') {
+        //This library uses an alpha version of the monitor dependency, which is incompatible with the version imported by other libraries
+        exclude group: 'androidx.test', module: 'monitor'
+    }
+    testImplementation 'androidx.arch.core:core-testing:2.0.0'
     testImplementation "androidx.test.ext:junit:$rootProject.extJunitVersion"
-    testImplementation "androidx.test:core-ktx:1.1.0"
-    testImplementation "androidx.test:runner:1.1.1"
-    testImplementation "androidx.test:rules:1.1.1"
-    testImplementation "androidx.test.espresso:espresso-core:3.1.1"
-    testImplementation "androidx.test.espresso:espresso-contrib:3.1.1"
-    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
+    testImplementation 'androidx.test:core-ktx:1.1.0'
+    testImplementation 'androidx.test:runner:1.1.1'
+    testImplementation 'androidx.test:rules:1.1.1'
+    testImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    testImplementation 'androidx.test.espresso:espresso-contrib:3.1.1'
+    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0'
     testImplementation "org.robolectric:robolectric:$rootProject.robolectricVersion"
 
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
-    androidTestImplementation "androidx.arch.core:core-testing:2.0.0"
+    androidTestImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0'
+    androidTestImplementation 'androidx.arch.core:core-testing:2.0.0'
     androidTestImplementation 'org.mockito:mockito-android:2.24.0'
-
-
-
-
 }
