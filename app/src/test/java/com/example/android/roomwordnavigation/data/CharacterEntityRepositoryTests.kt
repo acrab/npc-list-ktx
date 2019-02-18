@@ -13,15 +13,15 @@ import org.junit.runners.Suite
 
 @RunWith(Suite::class)
 @Suite.SuiteClasses(
-    CharacterRepositoryTests.When_The_Character_Repository_Is_Created::class,
-    CharacterRepositoryTests.When_A_Character_Is_Created::class
+    CharacterEntityRepositoryTests.When_The_Character_Entity_Repository_Is_Created::class,
+    CharacterEntityRepositoryTests.When_A_Character_Entity_Is_Created::class
 )
-class CharacterRepositoryTests {
-    class When_The_Character_Repository_Is_Created {
+class CharacterEntityRepositoryTests {
+    class When_The_Character_Entity_Repository_Is_Created {
 
         private lateinit var characterDao: CharacterDao
 
-        private lateinit var data: LiveData<List<Character>>
+        private lateinit var data: LiveData<List<CharacterEntity>>
 
         @Before
         fun Setup() {
@@ -45,7 +45,7 @@ class CharacterRepositoryTests {
         }
     }
 
-    class When_A_Character_Is_Created {
+    class When_A_Character_Entity_Is_Created {
         private lateinit var characterDao: CharacterDao
         private lateinit var subject: CharacterRepository
         @Before
@@ -56,7 +56,7 @@ class CharacterRepositoryTests {
 
         @Test
         fun It_Is_Inserted_Into_The_Dao() {
-            val toInsert = Character("Test Character")
+            val toInsert = CharacterEntity("Test CharacterEntity")
             subject.insert(toInsert)
             verify(characterDao).insert(toInsert)
         }

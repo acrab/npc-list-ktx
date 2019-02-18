@@ -3,8 +3,8 @@ package com.example.android.roomwordnavigation.data
 import androidx.room.*
 
 @Entity(tableName = "character_table", indices = [Index("id", unique = true)])
-data class Character(@ColumnInfo(name = "name") val name: String,
-                     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id")  val id: Int = 0)
+data class CharacterEntity(@ColumnInfo(name = "name") val name: String,
+                           @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id")  val id: Int = 0)
 
 @Entity(tableName = "organisation_table", indices = [Index("id", unique = true)])
 data class Organisation(@ColumnInfo(name = "name") val name: String,
@@ -13,7 +13,7 @@ data class Organisation(@ColumnInfo(name = "name") val name: String,
 
 @Entity(
     tableName = "characters_in_organisations_table",
-    foreignKeys = [ForeignKey(entity = Character::class, parentColumns = ["id"], childColumns = ["character"], onDelete = ForeignKey.CASCADE),
+    foreignKeys = [ForeignKey(entity = CharacterEntity::class, parentColumns = ["id"], childColumns = ["character"], onDelete = ForeignKey.CASCADE),
         ForeignKey(entity = Organisation::class, parentColumns = ["id"], childColumns = ["organisation"], onDelete = ForeignKey.CASCADE)],
     indices = [Index("character"), Index("organisation")]
 )

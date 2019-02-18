@@ -39,7 +39,7 @@ class AddCharacterFragment : DaggerFragment(), IWithBoth {
 
         binding.button.setOnClickListener {
             inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
-            characterListViewModel.insert(com.example.android.roomwordnavigation.data.Character(binding.editText.text.toString()))
+            characterListViewModel.insert(com.example.android.roomwordnavigation.data.CharacterEntity(binding.editText.text.toString()))
             it.findNavController().navigateUp()
         }
 

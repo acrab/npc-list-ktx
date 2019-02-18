@@ -18,7 +18,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.android.roomwordnavigation.InputMethodManagerFactory
 import com.example.android.roomwordnavigation.R
 import com.example.android.roomwordnavigation.TestApp
-import com.example.android.roomwordnavigation.data.Character
+import com.example.android.roomwordnavigation.data.CharacterEntity
 import com.example.android.roomwordnavigation.util.FragmentWithBothFactory
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
@@ -32,10 +32,10 @@ import org.robolectric.annotation.Config
 
 @RunWith(Suite::class)
 @Suite.SuiteClasses(
-    AddCharacterFragmentTests.When_The_Submit_Button_Is_Pressed::class,
-    AddCharacterFragmentTests.When_The_View_Is_Created::class
+    AddCharacterEntityFragmentTests.When_The_Submit_Button_Is_Pressed::class,
+    AddCharacterEntityFragmentTests.When_The_View_Is_Created::class
 )
-class AddCharacterFragmentTests {
+class AddCharacterEntityFragmentTests {
 
     @RunWith(AndroidJUnit4::class)
     @Config(application = TestApp::class)
@@ -109,14 +109,14 @@ class AddCharacterFragmentTests {
         @Test
         fun If_The_Text_Is_Blank_It_Should_Create_A_Character_In_The_View_Model() {
             onView(withId(R.id.button)).perform(ViewActions.click())
-            verify(viewModel).insert(Character(""))
+            verify(viewModel).insert(CharacterEntity(""))
         }
 
         @Test
         fun If_The_Text_Has_Contents_It_Should_Create_A_Character_In_The_View_Model() {
             onView(withId(R.id.editText)).perform(ViewActions.typeText("Mixed Case Text"))
             onView(withId(R.id.button)).perform(ViewActions.click())
-            verify(viewModel).insert(Character("Mixed Case Text"))
+            verify(viewModel).insert(CharacterEntity("Mixed Case Text"))
         }
 
         @Test

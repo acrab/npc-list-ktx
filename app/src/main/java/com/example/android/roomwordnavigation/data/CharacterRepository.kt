@@ -5,11 +5,11 @@ import androidx.lifecycle.LiveData
 import javax.inject.Inject
 
 class CharacterRepository @Inject constructor(private val CharacterDao: CharacterDao) : ICharacterRepository {
-    override val allCharacters: LiveData<List<Character>> = CharacterDao.getAllCharacters()
+    override val allCharacters: LiveData<List<CharacterEntity>> = CharacterDao.getAllCharacters()
 
     @WorkerThread
-    override fun insert(character: Character)
+    override fun insert(characterEntity: CharacterEntity)
     {
-        CharacterDao.insert(character)
+        CharacterDao.insert(characterEntity)
     }
 }

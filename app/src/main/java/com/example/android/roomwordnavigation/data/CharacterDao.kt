@@ -10,14 +10,14 @@ import androidx.room.Query
 interface CharacterDao {
 
     @Query("SELECT * FROM character_table ORDER BY name ASC")
-    fun getAllCharacters() : LiveData<List<Character>>
+    fun getAllCharacters() : LiveData<List<CharacterEntity>>
 
     @Insert
-    fun insert(character:Character)
+    fun insert(characterEntity:CharacterEntity)
 
     @Query("DELETE FROM character_table")
     fun deleteAll()
 
     @Delete
-    fun delete(character:Character)
+    fun delete(characterEntity:CharacterEntity)
 }

@@ -38,7 +38,7 @@ class MembershipRepositoryTests {
     class When_All_Members_Of_An_Organisation_Are_Retrieved {
         private lateinit var subject: MembershipRepository
         private lateinit var membershipDao: MembershipDao
-        private lateinit var memberData: LiveData<List<Character>>
+        private lateinit var memberData: LiveData<List<CharacterEntity>>
 
         @Before
         fun TestSetup() {

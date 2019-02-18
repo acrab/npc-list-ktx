@@ -4,7 +4,7 @@ package com.example.android.roomwordnavigation.characters
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
-import com.example.android.roomwordnavigation.data.Character
+import com.example.android.roomwordnavigation.data.CharacterEntity
 import com.example.android.roomwordnavigation.data.ICharacterRepository
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
@@ -20,12 +20,12 @@ import org.junit.runners.Suite
 
 @RunWith(Suite::class)
 @Suite.SuiteClasses(
-    CharacterListViewModelTests.When_The_View_Model_Is_Created::class,
-    CharacterListViewModelTests.When_A_Character_Is_Inserted::class
+    CharacterEntityListViewModelTests.When_The_View_Model_Is_Created::class,
+    CharacterEntityListViewModelTests.When_A_Character_Entity_Is_Inserted::class
 )
-class CharacterListViewModelTests {
+class CharacterEntityListViewModelTests {
     class When_The_View_Model_Is_Created {
-        private lateinit var data: LiveData<List<Character>>
+        private lateinit var data: LiveData<List<CharacterEntity>>
         private lateinit var characterRepository: ICharacterRepository
 
         @Before
@@ -51,7 +51,7 @@ class CharacterListViewModelTests {
         }
     }
 
-    class When_A_Character_Is_Inserted {
+    class When_A_Character_Entity_Is_Inserted {
 
         @get:Rule
         val instantExecutor = InstantTaskExecutorRule()
@@ -68,7 +68,7 @@ class CharacterListViewModelTests {
         @ExperimentalCoroutinesApi
         @Test
         fun It_Is_Added_To_The_Repository() = runBlocking {
-            val data = Character("Test name")
+            val data = CharacterEntity("Test name")
             subject.insert(data, Dispatchers.Unconfined)
             verify(characterRepository).insert(data)
         }

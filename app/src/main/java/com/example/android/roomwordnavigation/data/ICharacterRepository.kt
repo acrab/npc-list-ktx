@@ -3,7 +3,7 @@ package com.example.android.roomwordnavigation.data
 import androidx.lifecycle.LiveData
 
 interface ICharacterRepository {
-    val allCharacters: LiveData<List<Character>>
+    val allCharacters: LiveData<List<CharacterEntity>>
 
-    fun insert(character: Character)
+    fun insert(characterEntity: CharacterEntity)
 }

@@ -20,7 +20,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.android.roomwordnavigation.R
 import com.example.android.roomwordnavigation.TestApp
-import com.example.android.roomwordnavigation.data.Character
+import com.example.android.roomwordnavigation.data.CharacterEntity
 import com.example.android.roomwordnavigation.util.FragmentWithViewModelFactory
 import com.example.android.roomwordnavigation.util.withRecyclerView
 import com.nhaarman.mockitokotlin2.any
@@ -36,12 +36,12 @@ import org.robolectric.annotation.Config
 
 @RunWith(Suite::class)
 @Suite.SuiteClasses(
-    CharacterListFragmentTests.When_The_View_Is_Created::class,
-    CharacterListFragmentTests.When_The_Characters_List_Is_Updated_With_One_Item::class,
-    CharacterListFragmentTests.When_The_Characters_List_Is_Updated_With_Many_Items::class,
-    CharacterListFragmentTests.When_The_Add_Button_Is_Clicked::class
+    CharacterEntityListFragmentTests.When_The_View_Is_Created::class,
+    CharacterEntityListFragmentTests.When_The_Characters_List_Is_Updated_With_One_Item::class,
+    CharacterEntityListFragmentTests.When_The_Characters_List_Is_Updated_With_Many_Items::class,
+    CharacterEntityListFragmentTests.When_The_Add_Button_Is_Clicked::class
 )
-class CharacterListFragmentTests {
+class CharacterEntityListFragmentTests {
     @RunWith(AndroidJUnit4::class)
     @Config(application = TestApp::class)
     class When_The_View_Is_Created {
@@ -89,16 +89,16 @@ class CharacterListFragmentTests {
 
         private lateinit var navController: NavController
         private lateinit var scenario: FragmentScenario<CharacterListFragment>
-        private lateinit var characterData: MutableLiveData<List<Character>>
+        private lateinit var characterEntityData: MutableLiveData<List<CharacterEntity>>
         private lateinit var viewModel: CharacterListViewModel
         private lateinit var viewModelFactory: ViewModelProvider.Factory
 
         @Before
         fun setup() {
             navController = mock()
-            characterData = MutableLiveData(emptyList())
+            characterEntityData = MutableLiveData(emptyList())
             viewModel = mock(name = "MockViewModel") {
-                on { allCharacters } doReturn characterData
+                on { allCharacters } doReturn characterEntityData
             }
 
             viewModelFactory = mock {
@@ -114,7 +114,7 @@ class CharacterListFragmentTests {
 
         @Test
         fun It_Should_Be_Displayed() {
-            characterData.postValue(listOf(Character("Bob")))
+            characterEntityData.postValue(listOf(CharacterEntity("Bob")))
             onView(withId(R.id.character_list)).check { view, _ ->
                 val recyclerView = view as RecyclerView
                 assert(recyclerView.adapter?.itemCount == 1)
@@ -136,20 +136,20 @@ class CharacterListFragmentTests {
 
         private lateinit var navController: NavController
         private lateinit var scenario: FragmentScenario<CharacterListFragment>
-        private lateinit var characterData: MutableLiveData<List<Character>>
+        private lateinit var characterEntityData: MutableLiveData<List<CharacterEntity>>
         private lateinit var viewModel: CharacterListViewModel
         private lateinit var viewModelFactory: ViewModelProvider.Factory
 
         @Before
         fun setup() {
             navController = mock()
-            characterData = MutableLiveData(emptyList())
+            characterEntityData = MutableLiveData(emptyList())
             viewModel = mock(name = "MockViewModel") {
-                on { allCharacters } doReturn characterData
+                on { allCharacters } doReturn characterEntityData
             }
 
             viewModelFactory = mock {
-                on { create<CharacterListViewModel>(com.nhaarman.mockitokotlin2.any()) } doReturn viewModel
+                on { create<CharacterListViewModel>(any()) } doReturn viewModel
             }
 
             scenario = launchFragmentInContainer<CharacterListFragment>(
@@ -158,7 +158,7 @@ class CharacterListFragmentTests {
                 Navigation.setViewNavController(it.view!!, navController)
             }.moveToState(Lifecycle.State.RESUMED)
 
-            characterData.postValue(listOf(Character("Bob"), Character("Dick"), Character("Harry")))
+            characterEntityData.postValue(listOf(CharacterEntity("Bob"), CharacterEntity("Dick"), CharacterEntity("Harry")))
         }
 
         @Test
@@ -189,7 +189,6 @@ class CharacterListFragmentTests {
                     2, R.id.word_view
                 )
             ).check(matches(withText("Harry")))
-
         }
     }
 

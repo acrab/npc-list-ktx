@@ -16,7 +16,7 @@ class OrganisationDetailsViewModel @Inject constructor(
 ) : ViewModelWithCoroutineScope() {
     var organisationId = MutableLiveData<Int>()
 
-    var allMembers: LiveData<List<Character>> = Transformations.switchMap(organisationId) { orgId ->
+    val allMembers: LiveData<List<CharacterEntity>> = Transformations.switchMap(organisationId) { orgId ->
         orgId?.let { membershipRepository.getMembers(it) }
     }
 
@@ -24,7 +24,7 @@ class OrganisationDetailsViewModel @Inject constructor(
         orgId?.let { organisationRepository.getOrganisation(it) }
     }
 
-    fun addToOrganisation(character: Character, coroutineContext: CoroutineContext = Dispatchers.IO) {
+    fun addToOrganisation(characterEntity: CharacterEntity, coroutineContext: CoroutineContext = Dispatchers.IO) {
 
         val orgId = organisationId.value ?: throw IllegalStateException("Must set organisationId before adding a character")
 

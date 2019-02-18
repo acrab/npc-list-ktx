@@ -11,7 +11,7 @@ class MembershipRepository(private val membershipDao: MembershipDao) : IMembersh
         membershipDao.createMembership(membership)
     }
 
-    override fun getMembers(organisationId:Int) : LiveData<List<Character>>
+    override fun getMembers(organisationId:Int) : LiveData<List<CharacterEntity>>
     {
         return membershipDao.getMembers(organisationId)
     }

@@ -7,5 +7,5 @@ interface IMembershipRepository {
     @WorkerThread
     fun createMembership(membership: OrganisationMembership)
 
-    fun getMembers(organisationId: Int) : LiveData<List<Character>>
+    fun getMembers(organisationId: Int) : LiveData<List<CharacterEntity>>
 }

@@ -4,30 +4,30 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.roomwordnavigation.data.Character
+import com.example.android.roomwordnavigation.data.CharacterEntity
 import com.example.android.roomwordnavigation.databinding.CharacterListItemBinding
 
-class CharacterListAdapter internal constructor(context: Context, private val onCharacterSelected: (Character)->Unit = {}) : RecyclerView.Adapter<CharacterListAdapter.CharacterViewHolder>() {
+class CharacterListAdapter internal constructor(context: Context, private val onCharacterSelected: (CharacterEntity)->Unit = {}) : RecyclerView.Adapter<CharacterListAdapter.CharacterViewHolder>() {
 
-    class CharacterViewHolder(private val wordListItemBinding: CharacterListItemBinding, onCharacterSelected: (Character)->Unit) :
+    class CharacterViewHolder(private val wordListItemBinding: CharacterListItemBinding, onCharacterSelected: (CharacterEntity)->Unit) :
         RecyclerView.ViewHolder(wordListItemBinding.root) {
         init{
             wordListItemBinding.root.setOnClickListener{
-                onCharacterSelected(character!!)
+                onCharacterSelected(characterEntity!!)
             }
         }
 
-        private var character : Character? = null
+        private var characterEntity : CharacterEntity? = null
 
-        fun setName(character: Character) {
-            this.character = character
-            wordListItemBinding.wordView.text = character.name
+        fun setName(characterEntity: CharacterEntity) {
+            this.characterEntity = characterEntity
+            wordListItemBinding.wordView.text = characterEntity.name
         }
     }
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
-    private var characters = emptyList<Character>()
+    private var characters = emptyList<CharacterEntity>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
         return CharacterViewHolder(CharacterListItemBinding.inflate(inflater), onCharacterSelected)
@@ -39,8 +39,8 @@ class CharacterListAdapter internal constructor(context: Context, private val on
         holder.setName(characters[position])
     }
 
-    fun setCharacters(characters: List<Character>) {
-        this.characters = characters
+    fun setCharacters(characterEntities: List<CharacterEntity>) {
+        this.characters = characterEntities
         notifyDataSetChanged()
     }
 }

@@ -24,8 +24,8 @@ import org.junit.runners.Suite
 @Suite.SuiteClasses(
     OrganisationDetailsViewModelTests.When_The_ViewModel_Is_Created::class,
     OrganisationDetailsViewModelTests.When_The_Organisation_ID_Is_Set::class,
-    OrganisationDetailsViewModelTests.When_A_Character_Is_Added_To_The_Organisation_And_The_Organsiation_ID_Has_Not_Been_Set::class,
-    OrganisationDetailsViewModelTests.When_A_Character_Is_Added_To_The_Organisation_And_The_Organsiation_ID_Has_Been_Set::class
+    OrganisationDetailsViewModelTests.When_A_Character_Entity_Is_Added_To_The_Organisation_And_The_Organsiation_ID_Has_Not_Been_Set::class,
+    OrganisationDetailsViewModelTests.When_A_Character_Entity_Is_Added_To_The_Organisation_And_The_Organsiation_ID_Has_Been_Set::class
 )
 class OrganisationDetailsViewModelTests {
     class When_The_ViewModel_Is_Created {
@@ -57,8 +57,8 @@ class OrganisationDetailsViewModelTests {
         private lateinit var membershipRepository: IMembershipRepository
         private lateinit var organisationRepository: IOrganisationRepository
 
-        private lateinit var membershipLiveData: MutableLiveData<List<Character>>
-        private lateinit var membershipData: List<Character>
+        private lateinit var membershipLiveData: MutableLiveData<List<CharacterEntity>>
+        private lateinit var membershipData: List<CharacterEntity>
 
         private lateinit var organisationLiveData: MutableLiveData<Organisation>
         private lateinit var organisationData: Organisation
@@ -117,7 +117,7 @@ class OrganisationDetailsViewModelTests {
         }
     }
 
-    class When_A_Character_Is_Added_To_The_Organisation_And_The_Organsiation_ID_Has_Not_Been_Set {
+    class When_A_Character_Entity_Is_Added_To_The_Organisation_And_The_Organsiation_ID_Has_Not_Been_Set {
 
         @get:Rule
         val instantExecutor = InstantTaskExecutorRule()
@@ -132,14 +132,14 @@ class OrganisationDetailsViewModelTests {
         @Test(expected = IllegalStateException::class)
         fun It_Should_Fail() {
             runBlocking {
-                subject.addToOrganisation(Character("Test Character"))
+                subject.addToOrganisation(CharacterEntity("Test CharacterEntity"))
             }
             //No exception thrown
             assert(true)
         }
     }
 
-    class When_A_Character_Is_Added_To_The_Organisation_And_The_Organsiation_ID_Has_Been_Set {
+    class When_A_Character_Entity_Is_Added_To_The_Organisation_And_The_Organsiation_ID_Has_Been_Set {
 
         @get:Rule
         val instantExecutor = InstantTaskExecutorRule()
@@ -156,7 +156,7 @@ class OrganisationDetailsViewModelTests {
         @ExperimentalCoroutinesApi
         @Test
         fun It_Should_Create_A_Membership_In_The_Repository() = runBlocking {
-            val charToAdd = Character("Test Character")
+            val charToAdd = CharacterEntity("Test CharacterEntity")
             subject.addToOrganisation(charToAdd, Dispatchers.Unconfined)
             verify(membershipRepository).createMembership(OrganisationMembership(charToAdd.id, 1))
         }

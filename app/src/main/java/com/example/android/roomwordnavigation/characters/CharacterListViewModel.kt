@@ -3,7 +3,7 @@ package com.example.android.roomwordnavigation.characters
 import androidx.lifecycle.LiveData
 import com.android.example.roomwordnavigation.testing.OpenForTesting
 import com.example.android.roomwordnavigation.ViewModelWithCoroutineScope
-import com.example.android.roomwordnavigation.data.Character
+import com.example.android.roomwordnavigation.data.CharacterEntity
 import com.example.android.roomwordnavigation.data.ICharacterRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,9 +13,9 @@ import kotlin.coroutines.CoroutineContext
 @OpenForTesting
 class CharacterListViewModel @Inject constructor(private val repository: ICharacterRepository):ViewModelWithCoroutineScope()
 {
-    val allCharacters:LiveData<List<Character>> = repository.allCharacters
+    val allCharacters:LiveData<List<CharacterEntity>> = repository.allCharacters
 
-    fun insert(character:Character, context:CoroutineContext = Dispatchers.IO) = scope.launch(context) {
-        repository.insert(character)
+    fun insert(characterEntity:CharacterEntity, context:CoroutineContext = Dispatchers.IO) = scope.launch(context) {
+        repository.insert(characterEntity)
     }
 }
