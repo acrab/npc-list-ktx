@@ -22,13 +22,13 @@ class MainActivity : AppCompatActivity() {
         val drawerLayout = binding.drawerLayout
 
         navController = this.findNavController(R.id.mainNavHostFragment)
-        appBarConfiguration = AppBarConfiguration(setOf(R.id.characterListFragment, R.id.organisationListFragment), drawerLayout)
+        appBarConfiguration =
+            AppBarConfiguration(setOf(R.id.characterListFragment, R.id.organisationListFragment), drawerLayout)
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
         NavigationUI.setupWithNavController(binding.navView, navController)
 
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-    }
+    override fun onSupportNavigateUp() = NavigationUI.navigateUp(navController, appBarConfiguration)
+
 }
