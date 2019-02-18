@@ -10,11 +10,9 @@
 
         <TextView
             android:id="@+id/word_view"
+            style="@style/character_list_item"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="8sp"
-            android:textAlignment="center"
-            android:textSize="28sp"
             tools:text="@tools:sample/first_names" />
     </LinearLayout>
 </layout>
