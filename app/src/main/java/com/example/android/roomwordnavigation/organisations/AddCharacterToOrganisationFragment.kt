@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.roomwordnavigation.IWithViewModelFactory
-import com.example.android.roomwordnavigation.R
 import com.example.android.roomwordnavigation.characters.CharacterListViewModel
 import com.example.android.roomwordnavigation.databinding.FragmentCharacterListBinding
 import com.example.android.roomwordnavigation.ui.CharacterListAdapter
@@ -31,9 +29,7 @@ class AddCharacterToOrganisationFragment : DaggerFragment(), IWithViewModelFacto
     private val args: AddCharacterToOrganisationFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = DataBindingUtil.inflate<FragmentCharacterListBinding>(
-            inflater, R.layout.fragment_character_list, container, false
-        )
+        val binding = FragmentCharacterListBinding.inflate(inflater, container, false)
 
         organisationDetailsViewModel.organisationId.postValue(args.organisationId)
 

@@ -1,21 +1,17 @@
 package com.example.android.roomwordnavigation.organisations
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.android.roomwordnavigation.IWithBoth
 import com.example.android.roomwordnavigation.InputMethodManagerFactory
-import com.example.android.roomwordnavigation.R
 import com.example.android.roomwordnavigation.data.Organisation
 import com.example.android.roomwordnavigation.databinding.FragmentAddOrganisationBinding
-import com.example.android.roomwordnavigation.injection.ViewModelFactory
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -30,12 +26,7 @@ class AddOrganisationFragment : DaggerFragment(), IWithBoth {
     private val organisationListViewModel: OrganisationListViewModel by activityViewModels{viewModelFactory}
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = DataBindingUtil.inflate<FragmentAddOrganisationBinding>(
-            inflater,
-            R.layout.fragment_add_organisation,
-            container,
-            false
-        )
+        val binding = FragmentAddOrganisationBinding.inflate(inflater, container, false)
 
         inputMethodManager = immFactory.get(context!!)
 

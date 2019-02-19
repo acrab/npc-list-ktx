@@ -16,8 +16,7 @@ import com.example.android.roomwordnavigation.ui.CharacterListAdapter
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class CharacterListFragment : DaggerFragment(), IWithViewModelFactory
-{
+class CharacterListFragment : DaggerFragment(), IWithViewModelFactory {
     @Inject
     override lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -25,10 +24,10 @@ class CharacterListFragment : DaggerFragment(), IWithViewModelFactory
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val binding = DataBindingUtil.inflate<FragmentCharacterListBinding>(inflater,
-            R.layout.fragment_character_list, container, false)
-        binding.fab.setOnClickListener{
-            it.findNavController().navigate(CharacterListFragmentDirections.actionCharacterListFragmentToAddCharacterFragment())
+        val binding = FragmentCharacterListBinding.inflate(inflater, container, false)
+        binding.fab.setOnClickListener {
+            it.findNavController()
+                .navigate(CharacterListFragmentDirections.actionCharacterListFragmentToAddCharacterFragment())
         }
         val recyclerView = binding.characterList
         val adapter = CharacterListAdapter(context!!)

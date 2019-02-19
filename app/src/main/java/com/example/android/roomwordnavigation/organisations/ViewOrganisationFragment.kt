@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
@@ -26,12 +25,7 @@ class ViewOrganisationFragment : DaggerFragment() {
     private val organisationDetailsViewModel: OrganisationDetailsViewModel by activityViewModels{viewModelFactory}
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = DataBindingUtil.inflate<FragmentViewOrganisationBinding>(
-            inflater,
-            R.layout.fragment_view_organisation,
-            container,
-            false
-        )
+        val binding = FragmentViewOrganisationBinding.inflate(inflater, container, false)
 
         val orgId = args.organisationId
 
