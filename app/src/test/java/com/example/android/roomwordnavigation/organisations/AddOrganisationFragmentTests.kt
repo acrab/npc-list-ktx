@@ -45,9 +45,7 @@ class AddOrganisationFragmentTests {
             organisationListViewModel = vm
             navController = mock()
             inputMethodManager = imm
-            scenario =
-                launchFragmentInContainer<AddOrganisationFragment>(factory = ff
-                )
+            scenario = launchFragmentInContainer<AddOrganisationFragment>(factory = ff)
             scenario.onFragment {
                 Navigation.setViewNavController(it.view!!, navController)
             }
