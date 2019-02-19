@@ -64,7 +64,6 @@ class AddCharacterEntityToOrganisationFragmentTests {
         {
             navController = mock()
 
-            val args = bundleOf("organisation_id" to 1)
             organisationIdLiveData = mock()
 
             organisationDetailsViewModel = mock {
@@ -86,7 +85,7 @@ class AddCharacterEntityToOrganisationFragmentTests {
             }
 
             scenario = launchFragmentInContainer<AddCharacterToOrganisationFragment>(
-                fragmentArgs = args,
+                fragmentArgs = AddCharacterToOrganisationFragmentArgs(1).toBundle(),
                 factory = FragmentWithViewModelFactory(viewModelFactory)
             ).onFragment {
                 Navigation.setViewNavController(it.view!!, navController)
