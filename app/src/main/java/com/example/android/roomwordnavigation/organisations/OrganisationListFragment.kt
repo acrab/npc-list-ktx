@@ -7,20 +7,21 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.android.roomwordnavigation.IWithViewModelFactory
 import com.example.android.roomwordnavigation.R
 import com.example.android.roomwordnavigation.databinding.FragmentOrganisationListBinding
-import com.example.android.roomwordnavigation.injection.ViewModelFactory
 import com.example.android.roomwordnavigation.ui.OrganisationListAdapter
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class OrganisationListFragment : DaggerFragment() {
+class OrganisationListFragment : DaggerFragment(), IWithViewModelFactory {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory
+    override lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val organisationListViewModel: OrganisationListViewModel by activityViewModels {viewModelFactory}
 
