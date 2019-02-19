@@ -21,9 +21,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.android.roomwordnavigation.R
 import com.example.android.roomwordnavigation.TestApp
 import com.example.android.roomwordnavigation.data.CharacterEntity
-import com.example.android.roomwordnavigation.util.FragmentWithViewModelFactory
+import com.example.android.roomwordnavigation.util.fragmentFactoryWithMockViewModel
 import com.example.android.roomwordnavigation.util.withRecyclerView
-import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
@@ -54,16 +53,16 @@ class CharacterEntityListFragmentTests {
         fun setup() {
             navController = mock()
 
-            viewModel = mock(name = "MockViewModel") {
+            val(ff, vm, vmf) = fragmentFactoryWithMockViewModel<CharacterListViewModel>{
                 on { allCharacters } doReturn mock()
             }
 
-            viewModelFactory = mock {
-                on { create<CharacterListViewModel>(any()) } doReturn viewModel
-            }
+            viewModel = vm
+
+            viewModelFactory = vmf
 
             scenario = launchFragmentInContainer<CharacterListFragment>(
-                factory = FragmentWithViewModelFactory<CharacterListFragment>(viewModelFactory)
+                factory = ff
             ).onFragment {
                 Navigation.setViewNavController(it.view!!, navController)
             }.moveToState(Lifecycle.State.RESUMED)
@@ -97,16 +96,17 @@ class CharacterEntityListFragmentTests {
         fun setup() {
             navController = mock()
             characterEntityData = MutableLiveData(emptyList())
-            viewModel = mock(name = "MockViewModel") {
+
+            val(ff, vm, vmf) = fragmentFactoryWithMockViewModel<CharacterListViewModel>{
                 on { allCharacters } doReturn characterEntityData
             }
 
-            viewModelFactory = mock {
-                on { create<CharacterListViewModel>(any()) } doReturn viewModel
-            }
+            viewModel = vm
+
+            viewModelFactory = vmf
 
             scenario = launchFragmentInContainer<CharacterListFragment>(
-                factory = FragmentWithViewModelFactory<CharacterListFragment>(viewModelFactory)
+                factory = ff
             ).onFragment {
                 Navigation.setViewNavController(it.view!!, navController)
             }.moveToState(Lifecycle.State.RESUMED)
@@ -134,7 +134,6 @@ class CharacterEntityListFragmentTests {
         @get:Rule
         val instantExecutor = InstantTaskExecutorRule()
 
-        private lateinit var navController: NavController
         private lateinit var scenario: FragmentScenario<CharacterListFragment>
         private lateinit var characterEntityData: MutableLiveData<List<CharacterEntity>>
         private lateinit var viewModel: CharacterListViewModel
@@ -142,21 +141,19 @@ class CharacterEntityListFragmentTests {
 
         @Before
         fun setup() {
-            navController = mock()
             characterEntityData = MutableLiveData(emptyList())
-            viewModel = mock(name = "MockViewModel") {
+
+            val(ff, vm, vmf) = fragmentFactoryWithMockViewModel<CharacterListViewModel>{
                 on { allCharacters } doReturn characterEntityData
             }
 
-            viewModelFactory = mock {
-                on { create<CharacterListViewModel>(any()) } doReturn viewModel
-            }
+            viewModel = vm
+
+            viewModelFactory = vmf
 
             scenario = launchFragmentInContainer<CharacterListFragment>(
-                factory = FragmentWithViewModelFactory<CharacterListFragment>(viewModelFactory)
-            ).onFragment {
-                Navigation.setViewNavController(it.view!!, navController)
-            }.moveToState(Lifecycle.State.RESUMED)
+                factory = ff
+            ).moveToState(Lifecycle.State.RESUMED)
 
             characterEntityData.postValue(listOf(CharacterEntity("Bob"), CharacterEntity("Dick"), CharacterEntity("Harry")))
         }
@@ -203,15 +200,16 @@ class CharacterEntityListFragmentTests {
         @Before
         fun setup() {
             navController = mock()
-            viewModel = mock(name = "MockViewModel") {
+            val(ff, vm, vmf) = fragmentFactoryWithMockViewModel<CharacterListViewModel>{
                 on { allCharacters } doReturn mock()
             }
-            viewModelFactory = mock {
-                on { create<CharacterListViewModel>(com.nhaarman.mockitokotlin2.any()) } doReturn viewModel
-            }
+
+            viewModel = vm
+
+            viewModelFactory = vmf
 
             scenario = launchFragmentInContainer<CharacterListFragment>(
-                factory = FragmentWithViewModelFactory<CharacterListFragment>(viewModelFactory)
+                factory = ff
             )
             scenario.onFragment {
                 Navigation.setViewNavController(it.view!!, navController)

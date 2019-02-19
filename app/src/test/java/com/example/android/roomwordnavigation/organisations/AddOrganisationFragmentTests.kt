@@ -15,8 +15,11 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.android.roomwordnavigation.R
 import com.example.android.roomwordnavigation.TestApp
-import com.example.android.roomwordnavigation.util.FragmentWithBothFactory
-import com.nhaarman.mockitokotlin2.*
+import com.example.android.roomwordnavigation.util.fragmentFactoryWithMockViewModelAndIMM
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.eq
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -36,17 +39,14 @@ class AddOrganisationFragmentTests {
         protected lateinit var inputMethodManager: InputMethodManager
 
         fun baseSetup() {
-            organisationListViewModel = mock()
+
+            val (ff, vm, _, imm) = fragmentFactoryWithMockViewModelAndIMM<OrganisationListViewModel>()
+
+            organisationListViewModel = vm
             navController = mock()
-            inputMethodManager = mock()
+            inputMethodManager = imm
             scenario =
-                launchFragmentInContainer<AddOrganisationFragment>(factory = FragmentWithBothFactory<AddOrganisationFragment>(
-                    mock {
-                        on { get(any()) } doReturn inputMethodManager
-                    },
-                    mock {
-                        on { create<OrganisationListViewModel>(any()) } doReturn organisationListViewModel
-                    })
+                launchFragmentInContainer<AddOrganisationFragment>(factory = ff
                 )
             scenario.onFragment {
                 Navigation.setViewNavController(it.view!!, navController)

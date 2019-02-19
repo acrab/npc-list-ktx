@@ -87,7 +87,7 @@ class AddCharacterEntityToOrganisationFragmentTests {
 
             scenario = launchFragmentInContainer<AddCharacterToOrganisationFragment>(
                 fragmentArgs = args,
-                factory = FragmentWithViewModelFactory<AddCharacterToOrganisationFragment>(viewModelFactory)
+                factory = FragmentWithViewModelFactory(viewModelFactory)
             ).onFragment {
                 Navigation.setViewNavController(it.view!!, navController)
             }.moveToState(Lifecycle.State.RESUMED)

@@ -56,13 +56,11 @@ class OrganisationListFragmentTests
                 }
             }
 
-            val factory = fragmentFactoryWithMockViewModel<OrganisationListFragment, OrganisationListViewModel>(viewModel)
+            val (ff) = fragmentFactoryWithMockViewModel(viewModel)
 
             subject = launchFragmentInContainer<OrganisationListFragment>(
-                factory = factory
-            )
-
-            subject.onFragment {
+                factory = ff
+            ).onFragment {
                 Navigation.setViewNavController(it.view!!, navController)
             }
         }

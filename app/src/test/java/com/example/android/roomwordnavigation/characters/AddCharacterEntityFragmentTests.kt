@@ -6,7 +6,6 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.test.espresso.Espresso.onView
@@ -15,11 +14,10 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.android.roomwordnavigation.InputMethodManagerFactory
 import com.example.android.roomwordnavigation.R
 import com.example.android.roomwordnavigation.TestApp
 import com.example.android.roomwordnavigation.data.CharacterEntity
-import com.example.android.roomwordnavigation.util.FragmentWithBothFactory
+import com.example.android.roomwordnavigation.util.fragmentFactoryWithMockViewModelAndIMM
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
@@ -42,22 +40,17 @@ class AddCharacterEntityFragmentTests {
     class When_The_View_Is_Created {
         private lateinit var navController: NavController
         private lateinit var scenario: FragmentScenario<AddCharacterFragment>
-        private lateinit var viewModel: CharacterListViewModel
-        private lateinit var viewModelFactory: ViewModelProvider.Factory
 
         @Before
         fun setup() {
             navController = mock()
 
-            viewModel = mock(name = "MockViewModel") {
+            val (ff) = fragmentFactoryWithMockViewModelAndIMM<CharacterListViewModel>{
                 on { allCharacters } doReturn mock()
             }
 
-            viewModelFactory = mock {
-                on { create<CharacterListViewModel>(any()) } doReturn viewModel
-            }
             scenario = launchFragmentInContainer<AddCharacterFragment>(
-                factory = FragmentWithBothFactory<AddCharacterFragment>(mock(), viewModelFactory)
+                factory = ff
             ).onFragment {
                 Navigation.setViewNavController(it.view!!, navController)
             }.moveToState(Lifecycle.State.RESUMED)
@@ -77,27 +70,19 @@ class AddCharacterEntityFragmentTests {
         private lateinit var navController: NavController
         private lateinit var scenario: FragmentScenario<AddCharacterFragment>
         private lateinit var viewModel: CharacterListViewModel
-        private lateinit var viewModelFactory: ViewModelProvider.Factory
         private lateinit var inputMethodManager: InputMethodManager
 
         @Before
         fun setup() {
 
             navController = mock()
-            viewModel = mock(name = "MockViewModel")
 
-            viewModelFactory = mock {
-                on { create<CharacterListViewModel>(com.nhaarman.mockitokotlin2.any()) } doReturn viewModel
-            }
-
-            inputMethodManager = mock()
-
-            val immFactory : InputMethodManagerFactory = mock{
-                on{get(any())} doReturn inputMethodManager
-            }
+            val (ff, vm, _, imm) = fragmentFactoryWithMockViewModelAndIMM<CharacterListViewModel>()
+            viewModel = vm
+            inputMethodManager = imm
 
             scenario = launchFragmentInContainer<AddCharacterFragment>(
-                factory = FragmentWithBothFactory<AddCharacterFragment>(immFactory, viewModelFactory)
+                factory = ff
             )
             scenario.onFragment {
                 Navigation.setViewNavController(it.view!!, navController)
