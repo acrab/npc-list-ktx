@@ -13,6 +13,7 @@ import com.example.android.roomwordnavigation.IWithBoth
 import com.example.android.roomwordnavigation.InputMethodManagerFactory
 import com.example.android.roomwordnavigation.R
 import com.example.android.roomwordnavigation.databinding.FragmentAddCharacterBinding
+import com.example.android.roomwordnavigation.inputManager
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -22,11 +23,11 @@ class AddCharacterFragment : DaggerFragment(), IWithBoth {
     override lateinit var viewModelFactory: ViewModelProvider.Factory
 
     @Inject
-    override lateinit var immFactory : InputMethodManagerFactory
+    override lateinit var immFactory: InputMethodManagerFactory
 
-    private val characterListViewModel: CharacterListViewModel by viewModels{viewModelFactory}
-    private lateinit var inputMethodManager: InputMethodManager
-
+    private val characterListViewModel: CharacterListViewModel by viewModels { viewModelFactory }
+    private val inputMethodManager: InputMethodManager by inputManager { immFactory }
+    
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = DataBindingUtil.inflate<FragmentAddCharacterBinding>(
             inflater,
@@ -34,8 +35,6 @@ class AddCharacterFragment : DaggerFragment(), IWithBoth {
             container,
             false
         )
-
-        inputMethodManager = immFactory.get(context!!)
 
         binding.button.setOnClickListener {
             inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)

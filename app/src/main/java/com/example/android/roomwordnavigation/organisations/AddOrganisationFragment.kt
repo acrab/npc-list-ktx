@@ -12,6 +12,7 @@ import com.example.android.roomwordnavigation.IWithBoth
 import com.example.android.roomwordnavigation.InputMethodManagerFactory
 import com.example.android.roomwordnavigation.data.Organisation
 import com.example.android.roomwordnavigation.databinding.FragmentAddOrganisationBinding
+import com.example.android.roomwordnavigation.inputManager
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -22,13 +23,11 @@ class AddOrganisationFragment : DaggerFragment(), IWithBoth {
     @Inject
     override lateinit var immFactory: InputMethodManagerFactory
 
-    private lateinit var inputMethodManager: InputMethodManager
-    private val organisationListViewModel: OrganisationListViewModel by activityViewModels{viewModelFactory}
+    private val inputMethodManager: InputMethodManager by inputManager { immFactory }
+    private val organisationListViewModel: OrganisationListViewModel by activityViewModels { viewModelFactory }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentAddOrganisationBinding.inflate(inflater, container, false)
-
-        inputMethodManager = immFactory.get(context!!)
 
         binding.button.setOnClickListener {
             inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
