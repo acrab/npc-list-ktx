@@ -10,6 +10,7 @@ class OrganisationRepository(private val organisationDao: OrganisationDao) : IOr
     override fun insert(organisation: Organisation)
     {
         organisationDao.insert(organisation)
+
     }
 
     override fun getOrganisation(organisationId: Int) : LiveData<Organisation>

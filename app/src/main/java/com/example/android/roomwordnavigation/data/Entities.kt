@@ -4,7 +4,7 @@ import androidx.room.*
 
 @Entity(tableName = "character_table", indices = [Index("id", unique = true)])
 data class CharacterEntity(@ColumnInfo(name = "name") val name: String,
-                           @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id")  val id: Int = 0)
+                           @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Int = 0)
 
 @Entity(tableName = "organisation_table", indices = [Index("id", unique = true)])
 data class Organisation(@ColumnInfo(name = "name") val name: String,

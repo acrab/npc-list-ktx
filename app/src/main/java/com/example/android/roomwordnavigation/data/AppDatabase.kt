@@ -11,6 +11,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun characterDao():CharacterDao
     abstract fun organisationDao():OrganisationDao
     abstract fun membershipDao():MembershipDao
+
     companion object{
         @Volatile
         private var INSTANCE: AppDatabase? = null
