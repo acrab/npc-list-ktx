@@ -5,13 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.android.roomwordnavigation.IWithBoth
 import com.example.android.roomwordnavigation.InputMethodManagerFactory
-import com.example.android.roomwordnavigation.R
 import com.example.android.roomwordnavigation.databinding.FragmentAddCharacterBinding
 import com.example.android.roomwordnavigation.inputManager
 import dagger.android.support.DaggerFragment
@@ -27,21 +25,22 @@ class AddCharacterFragment : DaggerFragment(), IWithBoth {
 
     private val characterListViewModel: CharacterListViewModel by viewModels { viewModelFactory }
     private val inputMethodManager: InputMethodManager by inputManager { immFactory }
-    
+
+    private lateinit var binding: FragmentAddCharacterBinding
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = DataBindingUtil.inflate<FragmentAddCharacterBinding>(
-            inflater,
-            R.layout.fragment_add_character,
-            container,
-            false
-        )
-
-        binding.button.setOnClickListener {
-            inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
-            characterListViewModel.insert(com.example.android.roomwordnavigation.data.CharacterEntity(binding.editText.text.toString()))
-            it.findNavController().navigateUp()
-        }
-
+        binding = FragmentAddCharacterBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.view = this
+    }
+
+    fun onContinueButtonClicked(view: View) {
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+        characterListViewModel.insert(com.example.android.roomwordnavigation.data.CharacterEntity(binding.editText.text.toString()))
+        view.findNavController().navigateUp()
     }
 }
