@@ -25,7 +25,7 @@ class ViewModelFactory @Inject constructor(private val creators: Map<Class<out V
 
         try {
             //Return it as the type requested
-            return creator.get() as T
+            @Suppress("UNCHECKED_CAST") return creator.get() as T
         } catch (e: Exception) {
             //Or fail if somehow it's not castable.
             throw RuntimeException(e)
