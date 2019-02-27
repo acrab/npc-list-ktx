@@ -25,22 +25,26 @@ class AddOrganisationFragment : DaggerFragment(), IWithBoth {
 
     private val inputMethodManager: InputMethodManager by inputManager { immFactory }
     private val organisationListViewModel: OrganisationListViewModel by activityViewModels { viewModelFactory }
+    private lateinit var binding: FragmentAddOrganisationBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = FragmentAddOrganisationBinding.inflate(inflater, container, false)
-
-        binding.button.setOnClickListener {
-            inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
-
-            val newOrg = Organisation(
-                binding.organisationTitle.text.toString(),
-                binding.organisationDescription.text.toString()
-            )
-
-            organisationListViewModel.insert(newOrg)
-            it.findNavController().navigateUp()
-        }
-
+        binding = FragmentAddOrganisationBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.view = this
+    }
+
+    fun onContinueButtonPressed(view: View) {
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+
+        val newOrg = Organisation(
+            binding.organisationTitle.text.toString(), binding.organisationDescription.text.toString()
+        )
+
+        organisationListViewModel.insert(newOrg)
+        view.findNavController().navigateUp()
     }
 }
