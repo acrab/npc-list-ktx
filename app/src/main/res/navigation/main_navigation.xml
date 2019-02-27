@@ -31,7 +31,7 @@
             app:popUpTo="@+id/organisationListFragment"
             app:popUpToInclusive="false" />
         <action
-            android:id="@+id/action_organisationListFragment_to_viewOrganisationFragment"
+            android:id="@+id/action_show_selected_organisation"
             app:destination="@id/viewOrganisationFragment" />
     </fragment>
     <fragment

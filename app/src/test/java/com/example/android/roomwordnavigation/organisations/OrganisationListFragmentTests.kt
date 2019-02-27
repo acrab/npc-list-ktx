@@ -163,7 +163,7 @@ class OrganisationListFragmentTests
         @Test
         fun It_Should_Navigate_To_The_Organisation_Details_View()
         {
-            verify(navController).navigate(OrganisationListFragmentDirections.actionOrganisationListFragmentToViewOrganisationFragment(1))
+            verify(navController).navigate(OrganisationListFragmentDirections.actionShowSelectedOrganisation(1))
         }
     }
 }
