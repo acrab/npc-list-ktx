@@ -40,7 +40,7 @@ class AddOrganisationFragmentTests {
 
         fun baseSetup() {
 
-            val (ff, vm, _, imm) = fragmentFactoryWithMockViewModelAndIMM<OrganisationListViewModel>()
+            val (ff, vm, imm) = fragmentFactoryWithMockViewModelAndIMM<OrganisationListViewModel>()
 
             organisationListViewModel = vm
             navController = mock()

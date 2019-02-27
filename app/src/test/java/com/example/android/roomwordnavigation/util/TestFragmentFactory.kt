@@ -35,8 +35,8 @@ inline fun <reified V : ViewModel> fragmentFactoryWithMockViewModel(viewModel: V
 data class ExtendedFragmentFactoryData<V : ViewModel>(
     val fragmentFactory: FragmentWithBothFactory,
     val viewModel: V,
-    val viewModelFactory: ViewModelProvider.Factory,
-    val inputMethodManager: InputMethodManager
+    val inputMethodManager: InputMethodManager,
+    val viewModelFactory: ViewModelProvider.Factory
 )
 
 inline fun <reified V : ViewModel> fragmentFactoryWithMockViewModelAndIMM(): ExtendedFragmentFactoryData<V> =
@@ -58,7 +58,7 @@ inline fun <reified V : ViewModel> fragmentFactoryWithMockViewModelAndIMM(viewMo
 
     val fragFactory = FragmentWithBothFactory(immFactory, viewModelFactory)
 
-    return ExtendedFragmentFactoryData(fragFactory, viewModel, viewModelFactory, inputMethodManager)
+    return ExtendedFragmentFactoryData(fragFactory, viewModel, inputMethodManager, viewModelFactory)
 }
 
 open class FragmentWithViewModelFactory(private val viewModelFactory: ViewModelProvider.Factory) : FragmentFactory() {

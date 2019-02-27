@@ -77,7 +77,7 @@ class AddCharacterEntityFragmentTests {
 
             navController = mock()
 
-            val (ff, vm, _, imm) = fragmentFactoryWithMockViewModelAndIMM<CharacterListViewModel>()
+            val (ff, vm, imm) = fragmentFactoryWithMockViewModelAndIMM<CharacterListViewModel>()
             viewModel = vm
             inputMethodManager = imm
 
