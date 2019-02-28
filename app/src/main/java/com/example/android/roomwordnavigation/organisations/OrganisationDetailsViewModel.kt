@@ -29,6 +29,12 @@ class OrganisationDetailsViewModel @Inject constructor(
         }
     }
 
+    val organisationDescription: LiveData<String?> by lazy {
+        Transformations.map(organisation) { org ->
+            org?.description
+        }
+    }
+
     fun addToOrganisation(characterEntity: CharacterEntity, coroutineContext: CoroutineContext = Dispatchers.IO) {
 
         val orgId = organisationId.value

@@ -46,6 +46,11 @@ class OrganisationDetailsViewModelTests {
         fun The_Organisation_Details_Should_Be_Empty() {
             Assert.assertNull(subject.organisation.value)
         }
+
+        @Test
+        fun The_Organisation_Description_Should_Be_Null() {
+            Assert.assertNull(subject.organisationDescription.value)
+        }
     }
 
     class When_The_Organisation_ID_Is_Set {
@@ -114,6 +119,11 @@ class OrganisationDetailsViewModelTests {
         @Test
         fun The_Organisation_Details_Should_Be_Updated() {
             assert(subject.organisation.observedValue() == organisationData)
+        }
+
+        @Test
+        fun The_Organisation_Description_Should_Be_Updated() {
+            assert(subject.organisationDescription.observedValue() == organisationData.description)
         }
     }
 

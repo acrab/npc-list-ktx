@@ -19,7 +19,7 @@
         android:id="@+id/addCharacterFragment"
         android:name="com.example.android.roomwordnavigation.characters.AddCharacterFragment"
         android:label="@string/add_character_title"
-        tools:layout="@layout/fragment_add_character"/>
+        tools:layout="@layout/fragment_add_character" />
     <fragment
         android:id="@+id/organisationListFragment"
         android:name="com.example.android.roomwordnavigation.organisations.OrganisationListFragment"
@@ -42,12 +42,11 @@
     <fragment
         android:id="@+id/viewOrganisationFragment"
         android:name="com.example.android.roomwordnavigation.organisations.ViewOrganisationFragment"
-        android:label="ViewOrganisationFragment"
-        tools:layout="@layout/fragment_view_organisation" >
+        tools:layout="@layout/fragment_view_organisation">
         <argument
             android:name="organisation_id"
-            app:argType="integer"
-            android:defaultValue="0" />
+            android:defaultValue="0"
+            app:argType="integer" />
         <action
             android:id="@+id/action_viewOrganisationFragment_to_addCharacterToOrganisationFragment"
             app:destination="@id/addCharacterToOrganisationFragment" />

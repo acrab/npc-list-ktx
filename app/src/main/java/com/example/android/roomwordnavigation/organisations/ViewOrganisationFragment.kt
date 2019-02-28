@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -46,13 +47,13 @@ class ViewOrganisationFragment : DaggerFragment(), IWithViewModelFactory, WithFA
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         organisationDetailsViewModel.organisationId.postValue(args.organisationId)
-        })
 
         organisationDetailsViewModel.organisation.observe(this, Observer { org ->
-            org?.let {
-                binding.textView.text = it.description
+            org?.let { data ->
+                (activity as? AppCompatActivity)?.supportActionBar?.title = data.name
             }
         })
+    }
 
     override fun onFABClicked(view: View) {
         view.findNavController().navigate(
