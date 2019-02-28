@@ -30,6 +30,7 @@ class ViewOrganisationFragment : DaggerFragment(), IWithViewModelFactory, WithFA
         val binding = FragmentViewOrganisationBinding.inflate(inflater, container, false)
 
         val orgId = args.organisationId
+        binding.view = this
 
         val recyclerView = binding.memberList
         val adapter = CharacterListAdapter(context!!)
