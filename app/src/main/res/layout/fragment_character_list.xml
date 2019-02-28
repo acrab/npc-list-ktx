@@ -4,19 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.android.roomwordnavigation.characters.CharacterListViewModel" />
+
         <variable
             name="view"
             type="com.example.android.roomwordnavigation.ui.WithFAB" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:showIn="@layout/activity_main">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/character_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/character_list_item"/>
+            app:data="@{viewModel.allCharacters}"
+            tools:listitem="@layout/character_list_item" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"

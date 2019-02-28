@@ -24,25 +24,28 @@ class ViewOrganisationFragment : DaggerFragment(), IWithViewModelFactory, WithFA
     @Inject
     override lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val organisationDetailsViewModel: OrganisationDetailsViewModel by activityViewModels{viewModelFactory}
+    private val organisationDetailsViewModel: OrganisationDetailsViewModel by activityViewModels { viewModelFactory }
+
+    private lateinit var binding: FragmentViewOrganisationBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = FragmentViewOrganisationBinding.inflate(inflater, container, false)
+        binding = FragmentViewOrganisationBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        val orgId = args.organisationId
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.lifecycleOwner = this
+        binding.viewModel = organisationDetailsViewModel
         binding.view = this
 
         val recyclerView = binding.memberList
-        val adapter = CharacterListAdapter(context!!)
+        val adapter = CharacterListAdapter(requireContext())
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(context!!)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        organisationDetailsViewModel.organisationId.postValue(orgId)
-
-        organisationDetailsViewModel.allMembers.observe(this, Observer { members ->
-            members?.let {
-                adapter.setCharacters(it)
-            }
+        organisationDetailsViewModel.organisationId.postValue(args.organisationId)
         })
 
         organisationDetailsViewModel.organisation.observe(this, Observer { org ->

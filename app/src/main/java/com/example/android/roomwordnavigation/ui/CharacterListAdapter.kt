@@ -7,17 +7,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.android.roomwordnavigation.data.CharacterEntity
 import com.example.android.roomwordnavigation.databinding.CharacterListItemBinding
 
-class CharacterListAdapter internal constructor(context: Context, private val onCharacterSelected: (CharacterEntity)->Unit = {}) : RecyclerView.Adapter<CharacterListAdapter.CharacterViewHolder>() {
+class CharacterListAdapter internal constructor(
+    context: Context, private val onCharacterSelected: (CharacterEntity) -> Unit = {}
+) : RecyclerView.Adapter<CharacterListAdapter.CharacterViewHolder>(), BindingListAdapter<CharacterEntity> {
 
-    class CharacterViewHolder(private val wordListItemBinding: CharacterListItemBinding, onCharacterSelected: (CharacterEntity)->Unit) :
-        RecyclerView.ViewHolder(wordListItemBinding.root) {
-        init{
-            wordListItemBinding.root.setOnClickListener{
-                onCharacterSelected(characterEntity!!)
+    class CharacterViewHolder(
+        private val wordListItemBinding: CharacterListItemBinding, onCharacterSelected: (CharacterEntity) -> Unit
+    ) : RecyclerView.ViewHolder(wordListItemBinding.root) {
+        private lateinit var characterEntity: CharacterEntity
+
+        init {
+            wordListItemBinding.root.setOnClickListener {
+                onCharacterSelected(characterEntity)
             }
         }
-
-        private var characterEntity : CharacterEntity? = null
 
         fun setName(characterEntity: CharacterEntity) {
             this.characterEntity = characterEntity
@@ -39,8 +42,8 @@ class CharacterListAdapter internal constructor(context: Context, private val on
         holder.setName(characters[position])
     }
 
-    fun setCharacters(characterEntities: List<CharacterEntity>) {
-        this.characters = characterEntities
+    override fun setData(data: List<CharacterEntity>) {
+        this.characters = data
         notifyDataSetChanged()
     }
 }
