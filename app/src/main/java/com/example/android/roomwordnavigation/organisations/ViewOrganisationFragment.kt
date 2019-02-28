@@ -13,10 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.roomwordnavigation.IWithViewModelFactory
 import com.example.android.roomwordnavigation.databinding.FragmentViewOrganisationBinding
 import com.example.android.roomwordnavigation.ui.CharacterListAdapter
+import com.example.android.roomwordnavigation.ui.WithFAB
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class ViewOrganisationFragment : DaggerFragment(), IWithViewModelFactory {
+class ViewOrganisationFragment : DaggerFragment(), IWithViewModelFactory, WithFAB {
 
     private val args: ViewOrganisationFragmentArgs by navArgs()
 
@@ -49,12 +50,9 @@ class ViewOrganisationFragment : DaggerFragment(), IWithViewModelFactory {
             }
         })
 
-        binding.fab.setOnClickListener {
-            it.findNavController().navigate(
+    override fun onFABClicked(view: View) {
+        view.findNavController().navigate(
             ViewOrganisationFragmentDirections.actionViewOrganisationFragmentToAddCharacterToOrganisationFragment()
         )
-        }
-
-        return binding.root
     }
 }
