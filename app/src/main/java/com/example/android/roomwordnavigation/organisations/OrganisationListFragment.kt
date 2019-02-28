@@ -30,10 +30,10 @@ class OrganisationListFragment : DaggerFragment(), IWithViewModelFactory, WithFA
         binding.view = this
 
         val recyclerView = binding.organisationList
-
-        recyclerView.adapter = OrganisationListAdapter(context!!) {
+        val adapter = OrganisationListAdapter(context!!) {
             findNavController().navigate(OrganisationListFragmentDirections.actionShowSelectedOrganisation(it.id))
         }
+        recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context!!)
 
         organisationListViewModel.allOrganisations.observe(this, Observer { organisations ->
