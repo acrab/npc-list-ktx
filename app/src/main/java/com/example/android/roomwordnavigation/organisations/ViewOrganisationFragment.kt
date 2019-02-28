@@ -6,21 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.android.roomwordnavigation.R
+import com.example.android.roomwordnavigation.IWithViewModelFactory
 import com.example.android.roomwordnavigation.databinding.FragmentViewOrganisationBinding
-import com.example.android.roomwordnavigation.injection.ViewModelFactory
 import com.example.android.roomwordnavigation.ui.CharacterListAdapter
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class ViewOrganisationFragment : DaggerFragment() {
+class ViewOrganisationFragment : DaggerFragment(), IWithViewModelFactory {
+
     private val args: ViewOrganisationFragmentArgs by navArgs()
 
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory
+    override lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val organisationDetailsViewModel: OrganisationDetailsViewModel by activityViewModels{viewModelFactory}
 
@@ -50,10 +51,8 @@ class ViewOrganisationFragment : DaggerFragment() {
 
         binding.fab.setOnClickListener {
             it.findNavController().navigate(
-                ViewOrganisationFragmentDirections.actionViewOrganisationFragmentToAddCharacterToOrganisationFragment(
-                    orgId
-                )
-            )
+            ViewOrganisationFragmentDirections.actionViewOrganisationFragmentToAddCharacterToOrganisationFragment()
+        )
         }
 
         return binding.root
