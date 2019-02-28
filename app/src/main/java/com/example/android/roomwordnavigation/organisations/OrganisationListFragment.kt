@@ -13,10 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.roomwordnavigation.IWithViewModelFactory
 import com.example.android.roomwordnavigation.databinding.FragmentOrganisationListBinding
 import com.example.android.roomwordnavigation.ui.OrganisationListAdapter
+import com.example.android.roomwordnavigation.ui.WithFAB
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class OrganisationListFragment : DaggerFragment(), IWithViewModelFactory {
+class OrganisationListFragment : DaggerFragment(), IWithViewModelFactory, WithFAB {
 
     @Inject
     override lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -26,11 +27,7 @@ class OrganisationListFragment : DaggerFragment(), IWithViewModelFactory {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val binding = FragmentOrganisationListBinding.inflate(inflater, container, false)
-
-        binding.fab.setOnClickListener {
-            it.findNavController()
-                .navigate(OrganisationListFragmentDirections.actionOrganisationListFragmentToAddOrganisationFragment())
-        }
+        binding.view = this
 
         val recyclerView = binding.organisationList
 
@@ -46,5 +43,10 @@ class OrganisationListFragment : DaggerFragment(), IWithViewModelFactory {
         })
 
         return binding.root
+    }
+
+    override fun onFABClicked(view: View) {
+        view.findNavController()
+            .navigate(OrganisationListFragmentDirections.actionOrganisationListFragmentToAddOrganisationFragment())
     }
 }
