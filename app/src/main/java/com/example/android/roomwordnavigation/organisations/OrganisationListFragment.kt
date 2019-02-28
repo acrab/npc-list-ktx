@@ -8,11 +8,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.roomwordnavigation.IWithViewModelFactory
 import com.example.android.roomwordnavigation.databinding.FragmentOrganisationListBinding
 import com.example.android.roomwordnavigation.ui.OrganisationListAdapter
 import com.example.android.roomwordnavigation.ui.WithFAB
+import com.example.android.roomwordnavigation.ui.setupLinearWithAdapter
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -37,12 +37,9 @@ class OrganisationListFragment : DaggerFragment(), IWithViewModelFactory, WithFA
         binding.viewModel = organisationListViewModel
         binding.view = this
 
-        val recyclerView = binding.organisationList
-        val adapter = OrganisationListAdapter(context!!) {
+        binding.organisationList.setupLinearWithAdapter(requireContext(), OrganisationListAdapter(context!!) {
             findNavController().navigate(OrganisationListFragmentDirections.actionShowSelectedOrganisation(it.id))
-        }
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(context!!)
+        })
     }
 
     override fun onFABClicked(view: View) {
