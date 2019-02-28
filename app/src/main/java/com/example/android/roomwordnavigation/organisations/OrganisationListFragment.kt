@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -24,9 +23,18 @@ class OrganisationListFragment : DaggerFragment(), IWithViewModelFactory, WithFA
 
     private val organisationListViewModel: OrganisationListViewModel by activityViewModels { viewModelFactory }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    private lateinit var binding: FragmentOrganisationListBinding
 
-        val binding = FragmentOrganisationListBinding.inflate(inflater, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = FragmentOrganisationListBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.lifecycleOwner = this
+        binding.viewModel = organisationListViewModel
         binding.view = this
 
         val recyclerView = binding.organisationList
@@ -35,14 +43,6 @@ class OrganisationListFragment : DaggerFragment(), IWithViewModelFactory, WithFA
         }
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context!!)
-
-        organisationListViewModel.allOrganisations.observe(this, Observer { organisations ->
-            organisations?.let {
-                adapter.setOrganisations(it)
-            }
-        })
-
-        return binding.root
     }
 
     override fun onFABClicked(view: View) {

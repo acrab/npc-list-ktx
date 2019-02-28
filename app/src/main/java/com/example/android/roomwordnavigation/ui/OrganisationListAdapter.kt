@@ -7,14 +7,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.android.roomwordnavigation.data.Organisation
 import com.example.android.roomwordnavigation.databinding.CharacterListItemBinding
 
-class OrganisationListAdapter internal constructor(context: Context, private val onOrganisationSelected: (Organisation)->Unit) : RecyclerView.Adapter<OrganisationListAdapter.OrganisationViewHolder>() {
+class OrganisationListAdapter internal constructor(context: Context, private val onOrganisationSelected: (Organisation)->Unit)
+    : RecyclerView.Adapter<OrganisationListAdapter.OrganisationViewHolder>(), BindingListAdapter<Organisation> {
 
     class OrganisationViewHolder(private val listItemBinding: CharacterListItemBinding, onOrganisationSelected: (Organisation)->Unit) :
         RecyclerView.ViewHolder(listItemBinding.root) {
-        private var organisation: Organisation? = null
+        private lateinit var organisation: Organisation
+
         init{
             listItemBinding.root.setOnClickListener{
-                onOrganisationSelected(organisation!!)
+                onOrganisationSelected(organisation)
             }
         }
 
@@ -38,8 +40,8 @@ class OrganisationListAdapter internal constructor(context: Context, private val
         holder.setOrganisation(organisations[position])
     }
 
-    fun setOrganisations(organisations: List<Organisation>) {
-        this.organisations = organisations
+    override fun setData(data: List<Organisation>) {
+        this.organisations = data
         notifyDataSetChanged()
     }
 }
