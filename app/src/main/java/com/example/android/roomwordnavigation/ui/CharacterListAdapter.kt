@@ -12,19 +12,19 @@ class CharacterListAdapter internal constructor(
 ) : RecyclerView.Adapter<CharacterListAdapter.CharacterViewHolder>(), BindingListAdapter<CharacterEntity> {
 
     class CharacterViewHolder(
-        private val wordListItemBinding: CharacterListItemBinding, onCharacterSelected: (CharacterEntity) -> Unit
-    ) : RecyclerView.ViewHolder(wordListItemBinding.root) {
+        private val characterListItemBinding: CharacterListItemBinding, onCharacterSelected: (CharacterEntity) -> Unit
+    ) : RecyclerView.ViewHolder(characterListItemBinding.root) {
         private lateinit var characterEntity: CharacterEntity
 
         init {
-            wordListItemBinding.root.setOnClickListener {
+            characterListItemBinding.root.setOnClickListener {
                 onCharacterSelected(characterEntity)
             }
         }
 
         fun setName(characterEntity: CharacterEntity) {
             this.characterEntity = characterEntity
-            wordListItemBinding.wordView.text = characterEntity.name
+            characterListItemBinding.wordView.text = characterEntity.name
         }
     }
 
