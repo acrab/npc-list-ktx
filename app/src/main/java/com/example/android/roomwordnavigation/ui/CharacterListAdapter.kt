@@ -11,23 +11,6 @@ class CharacterListAdapter internal constructor(
     context: Context, private val onCharacterSelected: (CharacterEntity) -> Unit = {}
 ) : RecyclerView.Adapter<CharacterListAdapter.CharacterViewHolder>(), BindingListAdapter<CharacterEntity> {
 
-    class CharacterViewHolder(
-        private val characterListItemBinding: CharacterListItemBinding, onCharacterSelected: (CharacterEntity) -> Unit
-    ) : RecyclerView.ViewHolder(characterListItemBinding.root) {
-        private lateinit var characterEntity: CharacterEntity
-
-        init {
-            characterListItemBinding.root.setOnClickListener {
-                onCharacterSelected(characterEntity)
-            }
-        }
-
-        fun setName(characterEntity: CharacterEntity) {
-            this.characterEntity = characterEntity
-            characterListItemBinding.wordView.text = characterEntity.name
-        }
-    }
-
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     private var characters = emptyList<CharacterEntity>()
@@ -45,5 +28,22 @@ class CharacterListAdapter internal constructor(
     override fun setData(data: List<CharacterEntity>) {
         this.characters = data
         notifyDataSetChanged()
+    }
+
+    class CharacterViewHolder(
+        private val characterListItemBinding: CharacterListItemBinding, onCharacterSelected: (CharacterEntity) -> Unit
+    ) : RecyclerView.ViewHolder(characterListItemBinding.root) {
+        private lateinit var characterEntity: CharacterEntity
+
+        init {
+            characterListItemBinding.root.setOnClickListener {
+                onCharacterSelected(characterEntity)
+            }
+        }
+
+        fun setName(characterEntity: CharacterEntity) {
+            this.characterEntity = characterEntity
+            characterListItemBinding.wordView.text = characterEntity.name
+        }
     }
 }
