@@ -13,10 +13,11 @@ import com.example.android.roomwordnavigation.IWithViewModelFactory
 import com.example.android.roomwordnavigation.R
 import com.example.android.roomwordnavigation.databinding.FragmentCharacterListBinding
 import com.example.android.roomwordnavigation.ui.CharacterListAdapter
+import com.example.android.roomwordnavigation.ui.WithFAB
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class CharacterListFragment : DaggerFragment(), IWithViewModelFactory {
+class CharacterListFragment : DaggerFragment(), IWithViewModelFactory, WithFAB {
     @Inject
     override lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -25,10 +26,7 @@ class CharacterListFragment : DaggerFragment(), IWithViewModelFactory {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val binding = FragmentCharacterListBinding.inflate(inflater, container, false)
-        binding.fab.setOnClickListener {
-            it.findNavController()
-                .navigate(CharacterListFragmentDirections.actionCharacterListFragmentToAddCharacterFragment())
-        }
+        binding.view = this
         val recyclerView = binding.characterList
         val adapter = CharacterListAdapter(context!!)
         recyclerView.adapter = adapter
@@ -48,7 +46,8 @@ class CharacterListFragment : DaggerFragment(), IWithViewModelFactory {
         inflater.inflate(R.menu.overflow_menu, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return NavigationUI.onNavDestinationSelected(item, view!!.findNavController()) || super.onOptionsItemSelected(item)
+    override fun onFABClicked(view: View) {
+        view.findNavController()
+            .navigate(CharacterListFragmentDirections.actionCharacterListFragmentToAddCharacterFragment())
     }
 }

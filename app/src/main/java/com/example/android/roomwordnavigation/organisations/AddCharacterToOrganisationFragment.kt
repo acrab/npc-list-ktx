@@ -15,10 +15,11 @@ import com.example.android.roomwordnavigation.IWithViewModelFactory
 import com.example.android.roomwordnavigation.characters.CharacterListViewModel
 import com.example.android.roomwordnavigation.databinding.FragmentCharacterListBinding
 import com.example.android.roomwordnavigation.ui.CharacterListAdapter
+import com.example.android.roomwordnavigation.ui.WithFAB
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class AddCharacterToOrganisationFragment : DaggerFragment(), IWithViewModelFactory {
+class AddCharacterToOrganisationFragment : DaggerFragment(), IWithViewModelFactory, WithFAB {
 
     @Inject
     override lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -30,6 +31,7 @@ class AddCharacterToOrganisationFragment : DaggerFragment(), IWithViewModelFacto
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentCharacterListBinding.inflate(inflater, container, false)
+        binding.view = this
 
         organisationDetailsViewModel.organisationId.postValue(args.organisationId)
 
@@ -54,5 +56,10 @@ class AddCharacterToOrganisationFragment : DaggerFragment(), IWithViewModelFacto
         }
 
         return binding.root
+    }
+
+    override fun onFABClicked(view: View) {
+        view.findNavController()
+            .navigate(AddCharacterToOrganisationFragmentDirections.actionAddCharacterToOrganisationFragmentToAddCharacterFragment())
     }
 }
