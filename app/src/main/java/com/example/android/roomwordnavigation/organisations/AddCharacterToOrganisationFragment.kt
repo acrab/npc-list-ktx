@@ -9,7 +9,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.roomwordnavigation.IWithViewModelFactory
 import com.example.android.roomwordnavigation.characters.CharacterListViewModel
@@ -27,13 +26,10 @@ class AddCharacterToOrganisationFragment : DaggerFragment(), IWithViewModelFacto
     private val organisationDetailsViewModel: OrganisationDetailsViewModel by activityViewModels { viewModelFactory }
     private val characterListViewModel: CharacterListViewModel by activityViewModels { viewModelFactory }
 
-    private val args: AddCharacterToOrganisationFragmentArgs by navArgs()
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentCharacterListBinding.inflate(inflater, container, false)
         binding.view = this
 
-        organisationDetailsViewModel.organisationId.postValue(args.organisationId)
 
         val recyclerView = binding.characterList
         val adapter = CharacterListAdapter(context!!) {

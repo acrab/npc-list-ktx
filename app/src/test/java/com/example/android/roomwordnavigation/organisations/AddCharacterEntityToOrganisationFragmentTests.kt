@@ -3,7 +3,6 @@
 package com.example.android.roomwordnavigation.organisations
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.core.os.bundleOf
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.lifecycle.*
@@ -44,7 +43,6 @@ class AddCharacterEntityToOrganisationFragmentTests {
         private lateinit var scenario: FragmentScenario<AddCharacterToOrganisationFragment>
         protected lateinit var characterLiveData: LiveData<List<CharacterEntity>>
         protected lateinit var characterListViewModel: CharacterListViewModel
-        protected lateinit var organisationIdLiveData: MutableLiveData<Int>
         protected lateinit var organisationDetailsViewModel: OrganisationDetailsViewModel
         private lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -64,10 +62,8 @@ class AddCharacterEntityToOrganisationFragmentTests {
         {
             navController = mock()
 
-            organisationIdLiveData = mock()
-
             organisationDetailsViewModel = mock {
-                on { organisationId } doReturn organisationIdLiveData
+                on { organisationId } doReturn mock()
             }
 
             characterListViewModel = mock {
@@ -85,7 +81,6 @@ class AddCharacterEntityToOrganisationFragmentTests {
             }
 
             scenario = launchFragmentInContainer<AddCharacterToOrganisationFragment>(
-                fragmentArgs = AddCharacterToOrganisationFragmentArgs(1).toBundle(),
                 factory = FragmentWithViewModelFactory(viewModelFactory)
             ).onFragment {
                 Navigation.setViewNavController(it.view!!, navController)
@@ -109,12 +104,6 @@ class AddCharacterEntityToOrganisationFragmentTests {
         fun It_Should_Observe_All_Characters() {
             verify(characterListViewModel).allCharacters
             verify(characterLiveData).observe(any(), any())
-        }
-
-        @Test
-        fun It_Should_Set_The_Organisation_ID() {
-            verify(organisationDetailsViewModel).organisationId
-            verify(organisationIdLiveData).postValue(any())
         }
     }
 

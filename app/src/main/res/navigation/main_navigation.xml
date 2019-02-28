@@ -57,10 +57,6 @@
         android:name="com.example.android.roomwordnavigation.organisations.AddCharacterToOrganisationFragment"
         android:label="AddCharacterToOrganisationFragment"
         tools:layout="@layout/fragment_character_list">
-        <argument
-            android:name="organisation_id"
-            app:argType="integer"
-            android:defaultValue="0" />
         <action
             android:id="@+id/action_addCharacterToOrganisationFragment_to_addCharacterFragment"
             app:destination="@id/addCharacterFragment"

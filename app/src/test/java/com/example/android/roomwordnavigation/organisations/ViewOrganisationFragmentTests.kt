@@ -181,9 +181,7 @@ class ViewOrganisationFragmentTests {
         @Test
         fun It_Should_Navigate_To_The_AddToOrganisation_View() {
             verify(navController).navigate(
-                ViewOrganisationFragmentDirections.actionViewOrganisationFragmentToAddCharacterToOrganisationFragment(
-                    1
-                )
+                ViewOrganisationFragmentDirections.actionViewOrganisationFragmentToAddCharacterToOrganisationFragment()
             )
         }
     }
