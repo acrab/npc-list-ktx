@@ -17,7 +17,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.android.roomwordnavigation.R
 import com.example.android.roomwordnavigation.TestApp
-import com.example.android.roomwordnavigation.data.Organisation
+import com.example.android.roomwordnavigation.data.OrganisationSummary
 import com.example.android.roomwordnavigation.util.fragmentFactoryWithMockViewModel
 import com.example.android.roomwordnavigation.util.withRecyclerView
 import com.nhaarman.mockitokotlin2.any
@@ -42,7 +42,7 @@ class OrganisationListFragmentTests
         private lateinit var subject: FragmentScenario<OrganisationListFragment>
         protected lateinit var navController: NavController
         protected lateinit var viewModel: OrganisationListViewModel
-        protected lateinit var allOrganisations : LiveData<List<Organisation>>
+        protected lateinit var allOrganisations : LiveData<List<OrganisationSummary>>
 
         protected fun commonSetup()
         {
@@ -89,7 +89,7 @@ class OrganisationListFragmentTests
     @Config(application = TestApp::class)
     class When_The_Organisation_List_Is_Updated : CommonSetup()
     {
-        private lateinit var organisationData : MutableLiveData<List<Organisation>>
+        private lateinit var organisationData : MutableLiveData<List<OrganisationSummary>>
 
         @Before
         fun setup()
@@ -102,7 +102,7 @@ class OrganisationListFragmentTests
 
             commonSetup()
 
-            organisationData.postValue(listOf(Organisation("Bob's club", "A test organsiation", 1)))
+            organisationData.postValue(listOf(OrganisationSummary("Bob's club",1)))
         }
 
         @Test
@@ -147,7 +147,7 @@ class OrganisationListFragmentTests
         @Before
         fun setup()
         {
-            val organisationData = MutableLiveData<List<Organisation>>()
+            val organisationData = MutableLiveData<List<OrganisationSummary>>()
 
             viewModel = mock{
                 on { allOrganisations } doReturn organisationData
@@ -155,7 +155,7 @@ class OrganisationListFragmentTests
 
             commonSetup()
 
-            organisationData.postValue(listOf(Organisation("Bob's club", "A test organsiation", 1)))
+            organisationData.postValue(listOf(OrganisationSummary("Bob's club", 1)))
 
             onView(withRecyclerView(R.id.organisation_list).atPosition(0)).perform(ViewActions.click())
         }

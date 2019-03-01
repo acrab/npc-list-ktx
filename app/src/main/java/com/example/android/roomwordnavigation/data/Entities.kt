@@ -11,6 +11,9 @@ data class Organisation(@ColumnInfo(name = "name") val name: String,
                         @ColumnInfo(name = "description") val description: String,
                         @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Int = 0)
 
+data class OrganisationSummary(@ColumnInfo(name = "name") val name: String,
+                               @ColumnInfo(name = "id") val id: Int = 0)
+
 @Entity(
     tableName = "characters_in_organisations_table",
     foreignKeys = [ForeignKey(entity = CharacterEntity::class, parentColumns = ["id"], childColumns = ["character"], onDelete = ForeignKey.CASCADE),

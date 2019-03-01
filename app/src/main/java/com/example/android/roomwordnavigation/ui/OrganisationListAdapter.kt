@@ -4,15 +4,15 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.roomwordnavigation.data.Organisation
+import com.example.android.roomwordnavigation.data.OrganisationSummary
 import com.example.android.roomwordnavigation.databinding.CharacterListItemBinding
 
-class OrganisationListAdapter internal constructor(context: Context, private val onOrganisationSelected: (Organisation)->Unit)
-    : RecyclerView.Adapter<OrganisationListAdapter.OrganisationViewHolder>(), BindingListAdapter<Organisation> {
+class OrganisationListAdapter internal constructor(context: Context, private val onOrganisationSelected: (OrganisationSummary)->Unit)
+    : RecyclerView.Adapter<OrganisationListAdapter.OrganisationViewHolder>(), BindingListAdapter<OrganisationSummary> {
 
-    class OrganisationViewHolder(private val listItemBinding: CharacterListItemBinding, onOrganisationSelected: (Organisation)->Unit) :
+    class OrganisationViewHolder(private val listItemBinding: CharacterListItemBinding, onOrganisationSelected: (OrganisationSummary)->Unit) :
         RecyclerView.ViewHolder(listItemBinding.root) {
-        private lateinit var organisation: Organisation
+        private lateinit var organisation: OrganisationSummary
 
         init{
             listItemBinding.root.setOnClickListener{
@@ -20,7 +20,7 @@ class OrganisationListAdapter internal constructor(context: Context, private val
             }
         }
 
-        fun setOrganisation(organisation: Organisation) {
+        fun setOrganisation(organisation: OrganisationSummary) {
             listItemBinding.wordView.text = organisation.name
             this.organisation = organisation
         }
@@ -28,7 +28,7 @@ class OrganisationListAdapter internal constructor(context: Context, private val
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
-    private var organisations = emptyList<Organisation>()
+    private var organisations = emptyList<OrganisationSummary>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrganisationViewHolder {
         return OrganisationViewHolder(CharacterListItemBinding.inflate(inflater), onOrganisationSelected)
@@ -40,7 +40,7 @@ class OrganisationListAdapter internal constructor(context: Context, private val
         holder.setOrganisation(organisations[position])
     }
 
-    override fun setData(data: List<Organisation>) {
+    override fun setData(data: List<OrganisationSummary>) {
         this.organisations = data
         notifyDataSetChanged()
     }
