@@ -14,12 +14,6 @@ allOpen {
     annotation("com.android.example.roomwordnavigation.testing.OpenForTesting")
 }
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}
-
 android {
     compileSdkVersion 28
     dataBinding {
@@ -50,10 +44,7 @@ android {
             includeAndroidResources = true
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
+
 }
 
 dependencies {
