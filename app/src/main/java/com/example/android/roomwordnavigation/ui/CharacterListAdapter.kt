@@ -3,44 +3,31 @@ package com.example.android.roomwordnavigation.ui
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.roomwordnavigation.data.CharacterEntity
 import com.example.android.roomwordnavigation.databinding.CharacterListItemBinding
 
-class CharacterListAdapter internal constructor(
-    context: Context, private val onCharacterSelected: (CharacterEntity) -> Unit = {}
-) : RecyclerView.Adapter<CharacterListAdapter.CharacterViewHolder>(), BindingListAdapter<CharacterEntity> {
+class CharacterListAdapter(context: Context, private val onCharacterSelected: (CharacterEntity) -> Unit = {}) :
+    ListAdapter<CharacterEntity, CharacterListAdapter.CharacterViewHolder>(diffCallback),
+    BindingListAdapter<CharacterEntity> {
 
-    private val inflater: LayoutInflater = LayoutInflater.from(context)
-
-    private val listDiffer = AsyncListDiffer<CharacterEntity>(this, diffCallback)
+    private val inflater = LayoutInflater.from(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
         return CharacterViewHolder(CharacterListItemBinding.inflate(inflater), onCharacterSelected)
     }
 
-    override fun getItemCount(): Int = listDiffer.currentList.size
-
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
-        holder.setName(listDiffer.currentList[position])
-    }
-
-    override fun setData(data: List<CharacterEntity>) {
-        listDiffer.submitList(data)
+        holder.setName(getItem(position))
     }
 
     companion object {
-        val diffCallback = object : DiffUtil.ItemCallback<CharacterEntity>()
-        {
-            override fun areContentsTheSame(oldItem: CharacterEntity, newItem: CharacterEntity): Boolean {
-                return oldItem == newItem
-            }
+        val diffCallback = object : DiffUtil.ItemCallback<CharacterEntity>() {
+            override fun areContentsTheSame(oldItem: CharacterEntity, newItem: CharacterEntity) = oldItem == newItem
 
-            override fun areItemsTheSame(oldItem: CharacterEntity, newItem: CharacterEntity): Boolean {
-                return oldItem.id == newItem.id
-            }
+            override fun areItemsTheSame(oldItem: CharacterEntity, newItem: CharacterEntity) = oldItem.id == newItem.id
         }
     }
 

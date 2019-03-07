@@ -12,13 +12,12 @@ fun RecyclerView.setupLinearWithAdapter(context: Context, adapter: RecyclerView.
 
 @BindingAdapter("data")
 fun <T> setData(recyclerView: RecyclerView, data: List<T>?) {
-    if (data == null) return
     val adapter = recyclerView.adapter
     if (adapter is BindingListAdapter<*>) {
-        @Suppress("UNCHECKED_CAST") (adapter as BindingListAdapter<T>).setData(data)
+        @Suppress("UNCHECKED_CAST") (adapter as BindingListAdapter<T>).submitList(data)
     }
 }
 
 interface BindingListAdapter<T> {
-    fun setData(data: List<T>)
+    fun submitList(data: List<T>?)
 }
