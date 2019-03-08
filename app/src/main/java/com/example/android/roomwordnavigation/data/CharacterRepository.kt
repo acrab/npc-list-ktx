@@ -2,6 +2,7 @@ package com.example.android.roomwordnavigation.data
 
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
+import com.example.android.roomwordnavigation.data.entities.CharacterEntity
 import javax.inject.Inject
 
 class CharacterRepository @Inject constructor(private val CharacterDao: CharacterDao) : ICharacterRepository {

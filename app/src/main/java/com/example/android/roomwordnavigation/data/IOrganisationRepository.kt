@@ -2,6 +2,8 @@ package com.example.android.roomwordnavigation.data
 
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
+import com.example.android.roomwordnavigation.data.entities.Organisation
+import com.example.android.roomwordnavigation.data.entities.OrganisationSummary
 
 interface IOrganisationRepository {
 

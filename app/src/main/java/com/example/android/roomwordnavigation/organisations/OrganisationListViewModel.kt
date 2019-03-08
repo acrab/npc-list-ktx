@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import com.android.example.roomwordnavigation.testing.OpenForTesting
 import com.example.android.roomwordnavigation.ViewModelWithCoroutineScope
 import com.example.android.roomwordnavigation.data.IOrganisationRepository
-import com.example.android.roomwordnavigation.data.Organisation
-import com.example.android.roomwordnavigation.data.OrganisationSummary
+import com.example.android.roomwordnavigation.data.entities.Organisation
+import com.example.android.roomwordnavigation.data.entities.OrganisationSummary
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject

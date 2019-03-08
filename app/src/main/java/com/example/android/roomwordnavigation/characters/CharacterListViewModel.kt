@@ -3,8 +3,8 @@ package com.example.android.roomwordnavigation.characters
 import androidx.lifecycle.LiveData
 import com.android.example.roomwordnavigation.testing.OpenForTesting
 import com.example.android.roomwordnavigation.ViewModelWithCoroutineScope
-import com.example.android.roomwordnavigation.data.CharacterEntity
 import com.example.android.roomwordnavigation.data.ICharacterRepository
+import com.example.android.roomwordnavigation.data.entities.CharacterEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
