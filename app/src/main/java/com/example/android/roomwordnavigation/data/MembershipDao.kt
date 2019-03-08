@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import com.example.android.roomwordnavigation.data.entities.CharacterEntity
+import com.example.android.roomwordnavigation.data.entities.OrganisationMembership
 
 @Dao
 interface MembershipDao {

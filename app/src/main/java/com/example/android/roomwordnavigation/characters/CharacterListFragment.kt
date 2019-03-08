@@ -1,9 +1,7 @@
 package com.example.android.roomwordnavigation.characters
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -16,6 +14,7 @@ import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 class CharacterListFragment : DaggerFragment(), IWithViewModelFactory, WithFAB {
+
     @Inject
     override lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -24,12 +23,12 @@ class CharacterListFragment : DaggerFragment(), IWithViewModelFactory, WithFAB {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentCharacterListBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = this
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.lifecycleOwner = this
         binding.view = this
         binding.viewModel = characterListViewModel
         binding.characterList.setupLinearWithAdapter(requireContext(), CharacterListAdapter(requireContext()))

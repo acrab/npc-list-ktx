@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import com.example.android.roomwordnavigation.data.entities.CharacterEntity
 
 @Dao
 interface CharacterDao {

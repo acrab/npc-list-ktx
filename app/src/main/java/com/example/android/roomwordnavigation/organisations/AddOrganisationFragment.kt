@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.android.roomwordnavigation.IWithBoth
 import com.example.android.roomwordnavigation.InputMethodManagerFactory
-import com.example.android.roomwordnavigation.data.Organisation
+import com.example.android.roomwordnavigation.data.entities.Organisation
 import com.example.android.roomwordnavigation.databinding.FragmentAddOrganisationBinding
 import com.example.android.roomwordnavigation.inputManager
 import dagger.android.support.DaggerFragment

@@ -5,7 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.android.example.roomwordnavigation.testing.OpenForTesting
 import com.example.android.roomwordnavigation.ViewModelWithCoroutineScope
-import com.example.android.roomwordnavigation.data.*
+import com.example.android.roomwordnavigation.data.IMembershipRepository
+import com.example.android.roomwordnavigation.data.IOrganisationRepository
+import com.example.android.roomwordnavigation.data.entities.CharacterEntity
+import com.example.android.roomwordnavigation.data.entities.Organisation
+import com.example.android.roomwordnavigation.data.entities.OrganisationMembership
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject

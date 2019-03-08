@@ -6,6 +6,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import com.example.android.roomwordnavigation.data.IOrganisationRepository
 import com.example.android.roomwordnavigation.data.Organisation
+import com.example.android.roomwordnavigation.data.OrganisationSummary
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
@@ -28,20 +29,20 @@ class OrganisationListViewModelTests {
 
         private lateinit var subject: OrganisationListViewModel
         private lateinit var organisationRepository: IOrganisationRepository
-        private lateinit var data: LiveData<List<Organisation>>
+        private lateinit var data: LiveData<List<OrganisationSummary>>
         @Before
         fun setup() {
             data = mock()
 
             organisationRepository = mock {
-                on { allOrganisations } doReturn data
+                on { allOrganisationSummary } doReturn data
             }
             subject = OrganisationListViewModel(organisationRepository)
         }
 
         @Test
         fun It_Should_Get_The_List_Of_Organisations() {
-            verify(organisationRepository).allOrganisations
+            verify(organisationRepository).allOrganisationSummary
         }
 
         @Test

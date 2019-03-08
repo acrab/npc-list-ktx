@@ -4,6 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.android.roomwordnavigation.data.entities.CharacterEntity
+import com.example.android.roomwordnavigation.data.entities.Organisation
+import com.example.android.roomwordnavigation.data.entities.OrganisationMembership
 
 @Database(entities = [CharacterEntity::class, Organisation::class, OrganisationMembership::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {

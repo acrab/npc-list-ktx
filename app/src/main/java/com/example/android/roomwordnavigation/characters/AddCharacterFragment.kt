@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.android.roomwordnavigation.IWithBoth
 import com.example.android.roomwordnavigation.InputMethodManagerFactory
+import com.example.android.roomwordnavigation.data.entities.CharacterEntity
 import com.example.android.roomwordnavigation.databinding.FragmentAddCharacterBinding
 import com.example.android.roomwordnavigation.inputManager
 import dagger.android.support.DaggerFragment
@@ -40,7 +41,7 @@ class AddCharacterFragment : DaggerFragment(), IWithBoth {
 
     fun onContinueButtonClicked(view: View) {
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
-        characterListViewModel.insert(com.example.android.roomwordnavigation.data.CharacterEntity(binding.editText.text.toString()))
+        characterListViewModel.insert(CharacterEntity(binding.editText.text.toString()))
         view.findNavController().navigateUp()
     }
 }
