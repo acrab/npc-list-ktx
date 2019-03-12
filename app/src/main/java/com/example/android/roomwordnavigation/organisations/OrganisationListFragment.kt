@@ -11,12 +11,12 @@ import androidx.navigation.fragment.findNavController
 import com.example.android.roomwordnavigation.IWithViewModelFactory
 import com.example.android.roomwordnavigation.databinding.FragmentOrganisationListBinding
 import com.example.android.roomwordnavigation.ui.OrganisationListAdapter
-import com.example.android.roomwordnavigation.ui.WithFAB
+import com.example.android.roomwordnavigation.ui.WithSingleButton
 import com.example.android.roomwordnavigation.ui.setupLinearWithAdapter
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class OrganisationListFragment : DaggerFragment(), IWithViewModelFactory, WithFAB {
+class OrganisationListFragment : DaggerFragment(), IWithViewModelFactory, WithSingleButton {
 
     @Inject
     override lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -42,7 +42,7 @@ class OrganisationListFragment : DaggerFragment(), IWithViewModelFactory, WithFA
         })
     }
 
-    override fun onFABClicked(view: View) {
+    override fun onButtonClicked(view: View) {
         view.findNavController()
             .navigate(OrganisationListFragmentDirections.actionOrganisationListFragmentToAddOrganisationFragment())
     }
