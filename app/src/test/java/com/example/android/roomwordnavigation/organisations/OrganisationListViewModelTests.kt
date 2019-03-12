@@ -5,8 +5,8 @@ package com.example.android.roomwordnavigation.organisations
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import com.example.android.roomwordnavigation.data.IOrganisationRepository
-import com.example.android.roomwordnavigation.data.Organisation
-import com.example.android.roomwordnavigation.data.OrganisationSummary
+import com.example.android.roomwordnavigation.data.entities.Organisation
+import com.example.android.roomwordnavigation.data.entities.OrganisationSummary
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify

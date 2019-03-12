@@ -20,7 +20,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.android.roomwordnavigation.R
 import com.example.android.roomwordnavigation.TestApp
-import com.example.android.roomwordnavigation.data.CharacterEntity
+import com.example.android.roomwordnavigation.data.entities.CharacterEntity
 import com.example.android.roomwordnavigation.util.fragmentFactoryWithMockViewModel
 import com.example.android.roomwordnavigation.util.withRecyclerView
 import com.nhaarman.mockitokotlin2.doReturn

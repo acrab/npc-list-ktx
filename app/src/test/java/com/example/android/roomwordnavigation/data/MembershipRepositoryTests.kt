@@ -3,6 +3,8 @@
 package com.example.android.roomwordnavigation.data
 
 import androidx.lifecycle.LiveData
+import com.example.android.roomwordnavigation.data.entities.CharacterEntity
+import com.example.android.roomwordnavigation.data.entities.OrganisationMembership
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
