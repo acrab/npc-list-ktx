@@ -95,7 +95,7 @@ class CharacterEntityListFragmentTests {
         @Before
         fun setup() {
             navController = mock()
-            characterEntityData = MutableLiveData(emptyList())
+            characterEntityData = MutableLiveData()
 
             val(ff, vm, vmf) = fragmentFactoryWithMockViewModel<CharacterListViewModel>{
                 on { allCharacters } doReturn characterEntityData
@@ -141,7 +141,7 @@ class CharacterEntityListFragmentTests {
 
         @Before
         fun setup() {
-            characterEntityData = MutableLiveData(emptyList())
+            characterEntityData = MutableLiveData()
 
             val(ff, vm, vmf) = fragmentFactoryWithMockViewModel<CharacterListViewModel>{
                 on { allCharacters } doReturn characterEntityData
