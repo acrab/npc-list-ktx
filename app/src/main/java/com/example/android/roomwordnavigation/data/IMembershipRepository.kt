@@ -9,5 +9,10 @@ interface IMembershipRepository {
     @WorkerThread
     fun createMembership(membership: OrganisationMembership)
 
+    @WorkerThread
+    fun deleteMembership(membership: OrganisationMembership)
+
     fun getMembers(organisationId: Int) : LiveData<List<CharacterEntity>>
+
+    fun getMembershipStatuses(organisationId:Int) : LiveData<List<MembershipStatus>>
 }

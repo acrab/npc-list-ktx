@@ -13,8 +13,18 @@ class MembershipRepository(private val membershipDao: MembershipDao) : IMembersh
         membershipDao.createMembership(membership)
     }
 
+    @WorkerThread
+    override fun deleteMembership(membership: OrganisationMembership) {
+        membershipDao.deleteMembership(membership)
+    }
+
     override fun getMembers(organisationId:Int) : LiveData<List<CharacterEntity>>
     {
         return membershipDao.getMembers(organisationId)
+    }
+
+    override fun getMembershipStatuses(organisationId:Int) : LiveData<List<MembershipStatus>>
+    {
+        return membershipDao.getMembershipStatus(organisationId)
     }
 }

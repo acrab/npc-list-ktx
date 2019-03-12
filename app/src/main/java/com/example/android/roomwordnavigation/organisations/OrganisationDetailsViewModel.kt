@@ -7,6 +7,7 @@ import com.android.example.roomwordnavigation.testing.OpenForTesting
 import com.example.android.roomwordnavigation.ViewModelWithCoroutineScope
 import com.example.android.roomwordnavigation.data.IMembershipRepository
 import com.example.android.roomwordnavigation.data.IOrganisationRepository
+import com.example.android.roomwordnavigation.data.MembershipStatus
 import com.example.android.roomwordnavigation.data.entities.CharacterEntity
 import com.example.android.roomwordnavigation.data.entities.Organisation
 import com.example.android.roomwordnavigation.data.entities.OrganisationMembership
@@ -24,6 +25,12 @@ class OrganisationDetailsViewModel @Inject constructor(
     val allMembers: LiveData<List<CharacterEntity>> by lazy {
         Transformations.switchMap(organisationId) { orgId ->
             orgId?.let { membershipRepository.getMembers(it) }
+        }
+    }
+
+    val membershipStatuses: LiveData<List<MembershipStatus>> by lazy {
+        Transformations.switchMap(organisationId) { orgId ->
+            orgId?.let { membershipRepository.getMembershipStatuses(it) }
         }
     }
 
@@ -46,6 +53,26 @@ class OrganisationDetailsViewModel @Inject constructor(
 
         scope.launch(coroutineContext) {
             membershipRepository.createMembership(OrganisationMembership(characterEntity.id, orgId))
+        }
+    }
+
+    fun addToOrganisation(character: Int, coroutineContext: CoroutineContext = Dispatchers.IO) {
+
+        val orgId = organisationId.value
+            ?: throw IllegalStateException("Must set organisationId before adding a characterEntity")
+
+        scope.launch(coroutineContext) {
+            membershipRepository.createMembership(OrganisationMembership(character, orgId))
+        }
+    }
+
+    fun removeFromOrganisation(character: Int, coroutineContext: CoroutineContext = Dispatchers.IO) {
+
+        val orgId = organisationId.value
+            ?: throw IllegalStateException("Must set organisationId before adding a characterEntity")
+
+        scope.launch(coroutineContext) {
+            membershipRepository.deleteMembership(OrganisationMembership(character, orgId))
         }
     }
 }

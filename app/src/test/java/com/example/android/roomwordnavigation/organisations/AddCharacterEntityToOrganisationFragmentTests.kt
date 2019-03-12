@@ -11,17 +11,16 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.assertion.ViewAssertions
-import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.android.roomwordnavigation.R
 import com.example.android.roomwordnavigation.TestApp
-import com.example.android.roomwordnavigation.characters.CharacterListViewModel
-import com.example.android.roomwordnavigation.data.CharacterEntity
+import com.example.android.roomwordnavigation.data.MembershipStatus
 import com.example.android.roomwordnavigation.util.FragmentWithViewModelFactory
 import com.example.android.roomwordnavigation.util.withRecyclerView
 import com.nhaarman.mockitokotlin2.*
+import org.hamcrest.CoreMatchers.allOf
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -33,47 +32,40 @@ import org.robolectric.annotation.Config
 @Suite.SuiteClasses(
     AddCharacterEntityToOrganisationFragmentTests.When_The_View_Is_Created::class,
     AddCharacterEntityToOrganisationFragmentTests.When_The_List_Of_Characters_Is_Populated::class,
-    AddCharacterEntityToOrganisationFragmentTests.When_A_Character_Entity_Is_Selected::class,
-    AddCharacterEntityToOrganisationFragmentTests.When_The_Add_Character_Entity_Button_Is_Selected::class
+    AddCharacterEntityToOrganisationFragmentTests.When_An_Unselected_Character_Entity_Is_Selected::class,
+    AddCharacterEntityToOrganisationFragmentTests.When_The_Add_Character_Entity_Button_Is_Selected::class,
+    AddCharacterEntityToOrganisationFragmentTests.When_A_Selected_Character_Entity_Is_Selected::class
 )
 class AddCharacterEntityToOrganisationFragmentTests {
 
     abstract class BaseTestSetup {
         protected lateinit var navController: NavController
         private lateinit var scenario: FragmentScenario<AddCharacterToOrganisationFragment>
-        protected lateinit var characterLiveData: LiveData<List<CharacterEntity>>
-        protected lateinit var characterListViewModel: CharacterListViewModel
+        protected lateinit var membershipStatuses: LiveData<List<MembershipStatus>>
         protected lateinit var organisationDetailsViewModel: OrganisationDetailsViewModel
         private lateinit var viewModelFactory: ViewModelProvider.Factory
 
-
-        fun baseSetup(characterLiveData: LiveData<List<CharacterEntity>>)
-        {
-            this.characterLiveData = characterLiveData
+        fun baseSetup(membershipStatuses: LiveData<List<MembershipStatus>>) {
+            this.membershipStatuses = membershipStatuses
             internalSetup()
         }
 
         fun baseSetup() {
-            characterLiveData = mock()
+            membershipStatuses = mock()
             internalSetup()
         }
 
-        private fun internalSetup()
-        {
+        private fun internalSetup() {
             navController = mock()
 
             organisationDetailsViewModel = mock {
                 on { organisationId } doReturn mock()
-            }
-
-            characterListViewModel = mock {
-                on { allCharacters } doReturn characterLiveData
+                on { membershipStatuses } doReturn membershipStatuses
             }
 
             viewModelFactory = mock {
                 onGeneric { create<ViewModel>(any()) } doAnswer {
                     when (it.getArgument<Class<ViewModel>>(0)) {
-                        CharacterListViewModel::class.java -> characterListViewModel
                         OrganisationDetailsViewModel::class.java -> organisationDetailsViewModel
                         else -> null
                     }
@@ -101,9 +93,9 @@ class AddCharacterEntityToOrganisationFragmentTests {
         }
 
         @Test
-        fun It_Should_Observe_All_Characters() {
-            verify(characterListViewModel).allCharacters
-            verify(characterLiveData).observe(any(), any())
+        fun It_Should_Observe_MembershipStatuses() {
+            verify(organisationDetailsViewModel).membershipStatuses
+            verify(membershipStatuses).observe(any(), any())
         }
     }
 
@@ -111,15 +103,20 @@ class AddCharacterEntityToOrganisationFragmentTests {
     @Config(application = TestApp::class)
     class When_The_List_Of_Characters_Is_Populated : BaseTestSetup() {
 
-        private lateinit var mutableCharacterData:MutableLiveData<List<CharacterEntity>>
+        private lateinit var mutableCharacterData: MutableLiveData<List<MembershipStatus>>
 
         @Before
-        fun setup()
-        {
-            mutableCharacterData= MutableLiveData()
+        fun setup() {
+            mutableCharacterData = MutableLiveData()
             baseSetup(mutableCharacterData)
 
-            mutableCharacterData.postValue(listOf(CharacterEntity("Bob"), CharacterEntity("Dick"), CharacterEntity("Harry")))
+            mutableCharacterData.postValue(
+                listOf(
+                    MembershipStatus(1, "Bob", true),
+                    MembershipStatus(2, "Dick", false),
+                    MembershipStatus(3, "Harry", false)
+                )
+            )
         }
 
         @Test
@@ -137,52 +134,80 @@ class AddCharacterEntityToOrganisationFragmentTests {
 
             onView(
                 withRecyclerView(R.id.character_list).atPositionOnView(
-                    0, R.id.word_view
+                    0, R.id.checkBox
                 )
-            ).check(ViewAssertions.matches(ViewMatchers.withText("Bob")))
+            ).check(matches(allOf(withText("Bob"), isChecked())))
+
             onView(
                 withRecyclerView(R.id.character_list).atPositionOnView(
-                    1, R.id.word_view
+                    1, R.id.checkBox
                 )
-            ).check(ViewAssertions.matches(ViewMatchers.withText("Dick")))
+            ).check(matches(allOf(withText("Dick"), isNotChecked())))
             onView(
                 withRecyclerView(R.id.character_list).atPositionOnView(
-                    2, R.id.word_view
+                    2, R.id.checkBox
                 )
-            ).check(ViewAssertions.matches(ViewMatchers.withText("Harry")))
+            ).check(matches(allOf(withText("Harry"), isNotChecked())))
         }
     }
 
     @RunWith(AndroidJUnit4::class)
     @Config(application = TestApp::class)
-    class When_A_Character_Entity_Is_Selected : BaseTestSetup() {
+    class When_An_Unselected_Character_Entity_Is_Selected : BaseTestSetup() {
 
-        private lateinit var mutableCharacterData:MutableLiveData<List<CharacterEntity>>
+        private lateinit var mutableCharacterData: MutableLiveData<List<MembershipStatus>>
+
+        private lateinit var harry : MembershipStatus
 
         @Before
-        fun setup()
-        {
-            mutableCharacterData= MutableLiveData()
+        fun setup() {
+
+            harry = MembershipStatus(1, "Harry", false)
+
+            mutableCharacterData = MutableLiveData()
             baseSetup(mutableCharacterData)
 
-            mutableCharacterData.postValue(listOf(CharacterEntity("Harry")))
+            mutableCharacterData.postValue(listOf(harry))
             onView(withRecyclerView(R.id.character_list).atPosition(0)).perform(ViewActions.click())
         }
 
         @Test
         fun It_Should_Add_The_Character_To_The_Organisation() {
-            verify(organisationDetailsViewModel).addToOrganisation(any(), any())
-        }
-
-        @Test
-        fun It_Should_Navigate_Up() {
-            verify(navController).navigateUp()
+            verify(organisationDetailsViewModel).addToOrganisation(eq(harry.characterId), any())
         }
     }
 
     @RunWith(AndroidJUnit4::class)
     @Config(application = TestApp::class)
-    class When_The_Add_Character_Entity_Button_Is_Selected : AddCharacterEntityToOrganisationFragmentTests.BaseTestSetup() {
+    class When_A_Selected_Character_Entity_Is_Selected : BaseTestSetup() {
+
+        private lateinit var mutableCharacterData: MutableLiveData<List<MembershipStatus>>
+
+        private lateinit var harry : MembershipStatus
+
+        @Before
+        fun setup() {
+
+            harry = MembershipStatus(1, "Harry", true)
+
+            mutableCharacterData = MutableLiveData()
+            baseSetup(mutableCharacterData)
+
+            mutableCharacterData.postValue(listOf(harry))
+            onView(withRecyclerView(R.id.character_list).atPosition(0)).perform(ViewActions.click())
+        }
+
+        @Test
+        fun It_Should_Remove_The_Character_From_The_Organisation() {
+            verify(organisationDetailsViewModel).removeFromOrganisation(eq(harry.characterId), any())
+        }
+    }
+
+
+    @RunWith(AndroidJUnit4::class)
+    @Config(application = TestApp::class)
+    class When_The_Add_Character_Entity_Button_Is_Selected :
+        AddCharacterEntityToOrganisationFragmentTests.BaseTestSetup() {
 
         @get:Rule
         val instantExecutor = InstantTaskExecutorRule()

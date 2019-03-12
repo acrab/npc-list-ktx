@@ -7,11 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.example.android.roomwordnavigation.IWithViewModelFactory
-import com.example.android.roomwordnavigation.characters.CharacterListViewModel
-import com.example.android.roomwordnavigation.databinding.FragmentCharacterListBinding
-import com.example.android.roomwordnavigation.ui.CharacterListAdapter
+import com.example.android.roomwordnavigation.databinding.FragmentSelectableCharacterListBinding
+import com.example.android.roomwordnavigation.ui.SelectableCharacterListAdapter
 import com.example.android.roomwordnavigation.ui.WithFAB
 import com.example.android.roomwordnavigation.ui.setupLinearWithAdapter
 import dagger.android.support.DaggerFragment
@@ -23,17 +21,19 @@ class AddCharacterToOrganisationFragment : DaggerFragment(), IWithViewModelFacto
     override lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val organisationDetailsViewModel: OrganisationDetailsViewModel by activityViewModels { viewModelFactory }
-    private val characterListViewModel: CharacterListViewModel by activityViewModels { viewModelFactory }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = FragmentCharacterListBinding.inflate(inflater, container, false)
+        val binding = FragmentSelectableCharacterListBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.view = this
-        binding.viewModel = characterListViewModel
+        binding.viewModel = organisationDetailsViewModel
 
-        val adapter = CharacterListAdapter(requireContext()) {
-            organisationDetailsViewModel.addToOrganisation(it)
-            findNavController().navigateUp()
+        val adapter = SelectableCharacterListAdapter(requireContext()) { characterId, status ->
+            if (status) {
+                organisationDetailsViewModel.addToOrganisation(characterId)
+            } else {
+                organisationDetailsViewModel.removeFromOrganisation(characterId)
+            }
         }
         binding.characterList.setupLinearWithAdapter(requireContext(), adapter)
 
