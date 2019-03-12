@@ -4,9 +4,9 @@ package com.example.android.roomwordnavigation.organisations
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
+import com.android.example.roomwordnavigation.testing.afterObserve
+import com.android.example.roomwordnavigation.testing.observedValue
 import com.example.android.roomwordnavigation.data.*
-import com.example.android.roomwordnavigation.util.afterObserve
-import com.example.android.roomwordnavigation.util.observedValue
 import com.example.android.roomwordnavigation.data.entities.CharacterEntity
 import com.example.android.roomwordnavigation.data.entities.Organisation
 import com.example.android.roomwordnavigation.data.entities.OrganisationMembership
