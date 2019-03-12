@@ -1,6 +1,9 @@
 package com.example.android.roomwordnavigation.data.entities
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
 
 @Entity(
     tableName = "characters_in_organisations_table", foreignKeys = [ForeignKey(
@@ -13,14 +16,10 @@ import androidx.room.*
         parentColumns = ["id"],
         childColumns = ["organisation"],
         onDelete = ForeignKey.CASCADE
-    )], indices = [Index("character"), Index("organisation")]
+    )],
+    primaryKeys = ["character", "organisation"],
+    indices = [Index("character"), Index("organisation")]
 )
 data class OrganisationMembership(
-    @ColumnInfo(name = "character") val character: Int, @ColumnInfo(name = "organisation") val organisation: Int, @PrimaryKey(
-        autoGenerate = true
-    ) val id: Int = 0
-)
-
-data class CharacterOrganisationMembership(
-    @ColumnInfo(name = "name") val name: String, @ColumnInfo(name = "id") val id: Int = 0, @ColumnInfo(name = "isMember") val isMember: Boolean = false
+    @ColumnInfo(name = "character") val character: Int, @ColumnInfo(name = "organisation") val organisation: Int
 )
