@@ -220,7 +220,7 @@ class CharacterEntityListFragmentTests {
         @Test
         fun It_Should_Navigate_To_The_Add_Character_View() {
             onView(withId(R.id.fab)).perform(ViewActions.click())
-            verify(navController).navigate(CharacterListFragmentDirections.actionCharacterListFragmentToAddCharacterFragment())
+            verify(navController).navigate(CharacterListFragmentDirections.addCharacter())
         }
     }
 }

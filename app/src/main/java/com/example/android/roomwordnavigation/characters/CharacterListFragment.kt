@@ -36,6 +36,6 @@ class CharacterListFragment : DaggerFragment(), IWithViewModelFactory, WithSingl
 
     override fun onButtonClicked(view: View) {
         view.findNavController()
-            .navigate(CharacterListFragmentDirections.actionCharacterListFragmentToAddCharacterFragment())
+            .navigate(CharacterListFragmentDirections.addCharacter())
     }
 }
