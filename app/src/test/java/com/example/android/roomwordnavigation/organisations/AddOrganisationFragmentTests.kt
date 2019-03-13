@@ -82,7 +82,7 @@ class AddOrganisationFragmentTests {
 
         @Test
         fun It_Should_Create_The_Organisation() {
-            verify(organisationListViewModel).insert(any(), any())
+            verify(organisationListViewModel).insert(any())
         }
 
         @Test

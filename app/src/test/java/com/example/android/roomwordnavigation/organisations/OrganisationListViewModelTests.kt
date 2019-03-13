@@ -10,7 +10,6 @@ import com.example.android.roomwordnavigation.data.entities.OrganisationSummary
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -68,9 +67,10 @@ class OrganisationListViewModelTests {
         @ExperimentalCoroutinesApi
         @Test
         fun It_Should_Be_Inserted_Into_The_Repository() = runBlocking {
-
             val data = Organisation("Test Organsiation", "Test description")
-            subject.insert(data, Dispatchers.Unconfined)
+
+            subject.insert(data).join()
+
             verify(organisationRepository).insert(data)
         }
     }

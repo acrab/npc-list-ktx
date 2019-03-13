@@ -9,14 +9,13 @@ import com.example.android.roomwordnavigation.data.entities.OrganisationSummary
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 @OpenForTesting
 class OrganisationListViewModel @Inject constructor(private val repository: IOrganisationRepository) : ViewModelWithCoroutineScope() {
 
     val allOrganisations: LiveData<List<OrganisationSummary>> = repository.allOrganisationSummary
 
-    fun insert(organisation: Organisation, context:CoroutineContext = Dispatchers.IO) = scope.launch(context) {
+    fun insert(organisation: Organisation) = scope.launch(Dispatchers.IO) {
         repository.insert(organisation)
 
     }

@@ -173,7 +173,7 @@ class AddCharacterEntityToOrganisationFragmentTests {
 
         @Test
         fun It_Should_Add_The_Character_To_The_Organisation() {
-            verify(organisationDetailsViewModel).addToOrganisation(eq(harry.characterId), any())
+            verify(organisationDetailsViewModel).addToOrganisation(eq(harry.characterId))
         }
     }
 
@@ -199,7 +199,7 @@ class AddCharacterEntityToOrganisationFragmentTests {
 
         @Test
         fun It_Should_Remove_The_Character_From_The_Organisation() {
-            verify(organisationDetailsViewModel).removeFromOrganisation(eq(harry.characterId), any())
+            verify(organisationDetailsViewModel).removeFromOrganisation(eq(harry.characterId))
         }
     }
 

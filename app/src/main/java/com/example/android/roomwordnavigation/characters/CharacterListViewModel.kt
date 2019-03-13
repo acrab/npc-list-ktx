@@ -8,14 +8,13 @@ import com.example.android.roomwordnavigation.data.entities.CharacterEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 @OpenForTesting
 class CharacterListViewModel @Inject constructor(private val repository: ICharacterRepository):ViewModelWithCoroutineScope()
 {
     val allCharacters:LiveData<List<CharacterEntity>> = repository.allCharacters
 
-    fun insert(characterEntity:CharacterEntity, context:CoroutineContext = Dispatchers.IO) = scope.launch(context) {
+    fun insert(characterEntity: CharacterEntity) = scope.launch(Dispatchers.IO) {
         repository.insert(characterEntity)
     }
 }

@@ -9,7 +9,6 @@ import com.example.android.roomwordnavigation.data.entities.CharacterEntity
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -69,8 +68,11 @@ class CharacterEntityListViewModelTests {
         @Test
         fun It_Is_Added_To_The_Repository() = runBlocking {
             val data = CharacterEntity("Test name")
-            subject.insert(data, Dispatchers.Unconfined)
+
+            subject.insert(data).join()
+
             verify(characterRepository).insert(data)
         }
+
     }
 }
