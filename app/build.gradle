@@ -81,6 +81,7 @@ dependencies {
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1'
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1'
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.1.1'
+
     //Dagger
     implementation "com.google.dagger:dagger-android-support:$daggerVersion"
     implementation "com.google.dagger:dagger-android:$daggerVersion"
@@ -90,7 +91,7 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation "androidx.core:core-ktx:$fragmentVersion"
+    implementation "androidx.core:core-ktx:$coreVersion"
 
     implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
 

@@ -38,8 +38,10 @@ task clean(type: Delete) {
 
 ext {
     roomVersion = '2.0.0'
-    archLifecycleVersion = '2.1.0-alpha02'
+    archLifecycleVersion = '2.1.0-alpha03'
     coroutines = ''
-    daggerVersion = '2.19'
-    fragmentVersion = "1.1.0-alpha04"
+    daggerVersion = '2.21'
+    coreVersion = "1.1.0-alpha05"
+
+    fragmentVersion = "1.1.0-alpha05"
 }
