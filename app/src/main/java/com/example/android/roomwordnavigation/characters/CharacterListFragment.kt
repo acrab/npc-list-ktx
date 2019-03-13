@@ -31,7 +31,10 @@ class CharacterListFragment : DaggerFragment(), IWithViewModelFactory, WithSingl
         super.onViewCreated(view, savedInstanceState)
         binding.view = this
         binding.viewModel = characterListViewModel
-        binding.characterList.setupLinearWithAdapter(requireContext(), CharacterListAdapter(requireContext()))
+        binding.characterList.setupLinearWithAdapter(requireContext(), CharacterListAdapter(requireContext())
+        {
+            view.findNavController().navigate(CharacterListFragmentDirections.editCharacter(it.id))
+        })
     }
 
     override fun onButtonClicked(view: View) {

@@ -7,7 +7,7 @@
 
         <variable
             name="view"
-            type="com.example.android.roomwordnavigation.ui.WithSingleButton" />
+            type="com.example.android.roomwordnavigation.ui.WithCustomButton" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="@{view::onButtonClicked}"
-            android:text="@string/add_character"
+            android:text="@{view.buttonText}"
             app:layout_constraintBaseline_toBaselineOf="@+id/editText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

@@ -6,28 +6,29 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.android.roomwordnavigation.IWithBoth
 import com.example.android.roomwordnavigation.InputMethodManagerFactory
 import com.example.android.roomwordnavigation.R
-import com.example.android.roomwordnavigation.data.entities.CharacterEntity
 import com.example.android.roomwordnavigation.databinding.FragmentAddCharacterBinding
 import com.example.android.roomwordnavigation.inputManager
 import com.example.android.roomwordnavigation.ui.WithCustomButton
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class AddCharacterFragment : DaggerFragment(), IWithBoth, WithCustomButton {
+class EditCharacterFragment : DaggerFragment(), IWithBoth, WithCustomButton {
+    @Inject
+    override lateinit var immFactory: InputMethodManagerFactory
 
     @Inject
     override lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    @Inject
-    override lateinit var immFactory: InputMethodManagerFactory
-
-    private val characterListViewModel: CharacterListViewModel by viewModels { viewModelFactory }
+    private val characterListViewModel: EditCharacterViewModel by viewModels { viewModelFactory }
     private val inputMethodManager: InputMethodManager by inputManager { immFactory }
+    private val args: EditCharacterFragmentArgs by navArgs()
 
     private lateinit var binding: FragmentAddCharacterBinding
 
@@ -38,15 +39,23 @@ class AddCharacterFragment : DaggerFragment(), IWithBoth, WithCustomButton {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        buttonText = resources.getString(R.string.add_character)
+        characterListViewModel.characterId.value = args.characterId
+        buttonText = resources.getString(R.string.save_changes)
         binding.view = this
+        binding.lifecycleOwner = this
+        characterListViewModel.characterDetails.observe(this, Observer { c ->
+            c?.let {
+                binding.editText.setText(c.name)
+            }
+        })
     }
 
     override lateinit var buttonText: String
 
     override fun onButtonClicked(view: View) {
+
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
-        characterListViewModel.insert(CharacterEntity(binding.editText.text.toString()))
+        characterListViewModel.onCharacterEdited(binding.editText.text.toString())
         view.findNavController().navigateUp()
     }
 }

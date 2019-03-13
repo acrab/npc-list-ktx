@@ -3,9 +3,7 @@ package com.example.android.roomwordnavigation.injection
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.roomwordnavigation.MainActivity
-import com.example.android.roomwordnavigation.characters.AddCharacterFragment
-import com.example.android.roomwordnavigation.characters.CharacterListFragment
-import com.example.android.roomwordnavigation.characters.CharacterListViewModel
+import com.example.android.roomwordnavigation.characters.*
 import com.example.android.roomwordnavigation.organisations.*
 import dagger.Binds
 import dagger.MapKey
@@ -32,6 +30,9 @@ abstract class FragmentModule
     internal abstract fun contributeAddCharacterFragment() : AddCharacterFragment
 
     @ContributesAndroidInjector
+    internal abstract fun contributeEditCharacterFragment() : EditCharacterFragment
+
+    @ContributesAndroidInjector
     internal abstract fun contributeAddCharacterToOrganisationFragment() : AddCharacterToOrganisationFragment
 
     @ContributesAndroidInjector
@@ -42,6 +43,7 @@ abstract class FragmentModule
 
     @ContributesAndroidInjector
     internal abstract fun contributeViewOrganisationFragment() : ViewOrganisationFragment
+
 }
 
 @Module
@@ -66,6 +68,11 @@ internal abstract class ViewModelModule{
     @IntoMap
     @ViewModelKey(OrganisationDetailsViewModel::class)
     abstract fun bindOrganisationDetailsViewModel(viewModel: OrganisationDetailsViewModel) : ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(EditCharacterViewModel::class)
+    abstract fun bindEditCharacterViewModel(viewModel: EditCharacterViewModel) : ViewModel
 }
 
 @MustBeDocumented

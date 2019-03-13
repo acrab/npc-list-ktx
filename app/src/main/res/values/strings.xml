@@ -3,6 +3,7 @@
     <string name="character_name_hint">Enter a name</string>
     <string name="organisation_name_hint">Name the organisation</string>
     <string name="add_character">Add</string>
+    <string name="save_changes">Save</string>
     <string name="add_organisation">Add</string>
     <string name="character_list">Characters</string>
     <string name="organisation_list">Organisations</string>
@@ -12,4 +13,5 @@
     <string name="add_character_title">Create new character</string>
     <string name="character_list_title">Characters</string>
     <string name="organisation_description">Enter a description…</string>
+    <string name="edit_character_title">Edit name</string>
 </resources>
