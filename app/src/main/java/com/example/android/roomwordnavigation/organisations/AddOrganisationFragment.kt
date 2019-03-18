@@ -13,6 +13,7 @@ import com.example.android.roomwordnavigation.InputMethodManagerFactory
 import com.example.android.roomwordnavigation.data.entities.Organisation
 import com.example.android.roomwordnavigation.databinding.FragmentAddOrganisationBinding
 import com.example.android.roomwordnavigation.inputManager
+import com.example.android.roomwordnavigation.ui.asString
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -41,7 +42,7 @@ class AddOrganisationFragment : DaggerFragment(), IWithBoth {
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
 
         val newOrg = Organisation(
-            binding.organisationTitle.text.toString(), binding.organisationDescription.text.toString()
+            binding.organisationTitle.asString(), binding.organisationDescription.asString()
         )
 
         organisationListViewModel.insert(newOrg)
