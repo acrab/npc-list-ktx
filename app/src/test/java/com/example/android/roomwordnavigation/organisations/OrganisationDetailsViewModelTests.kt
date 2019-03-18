@@ -4,12 +4,13 @@ package com.example.android.roomwordnavigation.organisations
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
-import com.android.example.roomwordnavigation.testing.afterObserve
-import com.android.example.roomwordnavigation.testing.observedValue
-import com.example.android.roomwordnavigation.data.*
+import com.example.android.roomwordnavigation.afterObserve
+import com.example.android.roomwordnavigation.data.IMembershipRepository
+import com.example.android.roomwordnavigation.data.IOrganisationRepository
 import com.example.android.roomwordnavigation.data.entities.CharacterEntity
 import com.example.android.roomwordnavigation.data.entities.Organisation
 import com.example.android.roomwordnavigation.data.entities.OrganisationMembership
+import com.example.android.roomwordnavigation.observedValue
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify

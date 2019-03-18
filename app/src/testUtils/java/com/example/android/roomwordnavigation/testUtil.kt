@@ -1,4 +1,4 @@
-package com.android.example.roomwordnavigation.testing
+package com.example.android.roomwordnavigation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer

@@ -38,6 +38,10 @@ android {
     // used by Room, to test migrations
     sourceSets {
         androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
+        test.java.srcDirs += files("$projectDir/src/testUtils/java/".toString())
+        androidTest.java.srcDirs += files("$projectDir/src/testUtils/java/".toString())
+
+
     }
 
     buildTypes {
