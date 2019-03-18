@@ -16,7 +16,9 @@ import org.junit.runners.Suite
 @RunWith(Suite::class)
 @Suite.SuiteClasses(
     MembershipRepositoryTests.When_A_Membership_Is_Created::class,
-    MembershipRepositoryTests.When_All_Members_Of_An_Organisation_Are_Retrieved::class
+    MembershipRepositoryTests.When_A_Membership_Is_Deleted::class,
+    MembershipRepositoryTests.When_All_Members_Of_An_Organisation_Are_Retrieved::class,
+    MembershipRepositoryTests.When_The_Status_Of_All_Characters_Is_Queried::class
 )
 class MembershipRepositoryTests {
     class When_A_Membership_Is_Created {
@@ -34,6 +36,24 @@ class MembershipRepositoryTests {
             val toInsert = OrganisationMembership(1, 2)
             subject.createMembership(toInsert)
             verify(membershipDao).createMembership(toInsert)
+        }
+    }
+
+    class When_A_Membership_Is_Deleted {
+        private lateinit var subject: MembershipRepository
+        private lateinit var membershipDao: MembershipDao
+
+        @Before
+        fun TestSetup() {
+            membershipDao = mock()
+            subject = MembershipRepository(membershipDao)
+        }
+
+        @Test
+        fun It_Is_Deleted_From_The_Membership_Dao() {
+            val toDelete = OrganisationMembership(1, 2)
+            subject.deleteMembership(toDelete)
+            verify(membershipDao).deleteMembership(toDelete)
         }
     }
 
@@ -64,4 +84,33 @@ class MembershipRepositoryTests {
             assert(x == memberData)
         }
     }
+
+    class When_The_Status_Of_All_Characters_Is_Queried {
+        private lateinit var subject: MembershipRepository
+        private lateinit var membershipDao: MembershipDao
+        private lateinit var memberData: LiveData<List<MembershipStatus>>
+
+        @Before
+        fun TestSetup() {
+            this.memberData = mock(stubOnly = true)
+
+            membershipDao = mock {
+                on { getMembershipStatus(1) } doReturn memberData
+            }
+            subject = MembershipRepository(membershipDao)
+        }
+
+        @Test
+        fun The_Dao_Is_Queried() {
+            subject.getMembershipStatuses(1)
+            verify(membershipDao).getMembershipStatus(1)
+        }
+
+        @Test
+        fun The_Statuses_Are_Returned() {
+            val x = subject.getMembershipStatuses(1)
+            assert(x == memberData)
+        }
+    }
+
 }

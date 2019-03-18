@@ -58,7 +58,7 @@ class EditCharacterViewModelTests {
 
         private lateinit var subject: EditCharacterViewModel
         private lateinit var repository: ICharacterRepository
-        private val bob = CharacterEntity("Bob", 1)
+        private val bob = CharacterEntity("Bob", id = 1)
         private val characterData = MutableLiveData(bob)
         @Before
         fun setup() {
@@ -91,7 +91,7 @@ class EditCharacterViewModelTests {
 
         private lateinit var subject: EditCharacterViewModel
         private lateinit var repository: ICharacterRepository
-        private val bob = CharacterEntity("Bob", 1)
+        private val bob = CharacterEntity("Bob", id = 1)
         private val characterData = MutableLiveData(bob)
         @Before
         fun setup() {
@@ -108,8 +108,8 @@ class EditCharacterViewModelTests {
         @Test
         fun It_Should_Update_The_Repository() = runBlocking {
 
-            subject.onCharacterEdited("Bobby").join()
-            verify(repository).update(CharacterEntity("Bobby", 1))
+            subject.onCharacterEdited("Bobby", "Up", "Date").join()
+            verify(repository).update(CharacterEntity("Bobby", "Up", "Date", id = 1))
         }
     }
 }

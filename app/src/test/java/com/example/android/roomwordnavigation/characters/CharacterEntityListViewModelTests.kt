@@ -9,8 +9,8 @@ import com.example.android.roomwordnavigation.data.entities.CharacterEntity
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -64,7 +64,6 @@ class CharacterEntityListViewModelTests {
             subject = CharacterListViewModel(characterRepository)
         }
 
-        @ExperimentalCoroutinesApi
         @Test
         fun It_Is_Added_To_The_Repository() = runBlocking {
             val data = CharacterEntity("Test name")
@@ -74,5 +73,36 @@ class CharacterEntityListViewModelTests {
             verify(characterRepository).insert(data)
         }
 
+    }
+
+    class When_A_Character_Entity_Is_Requested {
+        @get:Rule
+        val instantExecutor = InstantTaskExecutorRule()
+
+        private lateinit var characterRepository: ICharacterRepository
+        private lateinit var subject: CharacterListViewModel
+        private lateinit var characterData: LiveData<CharacterEntity>
+        @Before
+        fun setup() {
+            characterData = mock()
+
+            characterRepository = mock {
+                on { get(0) } doReturn characterData
+            }
+            subject = CharacterListViewModel(characterRepository)
+
+        }
+
+        @Test
+        fun The_Repository_Is_Queried() {
+            subject.get(0)
+            verify(characterRepository).get(0)
+        }
+
+        @Test
+        fun The_Data_Is_Returned() {
+            val x =  subject.get(0)
+            assertEquals(characterData, x)
+        }
     }
 }

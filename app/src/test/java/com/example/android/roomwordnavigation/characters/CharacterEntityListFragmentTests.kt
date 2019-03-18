@@ -14,6 +14,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
@@ -38,22 +39,20 @@ import org.robolectric.annotation.Config
     CharacterEntityListFragmentTests.When_The_View_Is_Created::class,
     CharacterEntityListFragmentTests.When_The_Characters_List_Is_Updated_With_One_Item::class,
     CharacterEntityListFragmentTests.When_The_Characters_List_Is_Updated_With_Many_Items::class,
-    CharacterEntityListFragmentTests.When_The_Add_Button_Is_Clicked::class
+    CharacterEntityListFragmentTests.When_The_Add_Button_Is_Clicked::class,
+    CharacterEntityListFragmentTests.When_A_Character_Is_Selected::class
 )
 class CharacterEntityListFragmentTests {
     @RunWith(AndroidJUnit4::class)
     @Config(application = TestApp::class)
     class When_The_View_Is_Created {
-        private lateinit var navController: NavController
         private lateinit var scenario: FragmentScenario<CharacterListFragment>
         private lateinit var viewModel: CharacterListViewModel
         private lateinit var viewModelFactory: ViewModelProvider.Factory
 
         @Before
         fun setup() {
-            navController = mock()
-
-            val(ff, vm, vmf) = fragmentFactoryWithMockViewModel<CharacterListViewModel>{
+            val (ff, vm, vmf) = fragmentFactoryWithMockViewModel<CharacterListViewModel> {
                 on { allCharacters } doReturn mock()
             }
 
@@ -63,9 +62,7 @@ class CharacterEntityListFragmentTests {
 
             scenario = launchFragmentInContainer<CharacterListFragment>(
                 factory = ff
-            ).onFragment {
-                Navigation.setViewNavController(it.view!!, navController)
-            }.moveToState(Lifecycle.State.RESUMED)
+            ).moveToState(Lifecycle.State.RESUMED)
         }
 
         @Test
@@ -86,30 +83,20 @@ class CharacterEntityListFragmentTests {
         @get:Rule
         val instantExecutor = InstantTaskExecutorRule()
 
-        private lateinit var navController: NavController
         private lateinit var scenario: FragmentScenario<CharacterListFragment>
         private lateinit var characterEntityData: MutableLiveData<List<CharacterEntity>>
-        private lateinit var viewModel: CharacterListViewModel
-        private lateinit var viewModelFactory: ViewModelProvider.Factory
 
         @Before
         fun setup() {
-            navController = mock()
             characterEntityData = MutableLiveData()
 
-            val(ff, vm, vmf) = fragmentFactoryWithMockViewModel<CharacterListViewModel>{
+            val (ff) = fragmentFactoryWithMockViewModel<CharacterListViewModel> {
                 on { allCharacters } doReturn characterEntityData
             }
 
-            viewModel = vm
-
-            viewModelFactory = vmf
-
             scenario = launchFragmentInContainer<CharacterListFragment>(
                 factory = ff
-            ).onFragment {
-                Navigation.setViewNavController(it.view!!, navController)
-            }.moveToState(Lifecycle.State.RESUMED)
+            ).moveToState(Lifecycle.State.RESUMED)
         }
 
         @Test
@@ -136,26 +123,24 @@ class CharacterEntityListFragmentTests {
 
         private lateinit var scenario: FragmentScenario<CharacterListFragment>
         private lateinit var characterEntityData: MutableLiveData<List<CharacterEntity>>
-        private lateinit var viewModel: CharacterListViewModel
-        private lateinit var viewModelFactory: ViewModelProvider.Factory
 
         @Before
         fun setup() {
             characterEntityData = MutableLiveData()
 
-            val(ff, vm, vmf) = fragmentFactoryWithMockViewModel<CharacterListViewModel>{
+            val (ff) = fragmentFactoryWithMockViewModel<CharacterListViewModel> {
                 on { allCharacters } doReturn characterEntityData
             }
-
-            viewModel = vm
-
-            viewModelFactory = vmf
 
             scenario = launchFragmentInContainer<CharacterListFragment>(
                 factory = ff
             ).moveToState(Lifecycle.State.RESUMED)
 
-            characterEntityData.postValue(listOf(CharacterEntity("Bob"), CharacterEntity("Dick"), CharacterEntity("Harry")))
+            characterEntityData.postValue(
+                listOf(
+                    CharacterEntity("Bob"), CharacterEntity("Dick"), CharacterEntity("Harry")
+                )
+            )
         }
 
         @Test
@@ -200,7 +185,7 @@ class CharacterEntityListFragmentTests {
         @Before
         fun setup() {
             navController = mock()
-            val(ff, vm, vmf) = fragmentFactoryWithMockViewModel<CharacterListViewModel>{
+            val (ff, vm, vmf) = fragmentFactoryWithMockViewModel<CharacterListViewModel> {
                 on { allCharacters } doReturn mock()
             }
 
@@ -221,6 +206,48 @@ class CharacterEntityListFragmentTests {
         fun It_Should_Navigate_To_The_Add_Character_View() {
             onView(withId(R.id.fab)).perform(ViewActions.click())
             verify(navController).navigate(CharacterListFragmentDirections.addCharacter())
+        }
+    }
+
+    @RunWith(AndroidJUnit4::class)
+    @Config(application = TestApp::class)
+    class When_A_Character_Is_Selected {
+
+        @get:Rule
+        val instantExecutor = InstantTaskExecutorRule()
+
+        private lateinit var scenario: FragmentScenario<CharacterListFragment>
+        private lateinit var characterEntityData: MutableLiveData<List<CharacterEntity>>
+        private lateinit var navController: NavController
+
+        @Before
+        fun setup() {
+
+            navController = mock()
+
+            characterEntityData = MutableLiveData()
+
+            val (ff) = fragmentFactoryWithMockViewModel<CharacterListViewModel> {
+                on { allCharacters } doReturn characterEntityData
+            }
+
+            scenario = launchFragmentInContainer<CharacterListFragment>(
+                factory = ff
+            ).onFragment {
+                Navigation.setViewNavController(it.view!!, navController)
+            }.moveToState(Lifecycle.State.RESUMED)
+
+            characterEntityData.postValue(
+                listOf(
+                    CharacterEntity("Bob", id = 1), CharacterEntity("Dick", id = 2), CharacterEntity("Harry", id = 3)
+                )
+            )
+        }
+
+        @Test
+        fun It_Should_Navigate_To_Display_Them() {
+            onView(withRecyclerView(R.id.character_list).atPosition(0)).perform(click())
+            verify(navController).navigate(CharacterListFragmentDirections.editCharacter(1))
         }
     }
 }
