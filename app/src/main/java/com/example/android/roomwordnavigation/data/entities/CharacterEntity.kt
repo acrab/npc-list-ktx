@@ -8,7 +8,11 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "character_table", indices = [Index("id", unique = true)])
 data class CharacterEntity(
-    @ColumnInfo(name = "name") val name: String, @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) val id: Int = 0
+    @ColumnInfo(name = "name") val name: String,
+    @ColumnInfo(name = "description") val description: String = "",
+    @ColumnInfo(name = "notes") val notes: String = "",
+    //@ColumnInfo(name = "avatar") val avatar: String="",
+    @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) val id: Int = 0
 ) {
     companion object {
         val diffCallback = object : DiffUtil.ItemCallback<CharacterEntity>() {

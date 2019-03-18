@@ -29,6 +29,38 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:targetApi="o" />
 
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:hint="@string/description_hint"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText"
+            tools:targetApi="o" />
+
+        <EditText
+            android:id="@+id/notes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:autofillHints="no"
+            android:ems="10"
+            android:hint="@string/character_notes_hint"
+            android:inputType="textMultiLine"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description"
+            tools:targetApi="o" />
+
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"
@@ -41,4 +73,5 @@
             app:layout_constraintStart_toEndOf="@+id/editText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

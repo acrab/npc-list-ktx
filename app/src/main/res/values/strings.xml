@@ -14,4 +14,6 @@
     <string name="character_list_title">Characters</string>
     <string name="organisation_description">Enter a description…</string>
     <string name="edit_character_title">Edit name</string>
+    <string name="description_hint">Add a description…</string>
+    <string name="character_notes_hint">Add some notes…</string>
 </resources>

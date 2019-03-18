@@ -15,6 +15,7 @@ import com.example.android.roomwordnavigation.data.entities.CharacterEntity
 import com.example.android.roomwordnavigation.databinding.FragmentAddCharacterBinding
 import com.example.android.roomwordnavigation.inputManager
 import com.example.android.roomwordnavigation.ui.WithCustomButton
+import com.example.android.roomwordnavigation.ui.asString
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -46,7 +47,10 @@ class AddCharacterFragment : DaggerFragment(), IWithBoth, WithCustomButton {
 
     override fun onButtonClicked(view: View) {
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
-        characterListViewModel.insert(CharacterEntity(binding.editText.text.toString()))
+        binding.apply {
+
+            characterListViewModel.insert(CharacterEntity(editText.asString(), description.asString(), notes.asString()))
+        }
         view.findNavController().navigateUp()
     }
 }

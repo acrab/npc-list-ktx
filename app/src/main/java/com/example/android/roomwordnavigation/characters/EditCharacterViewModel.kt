@@ -20,7 +20,7 @@ class EditCharacterViewModel @Inject constructor(private val repository: ICharac
         }
     }
 
-    fun onCharacterEdited(name: String) = scope.launch(Dispatchers.IO) {
-        repository.update(CharacterEntity(name, characterId.value!!))
+    fun onCharacterEdited(name: String, description:String, notes:String) = scope.launch(Dispatchers.IO) {
+        repository.update(CharacterEntity(name, description, notes, characterId.value!!))
     }
 }
