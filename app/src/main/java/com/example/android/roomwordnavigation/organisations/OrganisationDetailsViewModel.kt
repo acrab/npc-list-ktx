@@ -1,10 +1,7 @@
 package com.example.android.roomwordnavigation.organisations
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.*
 import com.android.example.roomwordnavigation.testing.OpenForTesting
-import com.example.android.roomwordnavigation.ViewModelWithCoroutineScope
 import com.example.android.roomwordnavigation.data.IMembershipRepository
 import com.example.android.roomwordnavigation.data.IOrganisationRepository
 import com.example.android.roomwordnavigation.data.MembershipStatus
@@ -19,7 +16,7 @@ import javax.inject.Inject
 @OpenForTesting
 class OrganisationDetailsViewModel @Inject constructor(
     private val membershipRepository: IMembershipRepository, private val organisationRepository: IOrganisationRepository
-) : ViewModelWithCoroutineScope() {
+) : ViewModel() {
     val organisationId = MutableLiveData<Int>()
 
     val allMembers: LiveData<List<CharacterEntity>> by lazy {
@@ -51,7 +48,7 @@ class OrganisationDetailsViewModel @Inject constructor(
         val orgId = organisationId.value
             ?: throw IllegalStateException("Must set organisationId before adding a characterEntity")
 
-        return scope.launch(Dispatchers.IO) {
+        return viewModelScope.launch(Dispatchers.IO) {
             membershipRepository.createMembership(OrganisationMembership(characterEntity.id, orgId))
         }
     }
@@ -61,7 +58,7 @@ class OrganisationDetailsViewModel @Inject constructor(
         val orgId = organisationId.value
             ?: throw IllegalStateException("Must set organisationId before adding a characterEntity")
 
-        return scope.launch(Dispatchers.IO) {
+        return viewModelScope.launch(Dispatchers.IO) {
             membershipRepository.createMembership(OrganisationMembership(character, orgId))
         }
     }
@@ -71,7 +68,7 @@ class OrganisationDetailsViewModel @Inject constructor(
         val orgId = organisationId.value
             ?: throw IllegalStateException("Must set organisationId before adding a characterEntity")
 
-        return scope.launch(Dispatchers.IO) {
+        return viewModelScope.launch(Dispatchers.IO) {
             membershipRepository.deleteMembership(OrganisationMembership(character, orgId))
         }
     }
