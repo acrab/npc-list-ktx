@@ -182,14 +182,10 @@ class Test_Adding_Data {
         assertEquals(2, allOrgs.size)
 
         val probablyBob = allOrgs[0]
-        assertEquals(bc.id, probablyBob.id)
-        assertEquals(bc.name, probablyBob.name)
-        assertEquals(bc.description, probablyBob.description)
+        assertEquals(bc, probablyBob)
 
         val probablyJames = allOrgs[1]
-        assertEquals(js.id, probablyJames.id)
-        assertEquals(js.name, probablyJames.name)
-        assertEquals(js.description, probablyJames.description)
+        assertEquals(js, probablyJames)
     }
 
     @Test
