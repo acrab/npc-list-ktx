@@ -75,7 +75,7 @@ abstract class AppDatabase : RoomDatabase() {
 
         }
 
-        val MIGRATION_2_3 = object : Migration(2,3){
+        private val MIGRATION_2_3 = object : Migration(2,3){
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("""
                     ALTER TABLE character_table
@@ -86,11 +86,6 @@ abstract class AppDatabase : RoomDatabase() {
                     ALTER TABLE character_table
                     ADD notes TEXT NULL;
                 """.trimIndent())
-
-//                database.execSQL("""
-//                    ALTER TABLE character_table
-//                    ADD avatar varchar;
-//                """.trimIndent())
             }
         }
 
