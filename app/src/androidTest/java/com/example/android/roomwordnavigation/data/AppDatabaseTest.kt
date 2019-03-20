@@ -13,6 +13,7 @@ import com.example.android.roomwordnavigation.data.entities.CharacterEntity
 import com.example.android.roomwordnavigation.data.entities.Organisation
 import com.example.android.roomwordnavigation.data.entities.OrganisationMembership
 import com.example.android.roomwordnavigation.observedValue
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -151,10 +152,13 @@ class Test_Adding_Data {
 
     @Test
     fun add_characters() {
-        val bob = CharacterEntity("Bob", 1)
-        charDao.insert(bob)
-        val james = CharacterEntity("James", 2)
-        charDao.insert(james)
+        //Add characters
+        val bob = CharacterEntity("Bob", id = 1)
+        val james = CharacterEntity("James", id = 2)
+        runBlocking {
+            charDao.insert(bob)
+            charDao.insert(james)
+        }
 
         val allChars = charDao.getAllCharacters().observedValue()!!
 
@@ -196,10 +200,13 @@ class Test_Adding_Data {
     fun add_members() {
 
         //Create characters
-        val bob = CharacterEntity("Bob", 1)
-        charDao.insert(bob)
-        val james = CharacterEntity("James", 2)
-        charDao.insert(james)
+        val bob = CharacterEntity("Bob", id = 1)
+        val james = CharacterEntity("James", id = 2)
+
+        runBlocking {
+            charDao.insert(bob)
+            charDao.insert(james)
+        }
 
         //Create organisations
         val bc = Organisation("Bob's club", "A Test Club", 1)
