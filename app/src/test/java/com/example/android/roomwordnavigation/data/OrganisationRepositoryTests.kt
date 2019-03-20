@@ -7,6 +7,7 @@ import com.example.android.roomwordnavigation.data.entities.Organisation
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
+import kotlinx.coroutines.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -47,17 +48,21 @@ class OrganisationRepositoryTests {
     class When_An_Organisation_Is_Created {
         private lateinit var dao: OrganisationDao
         private lateinit var subject: OrganisationRepository
+        private lateinit var scope: CoroutineScope
 
+        @ExperimentalCoroutinesApi
         @Before
         fun setup() {
             dao = mock()
             subject = OrganisationRepository(dao)
+
+            scope = CoroutineScope(Job() + Dispatchers.Unconfined)
         }
 
         @Test
-        fun It_Is_Inserted_Into_The_DAO() {
+        fun It_Is_Inserted_Into_The_DAO() = runBlocking {
             val toInsert = Organisation("Test Org", "Test description")
-            subject.insert(toInsert)
+            subject.insert(toInsert, scope)
             verify(dao).insert(toInsert)
         }
     }

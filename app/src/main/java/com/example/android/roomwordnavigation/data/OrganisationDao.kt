@@ -20,7 +20,7 @@ interface OrganisationDao {
     fun getOrganisation(id:Int) : LiveData<Organisation>
 
     @Insert
-    fun insert(organisation: Organisation)
+    suspend fun insert(organisation: Organisation)
 
     @Query("DELETE FROM organisation_table")
     fun deleteAll()

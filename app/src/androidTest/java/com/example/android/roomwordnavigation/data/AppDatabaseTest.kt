@@ -176,10 +176,11 @@ class Test_Adding_Data {
     @Test
     fun add_organisations() {
         val bc = Organisation("Bob's club", "A Test Club", 1)
-        organisationDao.insert(bc)
-
         val js = Organisation("James' saloon", "A Test Saloon", 2)
-        organisationDao.insert(js)
+        runBlocking {
+            organisationDao.insert(bc)
+            organisationDao.insert(js)
+        }
 
         val allOrgs = organisationDao.getAllOrganisations().observedValue()!!
 
@@ -210,9 +211,11 @@ class Test_Adding_Data {
 
         //Create organisations
         val bc = Organisation("Bob's club", "A Test Club", 1)
-        organisationDao.insert(bc)
         val bs = Organisation("Bob's saloon", "A Test Saloon", 2)
-        organisationDao.insert(bs)
+        runBlocking {
+            organisationDao.insert(bc)
+            organisationDao.insert(bs)
+        }
 
         //Put Bob in his club
         membershipDao.createMembership(OrganisationMembership(bob.id, bc.id))

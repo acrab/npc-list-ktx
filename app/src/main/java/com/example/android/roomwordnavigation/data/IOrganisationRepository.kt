@@ -1,9 +1,9 @@
 package com.example.android.roomwordnavigation.data
 
-import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import com.example.android.roomwordnavigation.data.entities.Organisation
 import com.example.android.roomwordnavigation.data.entities.OrganisationSummary
+import kotlinx.coroutines.CoroutineScope
 
 interface IOrganisationRepository {
 
@@ -11,8 +11,7 @@ interface IOrganisationRepository {
 
     val allOrganisations: LiveData<List<Organisation>>
 
-    @WorkerThread
-    fun insert(organisation: Organisation)
+    fun insert(organisation: Organisation, scope: CoroutineScope)
 
     fun getOrganisation(organisationId: Int) : LiveData<Organisation>
 }
