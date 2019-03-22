@@ -18,10 +18,7 @@ import com.example.android.roomwordnavigation.R
 import com.example.android.roomwordnavigation.TestApp
 import com.example.android.roomwordnavigation.data.entities.CharacterEntity
 import com.example.android.roomwordnavigation.util.fragmentFactoryWithMockViewModelAndIMM
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -57,8 +54,10 @@ class AddCharacterEntityFragmentTests {
         }
 
         @Test
-        fun The_Text_Box_Should_Be_Empty() {
+        fun The_Text_Boxes_Should_Be_Empty() {
             onView(withId(R.id.editText)).check(matches(withText("")))
+            onView(withId(R.id.notes)).check(matches(withText("")))
+            onView(withId(R.id.description)).check(matches(withText("")))
         }
 
     }
@@ -92,16 +91,53 @@ class AddCharacterEntityFragmentTests {
         }
 
         @Test
-        fun If_The_Text_Is_Blank_It_Should_Create_A_Character_In_The_View_Model() {
+        fun If_The_Name_Is_Blank_It_Should_Create_A_Character_In_The_View_Model() {
             onView(withId(R.id.button)).perform(ViewActions.click())
             verify(viewModel).insert(CharacterEntity(""))
         }
 
         @Test
-        fun If_The_Text_Has_Contents_It_Should_Create_A_Character_In_The_View_Model() {
+        fun If_The_Name_Has_Contents_It_Should_Create_A_Character_In_The_View_Model() {
             onView(withId(R.id.editText)).perform(ViewActions.typeText("Mixed Case Text"))
             onView(withId(R.id.button)).perform(ViewActions.click())
             verify(viewModel).insert(CharacterEntity("Mixed Case Text"))
+        }
+
+        @Test
+        fun If_The_Description_Is_Blank_It_Should_Create_A_Character_In_The_View_Model() {
+            onView(withId(R.id.button)).perform(ViewActions.click())
+            verify(viewModel).insert(CharacterEntity("", description =  ""))
+        }
+
+        @Test
+        fun If_The_Description_Has_Contents_It_Should_Create_A_Character_In_The_View_Model() {
+            onView(withId(R.id.description)).perform(ViewActions.typeText("Mixed Case Text"))
+            onView(withId(R.id.button)).perform(ViewActions.click())
+            verify(viewModel).insert(CharacterEntity("", description =  "Mixed Case Text"))
+        }
+
+        @Test
+        fun If_The_Notes_Are_Blank_It_Should_Create_A_Character_In_The_View_Model() {
+            onView(withId(R.id.button)).perform(ViewActions.click())
+            verify(viewModel).insert(CharacterEntity("", notes = ""))
+        }
+
+        @Test
+        fun If_The_Notes_Have_Contents_It_Should_Create_A_Character_In_The_View_Model() {
+            onView(withId(R.id.notes)).perform(ViewActions.typeText("Mixed Case Text"))
+            onView(withId(R.id.button)).perform(ViewActions.click())
+            verify(viewModel).insert(CharacterEntity("", notes = "Mixed Case Text"))
+        }
+
+        @Test
+        fun If_All_Fields_Have_Contents_It_Should_Create_A_Character_In_The_View_Model() {
+            onView(withId(R.id.editText)).perform(ViewActions.typeText("Name Test Text"))
+
+            onView(withId(R.id.description)).perform(ViewActions.typeText("Description Text"))
+
+            onView(withId(R.id.notes)).perform(ViewActions.typeText("Notes Text"))
+            onView(withId(R.id.button)).perform(ViewActions.click())
+            verify(viewModel).insert(CharacterEntity("Name Test Text", "Description Text", "Notes Text"))
         }
 
         @Test
