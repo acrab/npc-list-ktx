@@ -48,10 +48,8 @@ class ViewOrganisationFragment : DaggerFragment(), IWithViewModelFactory, WithSi
 
         organisationDetailsViewModel.organisationId.postValue(args.organisationId)
 
-        organisationDetailsViewModel.organisation.observe(this, Observer { org ->
-            org?.let { data ->
-                (activity as? AppCompatActivity)?.supportActionBar?.title = data.name
-            }
+        organisationDetailsViewModel.organisation.observe(this, Observer { data ->
+            (activity as? AppCompatActivity)?.supportActionBar?.title = data.name
         })
     }
 
