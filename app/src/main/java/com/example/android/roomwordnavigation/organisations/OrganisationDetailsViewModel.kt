@@ -8,9 +8,6 @@ import com.example.android.roomwordnavigation.data.MembershipStatus
 import com.example.android.roomwordnavigation.data.entities.CharacterEntity
 import com.example.android.roomwordnavigation.data.entities.Organisation
 import com.example.android.roomwordnavigation.data.entities.OrganisationMembership
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @OpenForTesting
@@ -43,33 +40,29 @@ class OrganisationDetailsViewModel @Inject constructor(
         }
     }
 
-    fun addToOrganisation(characterEntity: CharacterEntity): Job {
+    fun addToOrganisation(characterEntity: CharacterEntity) {
 
         val orgId = organisationId.value
             ?: throw IllegalStateException("Must set organisationId before adding a characterEntity")
 
-        return viewModelScope.launch(Dispatchers.IO) {
-            membershipRepository.createMembership(OrganisationMembership(characterEntity.id, orgId))
-        }
+        membershipRepository.createMembership(OrganisationMembership(characterEntity.id, orgId), viewModelScope)
+
     }
 
-    fun addToOrganisation(character: Int): Job {
+    fun addToOrganisation(character: Int) {
 
         val orgId = organisationId.value
             ?: throw IllegalStateException("Must set organisationId before adding a characterEntity")
 
-        return viewModelScope.launch(Dispatchers.IO) {
-            membershipRepository.createMembership(OrganisationMembership(character, orgId))
-        }
+        membershipRepository.createMembership(OrganisationMembership(character, orgId), viewModelScope)
     }
 
-    fun removeFromOrganisation(character: Int): Job {
+    fun removeFromOrganisation(character: Int) {
 
         val orgId = organisationId.value
             ?: throw IllegalStateException("Must set organisationId before adding a characterEntity")
 
-        return viewModelScope.launch(Dispatchers.IO) {
-            membershipRepository.deleteMembership(OrganisationMembership(character, orgId))
-        }
+        membershipRepository.deleteMembership(OrganisationMembership(character, orgId), viewModelScope)
+
     }
 }

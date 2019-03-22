@@ -4,11 +4,13 @@ package com.example.android.roomwordnavigation.data
 
 import androidx.lifecycle.LiveData
 import com.example.android.roomwordnavigation.data.entities.Organisation
+import com.example.android.roomwordnavigation.util.TestCoroutineScopeRule
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import kotlinx.coroutines.*
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Suite
@@ -48,7 +50,9 @@ class OrganisationRepositoryTests {
     class When_An_Organisation_Is_Created {
         private lateinit var dao: OrganisationDao
         private lateinit var subject: OrganisationRepository
-        private lateinit var scope: CoroutineScope
+
+        @get:Rule
+        val scopeRule = TestCoroutineScopeRule()
 
         @ExperimentalCoroutinesApi
         @Before
@@ -56,13 +60,12 @@ class OrganisationRepositoryTests {
             dao = mock()
             subject = OrganisationRepository(dao)
 
-            scope = CoroutineScope(Job() + Dispatchers.Unconfined)
         }
 
         @Test
         fun It_Is_Inserted_Into_The_DAO() = runBlocking {
             val toInsert = Organisation("Test Org", "Test description")
-            subject.insert(toInsert, scope)
+            subject.insert(toInsert, scopeRule.scope)
             verify(dao).insert(toInsert)
         }
     }

@@ -4,10 +4,13 @@ package com.example.android.roomwordnavigation.data
 
 import androidx.lifecycle.LiveData
 import com.example.android.roomwordnavigation.data.entities.CharacterEntity
+import com.example.android.roomwordnavigation.util.TestCoroutineScopeRule
+import com.example.android.roomwordnavigation.util.testCoroutineScope
 import com.nhaarman.mockitokotlin2.*
 import kotlinx.coroutines.*
 import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Suite
@@ -51,20 +54,21 @@ class CharacterEntityRepositoryTests {
     class When_A_Character_Entity_Is_Created {
         private lateinit var characterDao: CharacterDao
         private lateinit var subject: CharacterRepository
-        private lateinit var scope: CoroutineScope
+
+        @get:Rule
+        val scopeRule = TestCoroutineScopeRule()
         
         @ExperimentalCoroutinesApi
         @Before
         fun Setup() {
             characterDao = mock()
             subject = CharacterRepository(characterDao)
-            scope = CoroutineScope(Job() + Dispatchers.Unconfined)
         }
 
         @Test
         fun It_Is_Inserted_Into_The_Dao() = runBlocking {
             val toInsert = CharacterEntity("Test CharacterEntity")
-            subject.insert(toInsert, scope)
+            subject.insert(toInsert, scopeRule.scope)
             verify(characterDao).insert(toInsert)
         }
     }
@@ -100,7 +104,9 @@ class CharacterEntityRepositoryTests {
     class When_A_Character_Entity_Is_Updated {
         private lateinit var characterDao: CharacterDao
         private lateinit var subject: CharacterRepository
-        private lateinit var scope: CoroutineScope
+
+        @get:Rule
+        val scopeRule = TestCoroutineScopeRule()
 
         @ExperimentalCoroutinesApi
         @Before
@@ -108,14 +114,13 @@ class CharacterEntityRepositoryTests {
 
             characterDao = mock()
             subject = CharacterRepository(characterDao)
-            scope = CoroutineScope(Job() + Dispatchers.Unconfined)
 
         }
 
         @Test
         fun The_Updated_Data_Is_Passed_To_The_Dao() = runBlocking {
             val toUpdate = CharacterEntity("Bob", id = 1)
-            subject.update(toUpdate, scope)
+            subject.update(toUpdate, scopeRule.scope)
             verify(characterDao).update(toUpdate)
         }
     }

@@ -1,18 +1,16 @@
 package com.example.android.roomwordnavigation.data
 
-import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import com.example.android.roomwordnavigation.data.entities.CharacterEntity
 import com.example.android.roomwordnavigation.data.entities.OrganisationMembership
+import kotlinx.coroutines.CoroutineScope
 
 interface IMembershipRepository {
-    @WorkerThread
-    fun createMembership(membership: OrganisationMembership)
+    fun createMembership(membership: OrganisationMembership, scope: CoroutineScope)
 
-    @WorkerThread
-    fun deleteMembership(membership: OrganisationMembership)
+    fun deleteMembership(membership: OrganisationMembership, scope: CoroutineScope)
 
-    fun getMembers(organisationId: Int) : LiveData<List<CharacterEntity>>
+    fun getMembers(organisationId: Int): LiveData<List<CharacterEntity>>
 
-    fun getMembershipStatuses(organisationId:Int) : LiveData<List<MembershipStatus>>
+    fun getMembershipStatuses(organisationId: Int): LiveData<List<MembershipStatus>>
 }
