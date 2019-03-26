@@ -71,6 +71,11 @@ internal abstract class ViewModelModule{
 
     @Binds
     @IntoMap
+    @ViewModelKey(AddCharacterViewModel::class)
+    abstract fun bindAddCharacterViewModel(viewModel: AddCharacterViewModel) : ViewModel
+
+    @Binds
+    @IntoMap
     @ViewModelKey(EditCharacterViewModel::class)
     abstract fun bindEditCharacterViewModel(viewModel: EditCharacterViewModel) : ViewModel
 }

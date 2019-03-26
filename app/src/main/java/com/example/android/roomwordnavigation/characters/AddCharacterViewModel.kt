@@ -1,6 +1,5 @@
 package com.example.android.roomwordnavigation.characters
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.example.roomwordnavigation.testing.OpenForTesting
@@ -11,14 +10,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @OpenForTesting
-class CharacterListViewModel @Inject constructor(private val repository: ICharacterRepository) :
-    ViewModel() {
-    val allCharacters: LiveData<List<CharacterEntity>> = repository.allCharacters
-
-
-    fun get(characterId: Long) = repository.get(characterId)
-
-    fun update(characterEntity: CharacterEntity) = viewModelScope.launch(Dispatchers.IO) {
-        repository.update(characterEntity)
+class AddCharacterViewModel @Inject constructor(
+    private val characterRepository: ICharacterRepository
+) : ViewModel() {
+    fun insert(characterEntity: CharacterEntity) = viewModelScope.launch(Dispatchers.IO) {
+        characterRepository.insert(characterEntity)
     }
 }

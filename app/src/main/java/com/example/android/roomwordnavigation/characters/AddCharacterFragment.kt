@@ -27,7 +27,7 @@ class AddCharacterFragment : DaggerFragment(), IWithBoth, WithCustomButton {
     @Inject
     override lateinit var immFactory: InputMethodManagerFactory
 
-    private val characterListViewModel: CharacterListViewModel by viewModels { viewModelFactory }
+    private val addCharacterViewModel: AddCharacterViewModel by viewModels { viewModelFactory }
     private val inputMethodManager: InputMethodManager by inputManager { immFactory }
 
     private lateinit var binding: FragmentAddCharacterBinding
@@ -49,7 +49,12 @@ class AddCharacterFragment : DaggerFragment(), IWithBoth, WithCustomButton {
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
         binding.apply {
 
-            characterListViewModel.insert(CharacterEntity(editText.asString(), description.asString(), notes.asString()))
+            addCharacterViewModel.insert(
+                CharacterEntity(
+                    editText.asString(), description.asString(), notes.asString()
+                )
+            )
+
         }
         view.findNavController().navigateUp()
     }

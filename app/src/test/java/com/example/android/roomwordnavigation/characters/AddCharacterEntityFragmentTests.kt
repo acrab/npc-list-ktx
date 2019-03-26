@@ -42,9 +42,7 @@ class AddCharacterEntityFragmentTests {
         fun setup() {
             navController = mock()
 
-            val (ff) = fragmentFactoryWithMockViewModelAndIMM<CharacterListViewModel>{
-                on { allCharacters } doReturn mock()
-            }
+            val (ff) = fragmentFactoryWithMockViewModelAndIMM<AddCharacterViewModel>()
 
             scenario = launchFragmentInContainer<AddCharacterFragment>(
                 factory = ff
@@ -68,7 +66,7 @@ class AddCharacterEntityFragmentTests {
 
         private lateinit var navController: NavController
         private lateinit var scenario: FragmentScenario<AddCharacterFragment>
-        private lateinit var viewModel: CharacterListViewModel
+        private lateinit var viewModel: AddCharacterViewModel
         private lateinit var inputMethodManager: InputMethodManager
 
         @Before
@@ -76,7 +74,7 @@ class AddCharacterEntityFragmentTests {
 
             navController = mock()
 
-            val (ff, vm, imm) = fragmentFactoryWithMockViewModelAndIMM<CharacterListViewModel>()
+            val (ff, vm, imm) = fragmentFactoryWithMockViewModelAndIMM<AddCharacterViewModel>()
             viewModel = vm
             inputMethodManager = imm
 
