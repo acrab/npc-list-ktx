@@ -10,7 +10,7 @@ interface ICharacterRepository {
     fun get(characterId: Long) : LiveData<CharacterEntity>
 
     @WorkerThread
-    fun insert(characterEntity: CharacterEntity)
+    fun insert(characterEntity: CharacterEntity) : Long
 
     @WorkerThread
     fun update(characterEntity: CharacterEntity)

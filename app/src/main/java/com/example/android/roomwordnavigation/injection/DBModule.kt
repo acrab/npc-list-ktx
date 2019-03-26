@@ -7,7 +7,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class DBModule{
+class DBModule {
 
     @Singleton
     @Provides
@@ -15,25 +15,52 @@ class DBModule{
 
     @Singleton
     @Provides
-    fun providesCharacterDao(database : AppDatabase) = database.characterDao()
+    fun providesCharacterDao(database: AppDatabase) = database.characterDao()
 
     @Singleton
     @Provides
-    fun providesMembershipDao(database : AppDatabase) = database.membershipDao()
+    fun providesMembershipDao(database: AppDatabase) = database.membershipDao()
 
     @Singleton
     @Provides
-    fun providesOrganisationDao(database : AppDatabase) = database.organisationDao()
+    fun providesOrganisationDao(database: AppDatabase) = database.organisationDao()
 
     @Singleton
     @Provides
-    fun providesCharacterRepository(characterDao: CharacterDao) : ICharacterRepository = CharacterRepository(characterDao)
+    fun providesTemplateDao(database: AppDatabase) = database.templateDao()
 
     @Singleton
     @Provides
-    fun providesMembershipRepository(membershipDao: MembershipDao) : IMembershipRepository = MembershipRepository(membershipDao)
+    fun providesStatisticsDao(database: AppDatabase) = database.statisticsDao()
 
     @Singleton
     @Provides
-    fun providesOrganisationRepository(organisationDao: OrganisationDao) : IOrganisationRepository = OrganisationRepository(organisationDao)
+    fun providesCharacterStatDao(database: AppDatabase) = database.characterStatDao()
+
+    @Singleton
+    @Provides
+    fun providesCharacterRepository(characterDao: CharacterDao): ICharacterRepository =
+        CharacterRepository(characterDao)
+
+    @Singleton
+    @Provides
+    fun providesMembershipRepository(membershipDao: MembershipDao): IMembershipRepository =
+        MembershipRepository(membershipDao)
+
+    @Singleton
+    @Provides
+    fun providesOrganisationRepository(organisationDao: OrganisationDao): IOrganisationRepository =
+        OrganisationRepository(organisationDao)
+
+    @Singleton
+    @Provides
+    fun providesTemplateRepository(templateDao: TemplateDao): ITemplateRepository = TemplateRepository(templateDao)
+
+    @Singleton
+    @Provides
+    fun providesStatisticsRepository(statisticDao: StatisticDao): IStatsRepository = StatsRepository(statisticDao)
+
+    @Singleton
+    @Provides
+    fun providesCharStatisticsRepository(charStatDao: CharacterStatDao): ICharStatsRepository = CharStatsRepository(charStatDao)
 }

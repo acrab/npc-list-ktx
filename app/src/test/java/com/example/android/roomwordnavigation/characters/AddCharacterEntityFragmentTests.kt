@@ -91,40 +91,40 @@ class AddCharacterEntityFragmentTests {
         @Test
         fun If_The_Name_Is_Blank_It_Should_Create_A_Character_In_The_View_Model() {
             onView(withId(R.id.button)).perform(ViewActions.click())
-            verify(viewModel).insert(CharacterEntity(""))
+            verify(viewModel).insert(CharacterEntity("", template = 0))
         }
 
         @Test
         fun If_The_Name_Has_Contents_It_Should_Create_A_Character_In_The_View_Model() {
             onView(withId(R.id.editText)).perform(ViewActions.typeText("Mixed Case Text"))
             onView(withId(R.id.button)).perform(ViewActions.click())
-            verify(viewModel).insert(CharacterEntity("Mixed Case Text"))
+            verify(viewModel).insert(CharacterEntity("Mixed Case Text", template = 0))
         }
 
         @Test
         fun If_The_Description_Is_Blank_It_Should_Create_A_Character_In_The_View_Model() {
             onView(withId(R.id.button)).perform(ViewActions.click())
-            verify(viewModel).insert(CharacterEntity("", description =  ""))
+            verify(viewModel).insert(CharacterEntity("", description =  "", template = 0))
         }
 
         @Test
         fun If_The_Description_Has_Contents_It_Should_Create_A_Character_In_The_View_Model() {
             onView(withId(R.id.description)).perform(ViewActions.typeText("Mixed Case Text"))
             onView(withId(R.id.button)).perform(ViewActions.click())
-            verify(viewModel).insert(CharacterEntity("", description =  "Mixed Case Text"))
+            verify(viewModel).insert(CharacterEntity("", description =  "Mixed Case Text", template = 0))
         }
 
         @Test
         fun If_The_Notes_Are_Blank_It_Should_Create_A_Character_In_The_View_Model() {
             onView(withId(R.id.button)).perform(ViewActions.click())
-            verify(viewModel).insert(CharacterEntity("", notes = ""))
+            verify(viewModel).insert(CharacterEntity("", notes = "", template = 0))
         }
 
         @Test
         fun If_The_Notes_Have_Contents_It_Should_Create_A_Character_In_The_View_Model() {
             onView(withId(R.id.notes)).perform(ViewActions.typeText("Mixed Case Text"))
             onView(withId(R.id.button)).perform(ViewActions.click())
-            verify(viewModel).insert(CharacterEntity("", notes = "Mixed Case Text"))
+            verify(viewModel).insert(CharacterEntity("", notes = "Mixed Case Text", template = 0))
         }
 
         @Test
@@ -135,7 +135,7 @@ class AddCharacterEntityFragmentTests {
 
             onView(withId(R.id.notes)).perform(ViewActions.typeText("Notes Text"))
             onView(withId(R.id.button)).perform(ViewActions.click())
-            verify(viewModel).insert(CharacterEntity("Name Test Text", "Description Text", "Notes Text"))
+            verify(viewModel).insert(CharacterEntity("Name Test Text", "Description Text", "Notes Text", template = 0))
         }
 
         @Test

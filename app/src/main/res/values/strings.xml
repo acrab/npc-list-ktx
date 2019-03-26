@@ -16,4 +16,5 @@
     <string name="edit_character_title">Edit name</string>
     <string name="description_hint">Add a description…</string>
     <string name="character_notes_hint">Add some notes…</string>
+    <string name="stat_value_hint">Value for %1$s</string>
 </resources>

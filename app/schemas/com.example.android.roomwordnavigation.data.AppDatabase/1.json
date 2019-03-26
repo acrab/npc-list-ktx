@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "3517e0f093c461007b48b5a9f7365139",
+    "identityHash": "d8f6af3105ac2e56498a245214136cdb",
     "entities": [
       {
         "tableName": "character_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `description` TEXT NOT NULL, `notes` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `description` TEXT NOT NULL, `notes` TEXT NOT NULL, `template` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, FOREIGN KEY(`template`) REFERENCES `system_template`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "name",
@@ -24,6 +24,12 @@
             "fieldPath": "notes",
             "columnName": "notes",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "template",
+            "columnName": "template",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -47,9 +53,29 @@
               "id"
             ],
             "createSql": "CREATE UNIQUE INDEX `index_character_table_id` ON `${TABLE_NAME}` (`id`)"
+          },
+          {
+            "name": "index_character_table_template",
+            "unique": false,
+            "columnNames": [
+              "template"
+            ],
+            "createSql": "CREATE  INDEX `index_character_table_template` ON `${TABLE_NAME}` (`template`)"
           }
         ],
-        "foreignKeys": []
+        "foreignKeys": [
+          {
+            "table": "system_template",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "template"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       },
       {
         "tableName": "organisation_table",
@@ -158,12 +184,156 @@
             ]
           }
         ]
+      },
+      {
+        "tableName": "system_template",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "statistic",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `template` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, FOREIGN KEY(`template`) REFERENCES `system_template`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "template",
+            "columnName": "template",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_statistic_template",
+            "unique": false,
+            "columnNames": [
+              "template"
+            ],
+            "createSql": "CREATE  INDEX `index_statistic_template` ON `${TABLE_NAME}` (`template`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "system_template",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "template"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "character_stat_value",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`value` INTEGER NOT NULL, `statistic` INTEGER NOT NULL, `character` INTEGER NOT NULL, PRIMARY KEY(`statistic`, `character`), FOREIGN KEY(`statistic`) REFERENCES `statistic`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`character`) REFERENCES `character_table`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "value",
+            "columnName": "value",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "statistic",
+            "columnName": "statistic",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "character",
+            "columnName": "character",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "statistic",
+            "character"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_character_stat_value_character",
+            "unique": false,
+            "columnNames": [
+              "character"
+            ],
+            "createSql": "CREATE  INDEX `index_character_stat_value_character` ON `${TABLE_NAME}` (`character`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "statistic",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "statistic"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "character_table",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "character"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"3517e0f093c461007b48b5a9f7365139\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"d8f6af3105ac2e56498a245214136cdb\")"
     ]
   }
 }

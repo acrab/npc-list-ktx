@@ -1,17 +1,23 @@
 package com.example.android.roomwordnavigation.data.entities
 
 import androidx.recyclerview.widget.DiffUtil
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Index
-import androidx.room.PrimaryKey
+import androidx.room.*
 
-@Entity(tableName = "character_table", indices = [Index("id", unique = true)])
+@Entity(
+    tableName = "character_table",
+    indices = [
+        Index("id", unique = true),
+        Index("template")
+    ],
+    foreignKeys = [
+        ForeignKey(entity = Template::class, parentColumns = ["id"], childColumns = ["template"])
+    ]
+)
 data class CharacterEntity(
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "description") val description: String = "",
     @ColumnInfo(name = "notes") val notes: String = "",
-    //@ColumnInfo(name = "avatar") val avatar: String="",
+    @ColumnInfo(name = "template") val template: Long,
     @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) val id: Long = 0
 ) {
     companion object {

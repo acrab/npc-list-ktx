@@ -14,7 +14,7 @@ interface CharacterDao {
     fun getCharacter(id: Long): LiveData<CharacterEntity>
 
     @Insert
-    fun insert(characterEntity: CharacterEntity)
+    fun insert(characterEntity: CharacterEntity) : Long
 
     @Update
     fun update(characterEntity: CharacterEntity)
