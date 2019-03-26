@@ -7,7 +7,7 @@ import com.example.android.roomwordnavigation.data.entities.CharacterEntity
 interface ICharacterRepository {
     val allCharacters: LiveData<List<CharacterEntity>>
 
-    fun get(characterId: Int) : LiveData<CharacterEntity>
+    fun get(characterId: Long) : LiveData<CharacterEntity>
 
     @WorkerThread
     fun insert(characterEntity: CharacterEntity)

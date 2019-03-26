@@ -21,5 +21,5 @@ import androidx.room.Index
     indices = [Index("character"), Index("organisation")]
 )
 data class OrganisationMembership(
-    @ColumnInfo(name = "character") val character: Int, @ColumnInfo(name = "organisation") val organisation: Int
+    @ColumnInfo(name = "character") val character: Long, @ColumnInfo(name = "organisation") val organisation: Long
 )

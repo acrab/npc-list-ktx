@@ -8,13 +8,13 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "organisation_table", indices = [Index("id", unique = true)])
 data class Organisation(
-    @ColumnInfo(name = "name") val name: String, @ColumnInfo(name = "description") val description: String, @ColumnInfo(
-        name = "id"
-    ) @PrimaryKey(autoGenerate = true) val id: Int = 0
+    @ColumnInfo(name = "name") val name: String,
+    @ColumnInfo(name = "description") val description: String,
+    @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) val id: Long = 0
 )
 
 data class OrganisationSummary(
-    @ColumnInfo(name = "name") val name: String, @ColumnInfo(name = "id") val id: Int = 0
+    @ColumnInfo(name = "name") val name: String, @ColumnInfo(name = "id") val id: Long = 0
 ) {
 
     companion object {

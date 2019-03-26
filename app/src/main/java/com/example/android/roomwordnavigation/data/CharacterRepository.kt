@@ -8,7 +8,7 @@ import javax.inject.Inject
 class CharacterRepository @Inject constructor(private val CharacterDao: CharacterDao) : ICharacterRepository {
     override val allCharacters: LiveData<List<CharacterEntity>> = CharacterDao.getAllCharacters()
 
-    override fun get(characterId: Int) = CharacterDao.getCharacter(characterId)
+    override fun get(characterId: Long) = CharacterDao.getCharacter(characterId)
 
     @WorkerThread
     override fun insert(characterEntity: CharacterEntity) = CharacterDao.insert(characterEntity)

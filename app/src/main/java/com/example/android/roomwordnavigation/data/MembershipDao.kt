@@ -22,7 +22,7 @@ interface MembershipDao {
         WHERE characters_in_organisations_table.organisation = :organisationId
         ORDER BY name"""
     )
-    fun getMembers(organisationId: Int): LiveData<List<CharacterEntity>>
+    fun getMembers(organisationId: Long): LiveData<List<CharacterEntity>>
 
     @Query(
         """
@@ -31,10 +31,10 @@ interface MembershipDao {
         ON character_table.id = character
     """
     )
-    fun getMembershipStatus(organisationId: Int): LiveData<List<MembershipStatus>>
+    fun getMembershipStatus(organisationId: Long): LiveData<List<MembershipStatus>>
 }
 
-data class MembershipStatus(val characterId: Int, val characterName: String, val isMember: Boolean) {
+data class MembershipStatus(val characterId: Long, val characterName: String, val isMember: Boolean) {
     companion object {
         val diffCallback = object : DiffUtil.ItemCallback<MembershipStatus>() {
 

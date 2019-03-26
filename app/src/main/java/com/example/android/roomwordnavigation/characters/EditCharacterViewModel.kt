@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class EditCharacterViewModel @Inject constructor(private val repository: ICharacterRepository) :
     ViewModel() {
-    val characterId: MutableLiveData<Int> = MutableLiveData(0)
+    val characterId: MutableLiveData<Long> = MutableLiveData(0)
 
     val characterDetails: LiveData<CharacterEntity> by lazy {
         Transformations.switchMap(characterId) { charID ->

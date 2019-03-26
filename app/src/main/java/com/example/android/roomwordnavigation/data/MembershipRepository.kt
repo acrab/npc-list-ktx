@@ -13,9 +13,9 @@ class MembershipRepository(private val membershipDao: MembershipDao) : IMembersh
     @WorkerThread
     override fun deleteMembership(membership: OrganisationMembership) = membershipDao.deleteMembership(membership)
 
-    override fun getMembers(organisationId: Int): LiveData<List<CharacterEntity>> =
+    override fun getMembers(organisationId: Long): LiveData<List<CharacterEntity>> =
         membershipDao.getMembers(organisationId)
 
-    override fun getMembershipStatuses(organisationId: Int): LiveData<List<MembershipStatus>> =
+    override fun getMembershipStatuses(organisationId: Long): LiveData<List<MembershipStatus>> =
         membershipDao.getMembershipStatus(organisationId)
 }

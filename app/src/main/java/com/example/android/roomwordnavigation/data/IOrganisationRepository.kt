@@ -14,5 +14,5 @@ interface IOrganisationRepository {
     @WorkerThread
     fun insert(organisation: Organisation)
 
-    fun getOrganisation(organisationId: Int) : LiveData<Organisation>
+    fun getOrganisation(organisationId: Long) : LiveData<Organisation>
 }

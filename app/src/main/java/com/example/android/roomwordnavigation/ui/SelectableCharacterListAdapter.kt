@@ -9,7 +9,7 @@ import com.example.android.roomwordnavigation.data.MembershipStatus
 import com.example.android.roomwordnavigation.databinding.SelectableCharacterListItemBinding
 
 class SelectableCharacterListAdapter(
-    context: Context, private val onSelectionChanged: (Int, Boolean) -> Unit
+    context: Context, private val onSelectionChanged: (Long, Boolean) -> Unit
 ) : ListAdapter<MembershipStatus, SelectableCharacterListAdapter.ViewHolder>(MembershipStatus.diffCallback),
     BindingListAdapter<MembershipStatus> {
     private val inflater = LayoutInflater.from(context)
@@ -24,7 +24,7 @@ class SelectableCharacterListAdapter(
 
     class ViewHolder(
         private val characterListItemBinding: SelectableCharacterListItemBinding,
-        onSelectionChanged: (Int, Boolean) -> Unit
+        onSelectionChanged: (Long, Boolean) -> Unit
     ) : RecyclerView.ViewHolder(characterListItemBinding.root) {
         private lateinit var membershipStatus: MembershipStatus
 

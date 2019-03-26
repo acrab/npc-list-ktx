@@ -17,7 +17,7 @@ import javax.inject.Inject
 class OrganisationDetailsViewModel @Inject constructor(
     private val membershipRepository: IMembershipRepository, private val organisationRepository: IOrganisationRepository
 ) : ViewModel() {
-    val organisationId = MutableLiveData<Int>()
+    val organisationId = MutableLiveData<Long>()
 
     val allMembers: LiveData<List<CharacterEntity>> by lazy {
         Transformations.switchMap(organisationId) { orgId ->
@@ -53,7 +53,7 @@ class OrganisationDetailsViewModel @Inject constructor(
         }
     }
 
-    fun addToOrganisation(character: Int): Job {
+    fun addToOrganisation(character: Long): Job {
 
         val orgId = organisationId.value
             ?: throw IllegalStateException("Must set organisationId before adding a characterEntity")
@@ -63,7 +63,7 @@ class OrganisationDetailsViewModel @Inject constructor(
         }
     }
 
-    fun removeFromOrganisation(character: Int): Job {
+    fun removeFromOrganisation(character: Long): Job {
 
         val orgId = organisationId.value
             ?: throw IllegalStateException("Must set organisationId before adding a characterEntity")

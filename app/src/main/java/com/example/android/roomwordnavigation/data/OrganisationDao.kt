@@ -17,7 +17,7 @@ interface OrganisationDao {
     fun getOrganisationList() : LiveData<List<OrganisationSummary>>
 
     @Query("SELECT * FROM organisation_table WHERE id = :id")
-    fun getOrganisation(id:Int) : LiveData<Organisation>
+    fun getOrganisation(id:Long) : LiveData<Organisation>
 
     @Insert
     fun insert(organisation: Organisation)

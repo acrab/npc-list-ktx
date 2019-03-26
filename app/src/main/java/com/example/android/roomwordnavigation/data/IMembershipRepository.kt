@@ -12,7 +12,7 @@ interface IMembershipRepository {
     @WorkerThread
     fun deleteMembership(membership: OrganisationMembership)
 
-    fun getMembers(organisationId: Int) : LiveData<List<CharacterEntity>>
+    fun getMembers(organisationId: Long) : LiveData<List<CharacterEntity>>
 
-    fun getMembershipStatuses(organisationId:Int) : LiveData<List<MembershipStatus>>
+    fun getMembershipStatuses(organisationId:Long) : LiveData<List<MembershipStatus>>
 }

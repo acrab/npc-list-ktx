@@ -19,7 +19,7 @@ class CharacterListViewModel @Inject constructor(private val repository: ICharac
         repository.insert(characterEntity)
     }
 
-    fun get(characterId: Int) = repository.get(characterId)
+    fun get(characterId: Long) = repository.get(characterId)
 
     fun update(characterEntity: CharacterEntity) = viewModelScope.launch(Dispatchers.IO) {
         repository.update(characterEntity)

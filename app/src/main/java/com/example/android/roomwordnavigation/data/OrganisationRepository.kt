@@ -17,7 +17,7 @@ class OrganisationRepository(private val organisationDao: OrganisationDao) : IOr
 
     }
 
-    override fun getOrganisation(organisationId: Int) : LiveData<Organisation>
+    override fun getOrganisation(organisationId: Long) : LiveData<Organisation>
     {
         return organisationDao.getOrganisation(organisationId)
     }

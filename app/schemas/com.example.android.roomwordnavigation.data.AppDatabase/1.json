@@ -2,15 +2,27 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "7b2902c7cacabc31c0fe2cf7eab39cf2",
+    "identityHash": "3517e0f093c461007b48b5a9f7365139",
     "entities": [
       {
         "tableName": "character_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `description` TEXT NOT NULL, `notes` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "name",
             "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "notes",
+            "columnName": "notes",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -82,7 +94,7 @@
       },
       {
         "tableName": "characters_in_organisations_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`character` INTEGER NOT NULL, `organisation` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, FOREIGN KEY(`character`) REFERENCES `character_table`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`organisation`) REFERENCES `organisation_table`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`character` INTEGER NOT NULL, `organisation` INTEGER NOT NULL, PRIMARY KEY(`character`, `organisation`), FOREIGN KEY(`character`) REFERENCES `character_table`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`organisation`) REFERENCES `organisation_table`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "character",
@@ -95,19 +107,14 @@
             "columnName": "organisation",
             "affinity": "INTEGER",
             "notNull": true
-          },
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "character",
+            "organisation"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [
           {
@@ -153,9 +160,10 @@
         ]
       }
     ],
+    "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"7b2902c7cacabc31c0fe2cf7eab39cf2\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"3517e0f093c461007b48b5a9f7365139\")"
     ]
   }
 }
