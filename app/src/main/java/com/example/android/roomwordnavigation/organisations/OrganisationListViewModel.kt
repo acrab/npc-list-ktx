@@ -7,8 +7,6 @@ import com.android.example.roomwordnavigation.testing.OpenForTesting
 import com.example.android.roomwordnavigation.data.IOrganisationRepository
 import com.example.android.roomwordnavigation.data.entities.Organisation
 import com.example.android.roomwordnavigation.data.entities.OrganisationSummary
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @OpenForTesting
@@ -16,8 +14,7 @@ class OrganisationListViewModel @Inject constructor(private val repository: IOrg
 
     val allOrganisations: LiveData<List<OrganisationSummary>> = repository.allOrganisationSummary
 
-    fun insert(organisation: Organisation) = viewModelScope.launch(Dispatchers.IO) {
-        repository.insert(organisation)
-
+    fun insert(organisation: Organisation) {
+        repository.insert(organisation, viewModelScope)
     }
 }

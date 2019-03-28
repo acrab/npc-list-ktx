@@ -5,10 +5,13 @@ package com.example.android.roomwordnavigation.data
 import androidx.lifecycle.LiveData
 import com.example.android.roomwordnavigation.data.entities.CharacterEntity
 import com.example.android.roomwordnavigation.data.entities.OrganisationMembership
+import com.example.android.roomwordnavigation.util.TestCoroutineScopeRule
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Suite
@@ -25,6 +28,9 @@ class MembershipRepositoryTests {
         private lateinit var subject: MembershipRepository
         private lateinit var membershipDao: MembershipDao
 
+        @get:Rule
+        val testCoroutineScopeRule = TestCoroutineScopeRule()
+
         @Before
         fun TestSetup() {
             membershipDao = mock()
@@ -32,9 +38,9 @@ class MembershipRepositoryTests {
         }
 
         @Test
-        fun It_Is_Inserted_Into_The_Membership_Dao() {
+        fun It_Is_Inserted_Into_The_Membership_Dao() = runBlocking {
             val toInsert = OrganisationMembership(1, 2)
-            subject.createMembership(toInsert)
+            subject.createMembership(toInsert, testCoroutineScopeRule.scope)
             verify(membershipDao).createMembership(toInsert)
         }
     }
@@ -43,6 +49,9 @@ class MembershipRepositoryTests {
         private lateinit var subject: MembershipRepository
         private lateinit var membershipDao: MembershipDao
 
+        @get:Rule
+        val testCoroutineScopeRule = TestCoroutineScopeRule()
+
         @Before
         fun TestSetup() {
             membershipDao = mock()
@@ -50,9 +59,9 @@ class MembershipRepositoryTests {
         }
 
         @Test
-        fun It_Is_Deleted_From_The_Membership_Dao() {
+        fun It_Is_Deleted_From_The_Membership_Dao() = runBlocking{
             val toDelete = OrganisationMembership(1, 2)
-            subject.deleteMembership(toDelete)
+            subject.deleteMembership(toDelete, testCoroutineScopeRule.scope)
             verify(membershipDao).deleteMembership(toDelete)
         }
     }

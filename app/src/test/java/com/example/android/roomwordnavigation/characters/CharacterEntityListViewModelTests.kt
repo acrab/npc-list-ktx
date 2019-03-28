@@ -6,9 +6,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import com.example.android.roomwordnavigation.data.ICharacterRepository
 import com.example.android.roomwordnavigation.data.entities.CharacterEntity
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.*
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -65,14 +63,15 @@ class CharacterEntityListViewModelTests {
         }
 
         @Test
-        fun It_Is_Added_To_The_Repository() = runBlocking {
-            val data = CharacterEntity("Test name")
+        fun It_Is_Added_To_The_Repository() {
+            runBlocking {
+                val data = CharacterEntity("Test name")
 
-            subject.insert(data).join()
+                subject.insert(data)
 
-            verify(characterRepository).insert(data)
+                verify(characterRepository).insert(eq(data), any())
+            }
         }
-
     }
 
     class When_A_Character_Entity_Is_Requested {

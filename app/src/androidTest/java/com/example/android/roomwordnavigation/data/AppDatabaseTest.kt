@@ -13,6 +13,7 @@ import com.example.android.roomwordnavigation.data.entities.CharacterEntity
 import com.example.android.roomwordnavigation.data.entities.Organisation
 import com.example.android.roomwordnavigation.data.entities.OrganisationMembership
 import com.example.android.roomwordnavigation.observedValue
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -151,10 +152,13 @@ class Test_Adding_Data {
 
     @Test
     fun add_characters() {
-        val bob = CharacterEntity("Bob", 1)
-        charDao.insert(bob)
-        val james = CharacterEntity("James", 2)
-        charDao.insert(james)
+        //Add characters
+        val bob = CharacterEntity("Bob", id = 1)
+        val james = CharacterEntity("James", id = 2)
+        runBlocking {
+            charDao.insert(bob)
+            charDao.insert(james)
+        }
 
         val allChars = charDao.getAllCharacters().observedValue()!!
 
@@ -172,10 +176,11 @@ class Test_Adding_Data {
     @Test
     fun add_organisations() {
         val bc = Organisation("Bob's club", "A Test Club", 1)
-        organisationDao.insert(bc)
-
         val js = Organisation("James' saloon", "A Test Saloon", 2)
-        organisationDao.insert(js)
+        runBlocking {
+            organisationDao.insert(bc)
+            organisationDao.insert(js)
+        }
 
         val allOrgs = organisationDao.getAllOrganisations().observedValue()!!
 
@@ -192,16 +197,21 @@ class Test_Adding_Data {
     fun add_members() {
 
         //Create characters
-        val bob = CharacterEntity("Bob", 1)
-        charDao.insert(bob)
-        val james = CharacterEntity("James", 2)
-        charDao.insert(james)
+        val bob = CharacterEntity("Bob", id = 1)
+        val james = CharacterEntity("James", id = 2)
+
+        runBlocking {
+            charDao.insert(bob)
+            charDao.insert(james)
+        }
 
         //Create organisations
         val bc = Organisation("Bob's club", "A Test Club", 1)
-        organisationDao.insert(bc)
         val bs = Organisation("Bob's saloon", "A Test Saloon", 2)
-        organisationDao.insert(bs)
+        runBlocking {
+            organisationDao.insert(bc)
+            organisationDao.insert(bs)
+        }
 
         //Put Bob in his club
         membershipDao.createMembership(OrganisationMembership(bob.id, bc.id))
