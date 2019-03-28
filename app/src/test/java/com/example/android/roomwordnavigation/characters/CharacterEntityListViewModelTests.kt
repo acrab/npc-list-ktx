@@ -18,7 +18,7 @@ import org.junit.runners.Suite
 @RunWith(Suite::class)
 @Suite.SuiteClasses(
     CharacterEntityListViewModelTests.When_The_View_Model_Is_Created::class,
-    CharacterEntityListViewModelTests.When_A_Character_Entity_Is_Inserted::class
+    CharacterEntityListViewModelTests.When_A_Character_Entity_Is_Requested::class
 )
 class CharacterEntityListViewModelTests {
     class When_The_View_Model_Is_Created {
@@ -45,32 +45,6 @@ class CharacterEntityListViewModelTests {
             val vm = CharacterListViewModel(characterRepository)
             val x = vm.allCharacters
             assert(data == x)
-        }
-    }
-
-    class When_A_Character_Entity_Is_Inserted {
-
-        @get:Rule
-        val instantExecutor = InstantTaskExecutorRule()
-
-        private lateinit var characterRepository: ICharacterRepository
-        private lateinit var subject: CharacterListViewModel
-
-        @Before
-        fun setup() {
-            characterRepository = mock()
-            subject = CharacterListViewModel(characterRepository)
-        }
-
-        @Test
-        fun It_Is_Added_To_The_Repository() {
-            runBlocking {
-                val data = CharacterEntity("Test name")
-
-                subject.insert(data)
-
-                verify(characterRepository).insert(eq(data), any())
-            }
         }
     }
 

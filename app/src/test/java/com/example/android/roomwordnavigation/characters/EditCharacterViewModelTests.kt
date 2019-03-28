@@ -37,7 +37,7 @@ class EditCharacterViewModelTests {
 
         @Test
         fun The_Character_Id_Should_Be_Zero() {
-            assertEquals(0, subject.characterId.value)
+            assertEquals(0L, subject.characterId.value)
         }
 
         @Test

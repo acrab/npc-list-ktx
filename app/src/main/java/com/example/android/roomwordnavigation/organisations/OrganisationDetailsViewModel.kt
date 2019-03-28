@@ -49,7 +49,7 @@ class OrganisationDetailsViewModel @Inject constructor(
 
     }
 
-    fun addToOrganisation(character: Long): Job {
+    fun addToOrganisation(character: Long) {
 
         val orgId = organisationId.value
             ?: throw IllegalStateException("Must set organisationId before adding a characterEntity")
@@ -57,7 +57,7 @@ class OrganisationDetailsViewModel @Inject constructor(
         membershipRepository.createMembership(OrganisationMembership(character, orgId), viewModelScope)
     }
 
-    fun removeFromOrganisation(character: Long): Job {
+    fun removeFromOrganisation(character: Long) {
 
         val orgId = organisationId.value
             ?: throw IllegalStateException("Must set organisationId before adding a characterEntity")

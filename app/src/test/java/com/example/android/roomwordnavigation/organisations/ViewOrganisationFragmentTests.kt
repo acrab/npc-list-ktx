@@ -42,7 +42,7 @@ class ViewOrganisationFragmentTests {
     @RunWith(AndroidJUnit4::class)
     @Config(application = TestApp::class)
     class When_The_View_Is_Created {
-        private lateinit var organsiationId: MutableLiveData<Int>
+        private lateinit var organsiationId: MutableLiveData<Long>
         private lateinit var allMembers: LiveData<List<CharacterEntity>>
         private lateinit var organisation: LiveData<Organisation>
         private lateinit var viewModel: OrganisationDetailsViewModel
