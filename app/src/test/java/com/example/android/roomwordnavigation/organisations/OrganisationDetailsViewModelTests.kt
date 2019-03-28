@@ -11,9 +11,7 @@ import com.example.android.roomwordnavigation.data.entities.CharacterEntity
 import com.example.android.roomwordnavigation.data.entities.Organisation
 import com.example.android.roomwordnavigation.data.entities.OrganisationMembership
 import com.example.android.roomwordnavigation.observedValue
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
@@ -170,8 +168,8 @@ class OrganisationDetailsViewModelTests {
         @Test
         fun It_Should_Create_A_Membership_In_The_Repository() = runBlocking {
             val charToAdd = CharacterEntity("Test CharacterEntity")
-            subject.addToOrganisation(charToAdd).join()
-            verify(membershipRepository).createMembership(OrganisationMembership(charToAdd.id, 1))
+            subject.addToOrganisation(charToAdd)
+            verify(membershipRepository).createMembership(eq(OrganisationMembership(charToAdd.id, 1)), any())
         }
     }
 }

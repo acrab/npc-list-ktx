@@ -7,11 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.android.roomwordnavigation.data.ICharacterRepository
 import com.example.android.roomwordnavigation.data.entities.CharacterEntity
 import com.example.android.roomwordnavigation.observedValue
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.verifyZeroInteractions
-import kotlinx.coroutines.runBlocking
+import com.nhaarman.mockitokotlin2.*
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Before
@@ -41,7 +37,7 @@ class EditCharacterViewModelTests {
 
         @Test
         fun The_Character_Id_Should_Be_Zero() {
-            assertEquals(0, subject.characterId.value)
+            assertEquals(0L, subject.characterId.value)
         }
 
         @Test
@@ -106,10 +102,10 @@ class EditCharacterViewModelTests {
         }
 
         @Test
-        fun It_Should_Update_The_Repository() = runBlocking {
+        fun It_Should_Update_The_Repository() {
 
-            subject.onCharacterEdited("Bobby", "Up", "Date").join()
-            verify(repository).update(CharacterEntity("Bobby", "Up", "Date", id = 1))
+            subject.onCharacterEdited("Bobby", "Up", "Date")
+            verify(repository).update(eq(CharacterEntity("Bobby", "Up", "Date", id = 1)), any())
         }
     }
 }

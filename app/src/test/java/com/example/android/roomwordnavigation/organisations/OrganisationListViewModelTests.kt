@@ -7,11 +7,8 @@ import androidx.lifecycle.LiveData
 import com.example.android.roomwordnavigation.data.IOrganisationRepository
 import com.example.android.roomwordnavigation.data.entities.Organisation
 import com.example.android.roomwordnavigation.data.entities.OrganisationSummary
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -66,12 +63,12 @@ class OrganisationListViewModelTests {
 
         @ExperimentalCoroutinesApi
         @Test
-        fun It_Should_Be_Inserted_Into_The_Repository() = runBlocking {
+        fun It_Should_Be_Inserted_Into_The_Repository() {
             val data = Organisation("Test Organsiation", "Test description")
 
-            subject.insert(data).join()
+            subject.insert(data)
 
-            verify(organisationRepository).insert(data)
+            verify(organisationRepository).insert(eq(data), any())
         }
     }
 }

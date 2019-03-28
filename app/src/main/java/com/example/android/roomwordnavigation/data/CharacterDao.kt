@@ -14,10 +14,10 @@ interface CharacterDao {
     fun getCharacter(id: Long): LiveData<CharacterEntity>
 
     @Insert
-    fun insert(characterEntity: CharacterEntity) : Long
+    suspend fun insert(characterEntity: CharacterEntity) : Long
 
     @Update
-    fun update(characterEntity: CharacterEntity)
+    suspend fun update(characterEntity: CharacterEntity)
 
     @Query("DELETE FROM character_table")
     fun deleteAll()

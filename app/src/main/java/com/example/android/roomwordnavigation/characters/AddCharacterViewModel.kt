@@ -22,8 +22,8 @@ class AddCharacterViewModel @Inject constructor(
     private val statsRepository: IStatsRepository,
     private val charStatsRepository: ICharStatsRepository
 ) : ViewModel() {
-    fun insert(characterEntity: CharacterEntity) = viewModelScope.launch(Dispatchers.IO) {
-        characterRepository.insert(characterEntity)
+    fun insert(characterEntity: CharacterEntity) {
+        characterRepository.insert(characterEntity, viewModelScope)
     }
 
     fun create(characterEntity: CharacterEntity, stats: Map<Long, Int>) = viewModelScope.launch(Dispatchers.IO) {

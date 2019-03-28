@@ -9,10 +9,10 @@ import com.example.android.roomwordnavigation.data.entities.OrganisationMembersh
 @Dao
 interface MembershipDao {
     @Insert
-    fun createMembership(membership: OrganisationMembership)
+    suspend fun createMembership(membership: OrganisationMembership)
 
     @Delete
-    fun deleteMembership(membership: OrganisationMembership)
+    suspend fun deleteMembership(membership: OrganisationMembership)
 
     @Query(
         """
