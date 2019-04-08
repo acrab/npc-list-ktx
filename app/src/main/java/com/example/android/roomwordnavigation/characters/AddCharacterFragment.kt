@@ -41,7 +41,7 @@ class AddCharacterFragment : DaggerFragment(), IWithBoth, WithCustomButton {
 
     private var selectedTemplate: Long = 0
 
-    private val statMap = mutableMapOf<Int, Int>()
+    private val statMap = mutableMapOf<Long, Int>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentAddCharacterBinding.inflate(inflater, container, false)

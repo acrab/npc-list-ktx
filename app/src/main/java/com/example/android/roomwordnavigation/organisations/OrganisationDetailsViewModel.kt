@@ -35,18 +35,7 @@ class OrganisationDetailsViewModel @Inject constructor(
     }
 
     val organisationDescription: LiveData<String?> by lazy {
-        Transformations.map(organisation) { org ->
-            org?.description
-        }
-    }
-
-    fun addToOrganisation(characterEntity: CharacterEntity) {
-
-        val orgId = organisationId.value
-            ?: throw IllegalStateException("Must set organisationId before adding a characterEntity")
-
-        membershipRepository.createMembership(OrganisationMembership(characterEntity.id, orgId), viewModelScope)
-
+        Transformations.map(organisation, Organisation::description)
     }
 
     fun addToOrganisation(character: Long) {

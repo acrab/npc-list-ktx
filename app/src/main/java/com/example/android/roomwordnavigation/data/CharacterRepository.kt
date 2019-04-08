@@ -11,8 +11,11 @@ class CharacterRepository @Inject constructor(private val CharacterDao: Characte
 
     override fun get(characterId: Long) = CharacterDao.getCharacter(characterId)
 
-    override fun insert(characterEntity: CharacterEntity, coroutineScope: CoroutineScope) {
-        coroutineScope.launch { CharacterDao.insert(characterEntity) }
+    override fun insert(characterEntity: CharacterEntity, coroutineScope: CoroutineScope, onCharacterInserted:(characterId:Long)->Unit) {
+        coroutineScope.launch {
+            val id = CharacterDao.insert(characterEntity)
+            onCharacterInserted(id)
+        }
     }
 
     override fun update(characterEntity: CharacterEntity, coroutineScope: CoroutineScope) {

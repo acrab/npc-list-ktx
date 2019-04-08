@@ -12,7 +12,7 @@ import com.example.android.roomwordnavigation.data.entities.Template
 @Dao
 interface TemplateDao{
     @Insert
-    fun insert(template: Template)
+    suspend fun insert(template: Template)
 
     @Query("SELECT * FROM system_template ORDER BY name ASC")
     fun getAllTemplates() : LiveData<List<Template>>
@@ -21,7 +21,7 @@ interface TemplateDao{
 @Dao
 interface StatisticDao{
     @Insert
-    fun insert(statistic: Statistic)
+    suspend fun insert(statistic: Statistic)
 
     @Query("SELECT * FROM statistic WHERE template = :template")
     fun getStatsForTemplate(template: Long) : LiveData<List<Statistic>>
@@ -39,10 +39,10 @@ interface StatisticDao{
 @Dao
 interface CharacterStatDao{
     @Insert
-    fun insert(characterStatValue: CharacterStatValue)
+    suspend fun insert(characterStatValue: CharacterStatValue)
 
     @Update
-    fun update(characterStatValue: CharacterStatValue)
+    suspend fun update(characterStatValue: CharacterStatValue)
 
     @Query("SELECT * FROM character_stat_value WHERE character = :character")
     fun getStatsForCharacter(character:Int) : LiveData<List<CharacterStatValue>>

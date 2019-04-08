@@ -9,7 +9,10 @@ interface ICharacterRepository {
 
     fun get(characterId: Long) : LiveData<CharacterEntity>
 
-    fun insert(characterEntity: CharacterEntity, coroutineScope: CoroutineScope) : Long
+    /**
+     * @param onCharacterInserted An optional callback providing the ID of the newly inserted character
+     */
+    fun insert(characterEntity: CharacterEntity, coroutineScope: CoroutineScope, onCharacterInserted:(characterId:Long)->Unit = {})
 
     fun update(characterEntity: CharacterEntity, coroutineScope: CoroutineScope)
 }

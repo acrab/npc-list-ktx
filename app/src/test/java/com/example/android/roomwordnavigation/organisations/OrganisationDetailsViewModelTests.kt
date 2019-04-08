@@ -143,7 +143,7 @@ class OrganisationDetailsViewModelTests {
         @Test(expected = IllegalStateException::class)
         fun It_Should_Fail() {
             runBlocking {
-                subject.addToOrganisation(CharacterEntity("Test CharacterEntity"))
+                subject.addToOrganisation(CharacterEntity("Test CharacterEntity").id)
             }
             //No exception thrown
             assert(true)
@@ -168,7 +168,7 @@ class OrganisationDetailsViewModelTests {
         @Test
         fun It_Should_Create_A_Membership_In_The_Repository() = runBlocking {
             val charToAdd = CharacterEntity("Test CharacterEntity")
-            subject.addToOrganisation(charToAdd)
+            subject.addToOrganisation(charToAdd.id)
             verify(membershipRepository).createMembership(eq(OrganisationMembership(charToAdd.id, 1)), any())
         }
     }
