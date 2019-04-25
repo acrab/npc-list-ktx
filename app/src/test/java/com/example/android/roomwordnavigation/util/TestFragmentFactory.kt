@@ -1,6 +1,5 @@
 package com.example.android.roomwordnavigation.util
 
-import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
@@ -10,7 +9,10 @@ import com.example.android.roomwordnavigation.IWithBoth
 import com.example.android.roomwordnavigation.IWithInputMethodManagerFactory
 import com.example.android.roomwordnavigation.IWithViewModelFactory
 import com.example.android.roomwordnavigation.InputMethodManagerFactory
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.KStubbing
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
 
 data class FragmentFactoryData<V : ViewModel>(
     val fragmentFactory: FragmentWithViewModelFactory, val viewModel: V, val viewModelFactory: ViewModelProvider.Factory
@@ -62,9 +64,9 @@ inline fun <reified V : ViewModel> fragmentFactoryWithMockViewModelAndIMM(viewMo
 }
 
 open class FragmentWithViewModelFactory(private val viewModelFactory: ViewModelProvider.Factory) : FragmentFactory() {
-    override fun instantiate(classLoader: ClassLoader, className: String, args: Bundle?): Fragment {
+    override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
         //Spawn the fragment
-        val fragment = super.instantiate(classLoader, className, args)
+        val fragment = super.instantiate(classLoader, className)
         //Cast it
         val f = fragment as IWithViewModelFactory
         //Assign things
@@ -76,9 +78,9 @@ open class FragmentWithViewModelFactory(private val viewModelFactory: ViewModelP
 
 open class FragmentWithInputMethodManagerFactory(private val immFactory: InputMethodManagerFactory) :
     FragmentFactory() {
-    override fun instantiate(classLoader: ClassLoader, className: String, args: Bundle?): Fragment {
+    override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
         //Spawn the fragment
-        val fragment = super.instantiate(classLoader, className, args)
+        val fragment = super.instantiate(classLoader, className)
 
         //Cast it
         val f = fragment as IWithInputMethodManagerFactory
@@ -92,9 +94,9 @@ open class FragmentWithInputMethodManagerFactory(private val immFactory: InputMe
 open class FragmentWithBothFactory(
     private val immFactory: InputMethodManagerFactory, private val viewModelFactory: ViewModelProvider.Factory
 ) : FragmentFactory() {
-    override fun instantiate(classLoader: ClassLoader, className: String, args: Bundle?): Fragment {
+    override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
         //Spawn the fragment
-        val fragment = super.instantiate(classLoader, className, args)
+        val fragment = super.instantiate(classLoader, className)
 
         //Cast it.
         val f = fragment as IWithBoth
