@@ -88,12 +88,12 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation "androidx.core:core-ktx:$fragmentVersion"
+    implementation "androidx.core:core-ktx:$coreVersion"
 
     implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
 
     debugImplementation "androidx.fragment:fragment-testing:$fragmentVersion"
-    testImplementation 'androidx.arch.core:core-testing:2.0.0'
+    testImplementation 'androidx.arch.core:core-testing:2.0.1'
     testImplementation "androidx.test.ext:junit:$rootProject.extJunitVersion"
     testImplementation 'androidx.test:core-ktx:1.1.0'
     testImplementation 'androidx.test:runner:1.1.1'
@@ -106,6 +106,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0'
-    androidTestImplementation 'androidx.arch.core:core-testing:2.0.0'
+    androidTestImplementation 'androidx.arch.core:core-testing:2.0.1'
     androidTestImplementation 'org.mockito:mockito-android:2.24.0'
 }
